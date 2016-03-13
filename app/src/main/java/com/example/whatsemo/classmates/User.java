@@ -13,7 +13,6 @@ public class User {
     private CharSequence[] interests;
     private CharSequence email;
 
-
     public User(CharSequence firstName,
                 CharSequence middleName,
                 CharSequence lastName,
