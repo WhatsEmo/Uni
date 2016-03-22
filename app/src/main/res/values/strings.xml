@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ClassMates</string>
+    <string name="login_message">Uni</string>
+    <string name="login_button_text">Log in</string>
+    <string name="email_login_hint">Email</string>
+    <string name="password_login_hint">Password</string>
 </resources>
