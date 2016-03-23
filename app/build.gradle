@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/NOTICE' // will not include NOTICE file
+        exclude 'META-INF/LICENSE' // will not include LICENSE file
+    }
 }
 ext {
     supportLibVersion = '23.1.1'  // variable that can be referenced to keep support libs consistent
@@ -27,5 +31,6 @@ dependencies {
     compile "com.android.support:design:${supportLibVersion}"
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.firebase:firebase-client-android:2.5.1+'
+    compile 'com.jakewharton:butterknife:7.0.1'
 
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    android:rowCount="3"
+    android:background="@color/orange">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/login_message"
+        android:id="@+id/welcomeMessage"
+        android:layout_marginTop="104dp"
+        android:soundEffectsEnabled="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="50sp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="320dp"
+        android:ems="10"
+        android:id="@+id/firstNameField"
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/welcomeMessage"
+        android:layout_alignRight="@+id/singUpEmailField"
+        android:layout_alignEnd="@+id/singUpEmailField"
+        android:hint="@string/first_name_hint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="320dp"
+        android:ems="10"
+        android:id="@+id/lastNameField"
+        android:layout_below="@+id/firstNameField"
+        android:layout_alignRight="@+id/firstNameField"
+        android:layout_alignEnd="@+id/firstNameField"
+        android:hint="@string/last_name_hint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="320dp"
+        android:ems="10"
+        android:id="@+id/schoolNameFirst"
+        android:layout_below="@+id/lastNameField"
+        android:layout_alignRight="@+id/lastNameField"
+        android:layout_alignEnd="@+id/lastNameField"
+        android:hint="@string/school_name_hint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="320dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/singUpEmailField"
+        android:layout_below="@+id/schoolNameFirst"
+        android:layout_alignRight="@+id/signUpPasswordField"
+        android:layout_alignEnd="@+id/signUpPasswordField"
+        android:hint="@string/email_login_hint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="320dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/signUpPasswordField"
+        android:layout_below="@+id/singUpEmailField"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/password_login_hint" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_button_text"
+        android:id="@+id/loginButton"
+        android:layout_below="@+id/signUpPasswordField"
+        android:layout_alignRight="@+id/welcomeMessage"
+        android:layout_alignEnd="@+id/welcomeMessage"
+        android:onClick="signUpToFireBase"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_button_text"
+        android:id="@+id/signUpButton"
+        android:layout_alignBaseline="@+id/loginButton"
+        android:layout_alignBottom="@+id/loginButton"
+        android:layout_alignLeft="@+id/loginButton"
+        android:layout_alignStart="@+id/loginButton" />
+</RelativeLayout>

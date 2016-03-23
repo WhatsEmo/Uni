@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">ClassMates</string>
     <string name="login_message">Uni</string>
+
+
     <string name="login_button_text">Log in</string>
+    <string name="sign_up_button_text">Sign up</string>
     <string name="email_login_hint">Email</string>
     <string name="password_login_hint">Password</string>
+
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="school_name_hint">School</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+
 </resources>

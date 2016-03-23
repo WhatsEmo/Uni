@@ -1,10 +1,12 @@
 package com.example.whatsemo.classmates;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 /**
@@ -22,10 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         firedata = new Firebase("https://uni-database.firebaseio.com/");
-
-        if(appUser == null){
-            startLoginActivity();
-        }
+        firedata.addAuthStateListener(new Firebase.AuthStateListener(){
+            @Override
+            public void onAuthStateChanged(AuthData authData){
+                if(authData != null){
+                    //user is logged on
+                }else{
+                    //user is not logged on
+                    startLoginActivity();
+                }
+            }
+        });
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -39,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLoginActivity(){
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
 
