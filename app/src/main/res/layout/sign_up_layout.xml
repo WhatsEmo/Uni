@@ -84,8 +84,7 @@
         android:id="@+id/loginButtonSignUpScreen"
         android:layout_below="@+id/signUpScreenButton"
         android:layout_alignRight="@+id/welcomeMessage"
-        android:layout_alignEnd="@+id/welcomeMessage"
-        android:onClick="goBack"/>
+        android:layout_alignEnd="@+id/welcomeMessage"/>
 
     <Button
         android:layout_width="wrap_content"

@@ -53,8 +53,7 @@
         android:layout_marginTop="69dp"
         android:layout_below="@+id/passwordField"
         android:layout_toLeftOf="@+id/welcomeMessage"
-        android:layout_toStartOf="@+id/welcomeMessage"
-        android:onClick="logInNow"/>
+        android:layout_toStartOf="@+id/welcomeMessage"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -63,6 +62,5 @@
         android:id="@+id/signUpButton"
         android:layout_alignTop="@+id/loginButton"
         android:layout_toRightOf="@+id/welcomeMessage"
-        android:layout_toEndOf="@+id/welcomeMessage"
-        android:onClick="openSignUpScreen"/>
+        android:layout_toEndOf="@+id/welcomeMessage"/>
 </RelativeLayout>
