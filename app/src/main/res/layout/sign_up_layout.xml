@@ -94,6 +94,5 @@
         android:id="@+id/signUpScreenButton"
         android:layout_below="@+id/signUpPasswordField"
         android:layout_alignLeft="@+id/loginButtonSignUpScreen"
-        android:layout_alignStart="@+id/loginButtonSignUpScreen"
-        android:onClick="signUp" />
+        android:layout_alignStart="@+id/loginButtonSignUpScreen" />
 </RelativeLayout>

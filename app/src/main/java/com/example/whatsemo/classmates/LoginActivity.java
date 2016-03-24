@@ -10,12 +10,20 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by WhatsEmo on 3/14/2016.
  */
 public class LoginActivity extends Activity {
+
+    @Bind(R.id.emailField)
+    public EditText emailBox;
+
+    @Bind(R.id.passwordField)
+    public EditText passwordBox;
 
     @OnClick(R.id.signUpButton)
     public void openSignUpScreen(View view){
@@ -27,17 +35,14 @@ public class LoginActivity extends Activity {
         logIn();
     }
 
-    EditText emailBox;
-    EditText passwordBox;
     Activity thisActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         thisActivity = this;
         setContentView(R.layout.login_layout);
-        emailBox = (EditText) findViewById(R.id.emailField);
-        passwordBox = (EditText) findViewById(R.id.passwordField);
     }
 
     //When Users click on the Sign Up button, it will start the SignUpActivity

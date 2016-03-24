@@ -11,6 +11,7 @@ import com.firebase.client.FirebaseError;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SignUpActivity extends Activity {
@@ -45,6 +46,7 @@ public class SignUpActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Butterknife.bind(this);
         setContentView(R.layout.sign_up_layout);
         thisActivity = this;
     }
