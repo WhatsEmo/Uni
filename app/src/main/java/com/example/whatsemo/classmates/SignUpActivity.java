@@ -2,6 +2,7 @@ package com.example.whatsemo.classmates;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import com.firebase.client.Firebase;
@@ -10,23 +11,34 @@ import com.firebase.client.FirebaseError;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class SignUpActivity extends Activity {
 
     @Bind(R.id.firstNameField)
-    private EditText firstNameBox;
+    public EditText firstNameBox;
 
     @Bind(R.id.lastNameField)
-    private EditText lastNameBox;
+    public EditText lastNameBox;
 
     @Bind(R.id.schoolNameFirst)
-    private EditText schoolNameBox;
+    public EditText schoolNameBox;
 
     @Bind(R.id.singUpEmailField)
-    private EditText emailBox;
+    public EditText emailBox;
 
     @Bind(R.id.signUpPasswordField)
-    private EditText passwordBox;
+    public EditText passwordBox;
+
+    @OnClick(R.id.signUpScreenButton)
+    public void signUp(View view){
+        signUpToFireBase();
+    }
+
+    @OnClick(R.id.loginButtonSignUpScreen)
+    public void goBack(View view){
+        onBackPressed();
+    }
 
     private Activity thisActivity;
 

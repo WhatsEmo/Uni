@@ -3,16 +3,29 @@ package com.example.whatsemo.classmates;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import butterknife.OnClick;
+
 /**
  * Created by WhatsEmo on 3/14/2016.
  */
 public class LoginActivity extends Activity {
+
+    @OnClick(R.id.signUpButton)
+    public void openSignUpScreen(View view){
+        startSignUpAcitivty();
+    }
+
+    @OnClick(R.id.loginButton)
+    public void logInNow(View view){
+        logIn();
+    }
 
     EditText emailBox;
     EditText passwordBox;
@@ -60,6 +73,11 @@ public class LoginActivity extends Activity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        //Do nothing because we want the user to log in
     }
 
 }

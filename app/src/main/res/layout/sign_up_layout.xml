@@ -81,19 +81,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_button_text"
-        android:id="@+id/loginButton"
-        android:layout_below="@+id/signUpPasswordField"
+        android:id="@+id/loginButtonSignUpScreen"
+        android:layout_below="@+id/signUpScreenButton"
         android:layout_alignRight="@+id/welcomeMessage"
         android:layout_alignEnd="@+id/welcomeMessage"
-        android:onClick="signUpToFireBase"/>
+        android:onClick="goBack"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_button_text"
-        android:id="@+id/signUpButton"
-        android:layout_alignBaseline="@+id/loginButton"
-        android:layout_alignBottom="@+id/loginButton"
-        android:layout_alignLeft="@+id/loginButton"
-        android:layout_alignStart="@+id/loginButton" />
+        android:id="@+id/signUpScreenButton"
+        android:layout_below="@+id/signUpPasswordField"
+        android:layout_alignLeft="@+id/loginButtonSignUpScreen"
+        android:layout_alignStart="@+id/loginButtonSignUpScreen"
+        android:onClick="signUp" />
 </RelativeLayout>
