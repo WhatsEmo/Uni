@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
+        /*
         Firebase.setAndroidContext(this);
         firedata = new Firebase("https://uni-database.firebaseio.com/");
         firedata.addAuthStateListener(new Firebase.AuthStateListener(){
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        */
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
