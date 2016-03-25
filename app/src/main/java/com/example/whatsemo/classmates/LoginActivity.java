@@ -20,6 +20,7 @@ public class LoginActivity extends Activity {
     static final int USER_LOGGED_IN_THROUGH_SIGNUP = 0;
     static final int USER_DID_NOT_LOG_IN = 1;
     static final int SIGN_UP_RESULTS = 2;
+    static final int USER_PRESSED_BACK_BUTTON = 3;
 
     private Activity thisActivity;
     private Firebase ref;
@@ -90,11 +91,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-    @Override
-    public void onBackPressed(){
-        //Do nothing because we want the user to log in
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -120,5 +116,13 @@ public class LoginActivity extends Activity {
                 //Don't do anything
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        //Do nothing because we want the user to log in
+        Intent returnIntent = new Intent();
+        setResult(USER_PRESSED_BACK_BUTTON, returnIntent);
+        thisActivity.finish();
     }
 }
