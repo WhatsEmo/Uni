@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
         thisActivity = this;
         setContentView(R.layout.login_layout);
     }

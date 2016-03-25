@@ -46,7 +46,7 @@ public class SignUpActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Butterknife.bind(this);
+        ButterKnife.bind(this);
         setContentView(R.layout.sign_up_layout);
         thisActivity = this;
     }

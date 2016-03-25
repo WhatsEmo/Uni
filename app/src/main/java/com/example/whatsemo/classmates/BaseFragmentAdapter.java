@@ -25,7 +25,12 @@ public class BaseFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return BaseFragment.newInstance(position + 1);
+        if (position == 0){
+            return HomePageFragment.newInstance(position + 1);
+        }
+        else{
+            return BaseFragment.newInstance(position + 1);
+        }
     }
 
     @Override
