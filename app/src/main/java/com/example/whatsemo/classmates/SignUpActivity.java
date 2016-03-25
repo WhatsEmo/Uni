@@ -32,12 +32,12 @@ public class SignUpActivity extends Activity {
     public EditText passwordBox;
 
     @OnClick(R.id.signUpScreenButton)
-    public void signUp(View view){
+    public void signUp(){
         signUpToFireBase();
     }
 
     @OnClick(R.id.loginButtonSignUpScreen)
-    public void goBack(View view){
+    public void goBack(){
         onBackPressed();
     }
 
@@ -46,9 +46,9 @@ public class SignUpActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Butterknife.bind(this);
         setContentView(R.layout.sign_up_layout);
         thisActivity = this;
+        ButterKnife.bind(this);
     }
 
 

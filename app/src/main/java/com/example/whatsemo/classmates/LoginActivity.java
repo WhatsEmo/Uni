@@ -26,12 +26,12 @@ public class LoginActivity extends Activity {
     public EditText passwordBox;
 
     @OnClick(R.id.signUpButton)
-    public void openSignUpScreen(View view){
+    public void openSignUpScreen(){
         startSignUpAcitivty();
     }
 
     @OnClick(R.id.loginButton)
-    public void logInNow(View view){
+    public void logInNow(){
         logIn();
     }
 
@@ -40,9 +40,9 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         thisActivity = this;
         setContentView(R.layout.login_layout);
+        ButterKnife.bind(this);
     }
 
     //When Users click on the Sign Up button, it will start the SignUpActivity

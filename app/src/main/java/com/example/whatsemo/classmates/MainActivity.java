@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                     //user is logged on
                 }else{
                     //user is not logged on
-                    //startLoginActivity();
+                    startLoginActivity();
                 }
             }
         });
