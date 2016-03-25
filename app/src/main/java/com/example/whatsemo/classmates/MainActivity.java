@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Firebase firedata;
     private User appUser;
-    static final int DID_USER_PRESS_BACK_BUTTON = 0;
-    static final int USER_PRESSED_BACK_BUTTON = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void startLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, DID_USER_PRESS_BACK_BUTTON);
+        startActivity(intent);
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        /*
-            DID_USER_PRESS_BACK_BUTTON = 0
-            Basically if the user pressed the back button in LoginActivity and didn't log in
-            we don't use the MainActivity without auth code
-         */
-
-        if(requestCode == DID_USER_PRESS_BACK_BUTTON){
-            if(resultCode == USER_PRESSED_BACK_BUTTON) {
-                this.finish();
-            }
-        }
-        //We do nothing if the user actually logged in
-
-    }
 }
 
