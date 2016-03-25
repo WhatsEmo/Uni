@@ -9,6 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -22,14 +30,29 @@ public class HomePageFragment extends Fragment {
 
     private int mPage;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-
-
     private OnFragmentInteractionListener mListener;
+
+    private Firebase ref;
+
+    @Bind(R.id.userName)
+    public TextView userName;
+
+    @Bind(R.id.userMajor)
+    public TextView userMajor;
 
     public HomePageFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        if (getArguments() != null) {
+            mPage = getArguments().getInt(ARG_PAGE);
+        }
+
     }
 
     public static HomePageFragment newInstance(int page) {
@@ -40,18 +63,34 @@ public class HomePageFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mPage = getArguments().getInt(ARG_PAGE);
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_page_layout, container, false);
+        ButterKnife.bind(this, view);
+        ref = new Firebase("https://uni-database.firebaseio.com/");
+
+        if (ref.getAuth() != null){
+            String uid = ref.getAuth().getUid();
+            ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    String name = snapshot.child("firstName").getValue() + " " + snapshot.child("lastName").getValue();
+                    userName.setText(name);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    System.out.println("The read failed: " + firebaseError.getMessage());
+                }
+            });
+        }
+        else{
+            System.out.println("Authentication failed");
+        }
+
         return view;
     }
 
