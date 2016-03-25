@@ -2,7 +2,6 @@ package com.example.whatsemo.classmates;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 
 import com.firebase.client.Firebase;
@@ -48,6 +47,7 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_layout);
         thisActivity = this;
+        Firebase.setAndroidContext(this);
         ButterKnife.bind(this);
     }
 
@@ -61,15 +61,17 @@ public class SignUpActivity extends Activity {
         String schoolName = schoolNameBox.getText().toString();
 
         Firebase ref = new Firebase("https://uni-database.firebaseio.com/");
-        ref.createUser(email,password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+        ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
                 System.out.println("Successfully created user account with uid: " + result.get("uid"));
                 thisActivity.finish();
             }
+
             @Override
             public void onError(FirebaseError firebaseError) {
                 // there was an error
+                System.out.println("Error: " + firebaseError.getMessage());
             }
         });
     }

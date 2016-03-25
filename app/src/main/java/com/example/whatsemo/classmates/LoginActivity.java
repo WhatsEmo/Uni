@@ -3,7 +3,6 @@ package com.example.whatsemo.classmates;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 
 import com.firebase.client.AuthData;
@@ -42,6 +41,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         thisActivity = this;
         setContentView(R.layout.login_layout);
+        Firebase.setAndroidContext(this);
         ButterKnife.bind(this);
     }
 
@@ -54,12 +54,9 @@ public class LoginActivity extends Activity {
     //When users click on the Login Button
     private void logIn(){
         String email = emailBox.getText().toString();
-        String password = emailBox.getText().toString();
+        String password = passwordBox.getText().toString();
 
         if(email.isEmpty() || password.isEmpty()){
-            //Do this later
-            //generate text messages next to EditText boxes
-        }else if(password.length() <= 8){
             //Do this later
             //generate text messages next to EditText boxes
         }else{
@@ -75,6 +72,7 @@ public class LoginActivity extends Activity {
                     // there was an error
                     //Put something here to let the user know that there was an error
                     //ie. Email already registered
+                    System.out.println("Error: " + firebaseError.getMessage());
                 }
             });
         }
