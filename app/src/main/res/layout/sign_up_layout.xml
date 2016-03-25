@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:width="320dp"
         android:ems="10"
-        android:id="@+id/schoolNameFirst"
+        android:id="@+id/schoolNameField"
         android:layout_below="@+id/lastNameField"
         android:layout_alignRight="@+id/lastNameField"
         android:layout_alignEnd="@+id/lastNameField"
@@ -61,7 +61,7 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/singUpEmailField"
-        android:layout_below="@+id/schoolNameFirst"
+        android:layout_below="@+id/schoolNameField"
         android:layout_alignRight="@+id/signUpPasswordField"
         android:layout_alignEnd="@+id/signUpPasswordField"
         android:hint="@string/email_login_hint" />

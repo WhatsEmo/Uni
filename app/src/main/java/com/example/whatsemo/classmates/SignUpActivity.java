@@ -23,7 +23,7 @@ public class SignUpActivity extends Activity {
     @Bind(R.id.lastNameField)
     public EditText lastNameBox;
 
-    @Bind(R.id.schoolNameFirst)
+    @Bind(R.id.schoolNameField)
     public EditText schoolNameBox;
 
     @Bind(R.id.singUpEmailField)
