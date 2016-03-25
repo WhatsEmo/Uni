@@ -4,6 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <Button
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:text="logout"
+        android:id="@+id/logoutButton"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"

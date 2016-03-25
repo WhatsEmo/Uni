@@ -9,10 +9,23 @@ import android.support.v7.app.AppCompatActivity;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by WhatsEmo on 3/5/2016.
  */
 public class MainActivity extends AppCompatActivity {
+
+    //REMOVE THIS LATER
+    @OnClick(R.id.logoutButton)
+    public void logout(){
+        firedata.unauth();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
 
     private Firebase firedata;
     private User appUser;
@@ -21,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        ButterKnife.bind(this);
 
         Firebase.setAndroidContext(this);
         firedata = new Firebase("https://uni-database.firebaseio.com/");
@@ -52,5 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
 }
 
