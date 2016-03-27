@@ -30,7 +30,8 @@
         android:layout_below="@+id/welcomeMessage"
         android:layout_alignRight="@+id/singUpEmailField"
         android:layout_alignEnd="@+id/singUpEmailField"
-        android:hint="@string/first_name_hint" />
+        android:hint="@string/first_name_hint"
+        android:inputType="textCapSentences|textPersonName" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
         android:layout_below="@+id/firstNameField"
         android:layout_alignRight="@+id/firstNameField"
         android:layout_alignEnd="@+id/firstNameField"
-        android:hint="@string/last_name_hint" />
+        android:hint="@string/last_name_hint"
+        android:inputType="textCapSentences|textPersonName" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -52,7 +54,8 @@
         android:layout_below="@+id/lastNameField"
         android:layout_alignRight="@+id/lastNameField"
         android:layout_alignEnd="@+id/lastNameField"
-        android:hint="@string/school_name_hint" />
+        android:hint="@string/school_name_hint"
+        android:inputType="textCapSentences|textEmailSubject" />
 
     <EditText
         android:layout_width="wrap_content"

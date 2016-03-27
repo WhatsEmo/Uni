@@ -34,10 +34,10 @@ public class HomePageFragment extends Fragment {
 
     private Firebase ref;
 
-    @Bind(R.id.userName)
+    @Bind(R.id.homeUserName)
     public TextView userName;
 
-    @Bind(R.id.userMajor)
+    @Bind(R.id.homeUserMajor)
     public TextView userMajor;
 
     public HomePageFragment() {
