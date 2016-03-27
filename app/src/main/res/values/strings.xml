@@ -16,4 +16,10 @@
     <string name="classes_title">classes_title</string>
     <string name="academic_major_hint">Major</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="social_classes_title">Classes</string>
+    <string name="social_groups_title">Groups</string>
+    <string name="social_friends_title">Friends</string>
+
 </resources>
