@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="User.firstname + User.lastname"
-            android:id="@+id/userName"
+            android:id="@+id/homeUserName"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -23,16 +23,16 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="User major?"
-            android:id="@+id/userMajor"
-            android:layout_below="@+id/userName"
+            android:id="@+id/homeUserMajor"
+            android:layout_below="@+id/homeUserName"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:id="@+id/relativeLayout"
-            android:layout_below="@+id/userMajor"
+            android:id="@+id/HomeInterestsLayout"
+            android:layout_below="@+id/homeUserMajor"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:id="@+id/imageView2"
+                android:id="@+id/interestsBackground"
                 android:src="@drawable/smug"
                 android:adjustViewBounds="false"
                 android:layout_alignParentTop="true"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/interests_title"
-                android:id="@+id/textView3"
+                android:id="@+id/interestsTitle"
                 android:layout_marginTop="32dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -63,17 +63,17 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/relativeLayout"
+            android:layout_below="@+id/HomeInterestsLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/relativeLayout2">
+            android:id="@+id/HomeClassesLayout">
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:id="@+id/imageView3"
+                android:id="@+id/classesBackground"
                 android:src="@drawable/dijkstra"
                 android:adjustViewBounds="false"
                 android:layout_alignParentTop="true"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/classes_title"
-                android:id="@+id/textView4"
+                android:id="@+id/classesTitle"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -98,9 +98,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:id="@+id/imageView"
+            android:id="@+id/homeScheduleView"
             android:src="@drawable/schedule"
-            android:layout_below="@+id/relativeLayout2"
+            android:layout_below="@+id/HomeClassesLayout"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"

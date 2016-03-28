@@ -34,25 +34,14 @@ public class HomePageFragment extends Fragment {
 
     private Firebase ref;
 
-    @Bind(R.id.userName)
+    @Bind(R.id.homeUserName)
     public TextView userName;
 
-    @Bind(R.id.userMajor)
+    @Bind(R.id.homeUserMajor)
     public TextView userMajor;
 
     public HomePageFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-        if (getArguments() != null) {
-            mPage = getArguments().getInt(ARG_PAGE);
-        }
-
     }
 
     public static HomePageFragment newInstance(int page) {
@@ -63,7 +52,14 @@ public class HomePageFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        if (getArguments() != null) {
+            mPage = getArguments().getInt(ARG_PAGE);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
