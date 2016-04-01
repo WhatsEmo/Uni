@@ -76,6 +76,9 @@ public class LoginActivity extends Activity {
                     if(ref.getAuth().getProviderData().get("isTutorialDone") != null &&
                             ref.getAuth().getProviderData().get("isTutorialDone").equals(false)) {
                         //Going to implement this.
+                        Intent startTutoiralIntent = new Intent(thisActivity, TutorialActivity.class);
+                        startActivity(startTutoiralIntent);
+
                     }
                     //Ends this Acitivty and goes back to the Main Activity
                     thisActivity.finish();
@@ -107,8 +110,9 @@ public class LoginActivity extends Activity {
                 //first checks if the isTutorialDone variable a null because it would crash otherwise
                 if(ref.getAuth().getProviderData().get("isTutorialDone") != null &&
                         ref.getAuth().getProviderData().get("isTutorialDone").equals(false)){
-
                     //start tutorial
+                    Intent startTutoiralIntent = new Intent(this, TutorialActivity.class);
+                    startActivity(startTutoiralIntent);
                 }
                 thisActivity.finish();
             }

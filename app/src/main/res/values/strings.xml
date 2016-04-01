@@ -21,5 +21,9 @@
     <string name="social_classes_title">Classes</string>
     <string name="social_groups_title">Groups</string>
     <string name="social_friends_title">Friends</string>
+    <string name="adding_classes_button_text">Add Class</string>
+    <string name="adding_interests_button_text">Add Interest</string>
+    <string name="adding_groups_button_text">Add Group</string>
+    <string name="adding_schools_button_text">Add School</string>
 
 </resources>
