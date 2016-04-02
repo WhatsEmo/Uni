@@ -48,6 +48,7 @@ public class SignUpActivity extends Activity {
     static final int USER_DID_NOT_LOG_IN = 1;
     static final int SIGN_UP_RESULTS = 2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +116,13 @@ public class SignUpActivity extends Activity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent returnIntent = new Intent();
+        setResult(USER_DID_NOT_LOG_IN, returnIntent);
+        finish();
     }
 
 }
