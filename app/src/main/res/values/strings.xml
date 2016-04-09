@@ -25,5 +25,6 @@
     <string name="adding_interests_button_text">Add Interest</string>
     <string name="adding_groups_button_text">Add Group</string>
     <string name="adding_schools_button_text">Add School</string>
+    <string name="done_adding">Done</string>
 
 </resources>

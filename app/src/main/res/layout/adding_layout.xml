@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/orange">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/login_message"
+        android:soundEffectsEnabled="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="50sp"
+        android:id="@+id/addingLayoutTitle"
+        android:layout_gravity="center_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/addingClassesLayout">
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/addingClassesButton"
+            android:layout_alignLeft="@+id/addingClassesButton"
+            android:id="@+id/classId" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adding_classes_button_text"
-            android:id="@+id/adding_classes_button" />
+            android:id="@+id/addingClassesButton" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/classesListView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/classesListView"
+            android:text="@string/done_adding"
+            android:id="@+id/finishAddingClasses" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -20,11 +53,32 @@
         android:layout_height="match_parent"
         android:id="@+id/addingInterestsLayout">
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/addingInterestsButton"
+            android:layout_alignLeft="@+id/addingInterestsButton"
+            android:id="@+id/interest" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adding_interests_button_text"
-            android:id="@+id/adding_interests_button" />
+            android:id="@+id/addingInterestsButton" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/interestListView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/interestListView"
+            android:text="@string/done_adding"
+            android:id="@+id/finishAddingInterests" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -32,22 +86,31 @@
         android:layout_height="match_parent"
         android:id="@+id/addingGroupsLayout">
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/addingGroupsButton"
+            android:layout_alignLeft="@+id/addingGroupsButton"
+            android:id="@+id/groupName" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adding_groups_button_text"
-            android:id="@+id/adding_groups_button" />
-    </RelativeLayout>
+            android:id="@+id/addingGroupsButton" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/addingSchoolsLayout">
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/groupListView"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/adding_schools_button_text"
-            android:id="@+id/adding_schools_button" />
+            android:layout_alignBottom="@+id/groupListView"
+            android:text="@string/done_adding"
+            android:id="@+id/finishAddingGroups" />
+
     </RelativeLayout>
 </LinearLayout>
