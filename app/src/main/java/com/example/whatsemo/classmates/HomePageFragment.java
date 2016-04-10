@@ -14,6 +14,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -79,7 +82,20 @@ public class HomePageFragment extends Fragment {
 
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
-                    System.out.println("The read failed: " + firebaseError.getMessage());
+                    System.out.println("The name read failed: " + firebaseError.getMessage());
+                }
+            });
+
+            ref.child("Test").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Map<String, String> map = (Map<String, String>)dataSnapshot.getValue();
+                    System.out.print(map.values());
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    System.out.println(" The test read failed: " + firebaseError.getMessage());
                 }
             });
         }

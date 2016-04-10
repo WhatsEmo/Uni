@@ -12,8 +12,8 @@
     <string name="last_name_hint">Last Name</string>
     <string name="school_name_hint">School</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="interests_title">interests_title</string>
-    <string name="classes_title">classes_title</string>
+    <string name="interests_title">Interests</string>
+    <string name="classes_title">Classes</string>
     <string name="academic_major_hint">Major</string>
 
     <!-- TODO: Remove or change this placeholder text -->
