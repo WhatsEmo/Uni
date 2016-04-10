@@ -24,27 +24,34 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/addingClassesButton"
-            android:layout_alignLeft="@+id/addingClassesButton"
+            android:layout_alignParentLeft="true"
+            android:hint="@string/adding_classes_button_text"
             android:id="@+id/classId" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/adding_classes_button_text"
             android:id="@+id/addingClassesButton" />
 
-        <ListView
+        <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/classesListView" />
+            android:id="@+id/classesListView"
+            android:layout_below="@+id/addingClassesButton"
+            android:layout_above="@+id/finishAddingClasses"
+            android:fitsSystemWindows="true"
+            android:columnCount="5"></GridLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/classesListView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/done_adding"
             android:id="@+id/finishAddingClasses" />
+
 
     </RelativeLayout>
 
@@ -56,26 +63,31 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/addingInterestsButton"
-            android:layout_alignLeft="@+id/addingInterestsButton"
+            android:layout_alignParentLeft="true"
+            android:hint="@string/adding_interests_button_text"
             android:id="@+id/interest" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adding_interests_button_text"
+            android:layout_alignParentRight="true"
             android:id="@+id/addingInterestsButton" />
 
-        <ListView
+
+        <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/interestListView" />
+            android:id="@+id/interestsListView"
+            android:layout_below="@+id/addingInterestsButton"
+            android:layout_above="@+id/finishAddingInterests"
+            android:fitsSystemWindows="true" ></GridLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/interestListView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/done_adding"
             android:id="@+id/finishAddingInterests" />
 
@@ -89,26 +101,32 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/addingGroupsButton"
-            android:layout_alignLeft="@+id/addingGroupsButton"
+            android:layout_alignParentLeft="true"
+            android:hint="@string/adding_groups_button_text"
             android:id="@+id/groupName" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
             android:text="@string/adding_groups_button_text"
             android:id="@+id/addingGroupsButton" />
 
-        <ListView
+
+        <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/groupListView"/>
+            android:id="@+id/groupsListView"
+            android:layout_below="@+id/addingGroupsButton"
+            android:layout_above="@+id/finishAddingGroups"
+            android:fitsSystemWindows="true" ></GridLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/groupListView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/done_adding"
             android:id="@+id/finishAddingGroups" />
 

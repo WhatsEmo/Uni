@@ -7,7 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Firebase firedata;
     private User appUser;
+    private AppCompatActivity thisActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void checkTutorialDone(){
+
+        String uid = firedata.getAuth().getUid();
+
+        firedata.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //if isTutorialDone exists then we start the tutorial
+                if (dataSnapshot.child("isTutorialDone").exists()) {
+                    //start tutorial
+                    Intent startTutoiralIntent = new Intent(thisActivity, TutorialActivity.class);
+                    startActivity(startTutoiralIntent);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
 
 }
 

@@ -5,18 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,22 +38,22 @@ public class TutorialActivity extends Activity {
     RelativeLayout addingGroupsLayout;
 
     @Bind(R.id.classesListView)
-    ListView classesListView;
+    GridLayout classesListView;
 
-    @Bind(R.id.interestListView)
-    ListView interestListView;
+    @Bind(R.id.interestsListView)
+    GridLayout interestsListView;
 
-    @Bind(R.id.groupListView)
-    ListView groupListView;
+    @Bind(R.id.groupsListView)
+    GridLayout groupsListView;
 
     @OnClick(R.id.addingClassesButton)
-    public void addingClasses(){ addSomething(classesListView, classId, userClasses); }
+    public void addingClasses(){ addClasses();}
 
     @OnClick(R.id.addingInterestsButton)
-    public void addingInterests(){ addSomething(interestListView, interest, userInterests); }
+    public void addingInterests(){ addInterests(); }
 
     @OnClick(R.id.addingGroupsButton)
-    public void addingGroups(){ addSomething(groupListView, groupName, userGroups); }
+    public void addingGroups(){ addGroups(); }
 
     @OnClick(R.id.finishAddingClasses)
     public void finishAddingClasses(){ addToDatabase("class"); }
@@ -62,7 +63,6 @@ public class TutorialActivity extends Activity {
 
     @OnClick(R.id.finishAddingGroups)
     public void finishAddingGroups(){ addToDatabase("group"); }
-
 
     @Bind(R.id.classId)
     TextView classId;
@@ -83,59 +83,53 @@ public class TutorialActivity extends Activity {
     private Firebase fireData;
     private String uid;
     private String schoolId;
+    private String userName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         setContentView(R.layout.adding_layout);
+        ButterKnife.bind(this);
         Firebase.setAndroidContext(this);
 
         fireData = new Firebase("https://uni-database.firebaseio.com/");
-        fireData.addAuthStateListener(new Firebase.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(AuthData authData) {
-                if (authData != null) {
-                    //user is logged on
-                    if(authData.getUid() != null){
-                        uid = authData.getUid();
-
-                    }else{
-                        //if the Uid doesn't exist for some reason, we log the user out and exit the app
-                        fireData.unauth();
-                        onBackPressed();
-                    }
-                } else {
-                    //This returns user to home screen
-                    onBackPressed();
-                }
-            }
-        });
+        if(fireData.getAuth().getUid() != null){
+            uid = fireData.getAuth().getUid();
+        }
 
 
         //Get school ID
-        fireData.child("users").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                //Should always return a string.
-                schoolId = (String) snapshot.child("school").getValue();
-            }
+        if(uid != null) {
+            fireData.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    //Should always return a string.
+                    schoolId = (String) snapshot.child("school").getValue();
+                    userName = snapshot.child("firstName").getValue() + " " + snapshot.child("lastName").getValue();
+                }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    System.out.println("The read failed: " + firebaseError.getMessage());
+                }
+            });
+        }else{
+            //logs user out if for some reason they have no uid
+            fireData.unauth();
+        }
 
         //Sets all layouts other than classes invisible first
-        addingInterestsLayout.setVisibility(View.INVISIBLE);
-        addingGroupsLayout.setVisibility(View.INVISIBLE);
+        addingInterestsLayout.setVisibility(View.GONE);
+        addingGroupsLayout.setVisibility(View.GONE);
 
         //Intialize empty Lists
         userInterests = new ArrayList<String>();
         userClasses = new ArrayList<String>();
         userGroups = new ArrayList<String>();
+
+        //Set up GridViews
+
 
         //Set the Title
         title.setText("Uni: Adding Classes");
@@ -145,43 +139,83 @@ public class TutorialActivity extends Activity {
     //Example: If we add an Interest, we use interestListView and interest TextView
     //Then we add it to the Interest ListView to show the user.
     //If user clicks on interest button, then they delete it from the list
-    private void addSomething(final ListView viewList, TextView text, final List<String> stringList ){
+    private void addClasses(){
+        Button newClass = new Button(this);
+        newClass.setText(classId.getText());
 
-        final Button newClass = new Button(this);
-        newClass.setText(text.getText());
-
-        stringList.add(text.getText().toString());
+        userClasses.add(classId.getText().toString());
 
 
         newClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewList.removeView(newClass);
-                stringList.remove(newClass.getText().toString());
+                classesListView.removeView(v);
+                userClasses.remove(classId.getText().toString());
             }
         });
-        viewList.addView(newClass);
+        classesListView.addView(newClass);
+    }
+
+    private void addInterests(){
+        Button newInterest = new Button(this);
+        newInterest.setText(interest.getText());
+
+        userInterests.add(interest.getText().toString());
+
+
+        newInterest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                interestsListView.removeView(v);
+                userInterests.remove(interest.getText().toString());
+            }
+        });
+        interestsListView.addView(newInterest);
+    }
+
+    private void addGroups(){
+        Button newGroup = new Button(this);
+        newGroup.setText(groupName.getText());
+
+        userGroups.add(groupName.getText().toString());
+
+
+        newGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                groupsListView.removeView(v);
+                userGroups.remove(groupName.getText().toString());
+            }
+        });
+        groupsListView.addView(newGroup);
     }
 
 
     private void addToDatabase(String label){
 
-        if(label == "class"){
+        if(label.equals("class")){
             Firebase addingDataRef = fireData.child("users").child(uid); //firebase reference
             addingDataRef.setValue("classes",userClasses);
 
+            Firebase addingToSchool = fireData.child("school").child(schoolId);
+            for(String classes : userClasses){
+                Map<String, Object> addClass = new HashMap<String, Object>();
+                addClass.put(uid,userName);
+                addingToSchool.child(classes).child("enrolled").updateChildren(addClass);
+            }
+
             title.setText("Uni: Adding Interests");
-            addingClassesLayout.setVisibility(View.INVISIBLE);
+            addingClassesLayout.setVisibility(View.GONE);
             addingInterestsLayout.setVisibility(View.VISIBLE);
-        }else if(label == "interest"){
+        }else if(label.equals("interest")){
             Firebase addingDataRef = fireData.child("users").child(uid); //firebase reference
             addingDataRef.setValue("interests",userInterests);
 
 
             title.setText("Uni: Adding Groups");
-            addingInterestsLayout.setVisibility(View.INVISIBLE);
+            addingInterestsLayout.setVisibility(View.GONE);
             addingGroupsLayout.setVisibility(View.VISIBLE);
-        }else if(label == "group"){
+        }else if(label.equals("group")){
 
             Firebase addingDataRef = fireData.child("users").child(uid); //firebase reference
             addingDataRef.setValue("isTutorialDone", null);

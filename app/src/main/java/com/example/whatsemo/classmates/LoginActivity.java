@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,17 +71,10 @@ public class LoginActivity extends Activity {
             ref.authWithPassword(email,password, new Firebase.AuthResultHandler(){
                 @Override
                 public void onAuthenticated(AuthData authData) {
-
                     //Checks if user has done the tutorial, if not we start the tutorial.
                     //After tutorial is done, we exit to MainActivity
                     //first checks if the isTutorialDone variable a null because it would crash otherwise
-                    if(ref.getAuth().getProviderData().get("isTutorialDone") != null &&
-                            ref.getAuth().getProviderData().get("isTutorialDone").equals(false)) {
-                        //Going to implement this.
-                        Intent startTutoiralIntent = new Intent(thisActivity, TutorialActivity.class);
-                        startActivity(startTutoiralIntent);
-
-                    }
+                    checkTutorialDone();
                     //Ends this Acitivty and goes back to the Main Activity
                     thisActivity.finish();
                 }
@@ -107,19 +102,36 @@ public class LoginActivity extends Activity {
 
         if(requestCode == SIGN_UP_RESULTS){
             if(resultCode == USER_LOGGED_IN_THROUGH_SIGNUP){
-                //first checks if the isTutorialDone variable a null because it would crash otherwise
-                if(ref.getAuth().getProviderData().get("isTutorialDone") != null &&
-                        ref.getAuth().getProviderData().get("isTutorialDone").equals(false)){
-                    //start tutorial
-                    Intent startTutoiralIntent = new Intent(this, TutorialActivity.class);
-                    startActivity(startTutoiralIntent);
-                }
+                checkTutorialDone();
                 thisActivity.finish();
             }
             if(resultCode == USER_DID_NOT_LOG_IN){
                 //Don't do anything
             }
         }
+    }
+
+
+    private void checkTutorialDone(){
+
+        String uid = ref.getAuth().getUid();
+
+        ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //if isTutorialDone exists then we start the tutorial
+                if(dataSnapshot.child("isTutorialDone").exists()){
+                    //start tutorial
+                    Intent startTutoiralIntent = new Intent(thisActivity, TutorialActivity.class);
+                    startActivity(startTutoiralIntent);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override
