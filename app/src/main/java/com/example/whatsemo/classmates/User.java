@@ -1,53 +1,69 @@
 package com.example.whatsemo.classmates;
 
+import java.util.List;
+
 /**
  * Created by WhatsEmo on 3/5/2016.
  *
  * Used to store User data
  */
 public class User {
-    private CharSequence firstName;
-    private CharSequence middleName;
-    private CharSequence lastName;
-    private CharSequence school;
-    private CharSequence[] interests;
-    private CharSequence email;
+    private String uid;
+    private String name;
+    private String schoolId;
+    private String email;
+    private List<String> interests;
 
-    public User(CharSequence firstName,
-                CharSequence middleName,
-                CharSequence lastName,
-                CharSequence school,
-                CharSequence[] interests,
-                CharSequence email){
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.school = school;
-        this.interests = interests;
+    public User(String uid,
+                String name,
+                String school,
+                String email,
+                List<String> interests
+                ){
+        this.uid = uid;
+        this.name = name;
+        this.schoolId = school;
         this.email = email;
-    }
-
-    public void setFirstName(CharSequence firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setMiddleName(CharSequence middleName) {
-        this.middleName = middleName;
-    }
-
-    public void setLastName(CharSequence lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setSchool(CharSequence school) {
-        this.school = school;
-    }
-
-    public void setInterests(CharSequence[] interests) {
         this.interests = interests;
     }
 
-    public void setEmail(CharSequence email) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<String> interests) {
+        this.interests = interests;
+    }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
