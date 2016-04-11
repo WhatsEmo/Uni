@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Firebase.setAndroidContext(this);
-        firedata = new Firebase("https://uni-database.firebaseio.com/");
+        firedata = new Firebase(getResources().getString(R.string.database));
         firedata.addAuthStateListener(new Firebase.AuthStateListener(){
             @Override
             public void onAuthStateChanged(AuthData authData){

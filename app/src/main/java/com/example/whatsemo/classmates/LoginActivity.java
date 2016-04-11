@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login_layout);
         Firebase.setAndroidContext(this);
         ButterKnife.bind(this);
-        ref = new Firebase("https://uni-database.firebaseio.com/");
+        ref = new Firebase(getResources().getString(R.string.database));
     }
 
     //When Users click on the Sign Up button, it will start the SignUpActivity

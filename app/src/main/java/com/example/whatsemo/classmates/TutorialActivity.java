@@ -93,7 +93,7 @@ public class TutorialActivity extends Activity {
         ButterKnife.bind(this);
         Firebase.setAndroidContext(this);
 
-        fireData = new Firebase("https://uni-database.firebaseio.com/");
+        fireData = new Firebase(getResources().getString(R.string.database));
         if(fireData.getAuth().getUid() != null){
             uid = fireData.getAuth().getUid();
         }
@@ -194,8 +194,8 @@ public class TutorialActivity extends Activity {
     private void addToDatabase(String label){
 
         if(label.equals("class")){
-            Firebase addingDataRef = fireData.child("users").child(uid); //firebase reference
-            addingDataRef.setValue("classes",userClasses);
+            Firebase addingDataRef = fireData.child("users").child(uid).child("classes"); //firebase reference
+            addingDataRef.setValue(userClasses);
 
             Firebase addingToSchool = fireData.child("school").child(schoolId);
             Map<String, Object> addClass = new HashMap<String, Object>();
@@ -209,7 +209,7 @@ public class TutorialActivity extends Activity {
             addingInterestsLayout.setVisibility(View.VISIBLE);
         }
         else if(label.equals("interest")){
-            Firebase addingDataRef = fireData.child("users").child(uid); //firebase reference
+            Firebase addingDataRef = fireData.child("users").child(uid).child("interests"); //firebase reference
             addingDataRef.setValue("interests",userInterests);
 
 
@@ -219,7 +219,7 @@ public class TutorialActivity extends Activity {
         }
         else if(label.equals("group")){
 
-            Firebase addingDataRef = fireData.child("users").child(uid); //firebase reference
+            Firebase addingDataRef = fireData.child("users").child(uid).child("groups");; //firebase reference
             addingDataRef.setValue("isTutorialDone", null);
 
             finish();

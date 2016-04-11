@@ -10,14 +10,18 @@ import java.util.Map;
  * Created by WhatsEmo on 4/8/2016.
  */
 public class QueryManager {
-    private static Firebase fireData = new Firebase("https://uni-database.firebaseio.com/");
+    private static Firebase fireData;
+
+    public QueryManager(Firebase data) {
+        fireData = data;
+    }
 
     public void AddUserData(User user, String label, List<String> data){
         Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
 
         if (label.equals("class")){
 
-            addingDataRef.setValue("classes", data);
+            addingDataRef.child("classes").setValue("classes", data);
 
             Firebase addingToSchool = fireData.child("school").child(user.getSchoolId());
             Map<String, Object> addClass = new HashMap<String, Object>();
@@ -28,7 +32,7 @@ public class QueryManager {
 
         }
         else if(label.equals("interest")){
-            addingDataRef.setValue("interests",data);
+            addingDataRef.child("interests").setValue("interests",data);
 
             Firebase addingToSchoolInterests = fireData.child("school").child(user.getSchoolId()).child("interests");
             Map<String, Object> addUser = new HashMap<String, Object>();
@@ -39,7 +43,7 @@ public class QueryManager {
 
         }
         else if(label.equals("group")){
-            ;
+
         }
     }
 

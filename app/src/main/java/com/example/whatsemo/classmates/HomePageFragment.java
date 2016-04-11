@@ -69,7 +69,7 @@ public class HomePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_page_layout, container, false);
         ButterKnife.bind(this, view);
-        ref = new Firebase("https://uni-database.firebaseio.com/");
+        ref = new Firebase(getResources().getString(R.string.database));
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();

@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">ClassMates</string>
+    <string name="app_name">Uni</string>
+    <string name="database">https://uni-database.firebaseio.com/</string>
     <string name="login_message">Uni</string>
 
 

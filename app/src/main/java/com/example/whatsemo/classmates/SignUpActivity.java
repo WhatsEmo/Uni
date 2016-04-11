@@ -56,7 +56,7 @@ public class SignUpActivity extends Activity {
         thisActivity = this;
         Firebase.setAndroidContext(this);
         ButterKnife.bind(this);
-        ref = new Firebase("https://uni-database.firebaseio.com/");
+        ref = new Firebase(getResources().getString(R.string.database));
     }
 
 
