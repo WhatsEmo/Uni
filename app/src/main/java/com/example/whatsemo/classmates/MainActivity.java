@@ -12,6 +12,10 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Firebase.setAndroidContext(this);
-        firedata = new Firebase(getResources().getString(R.string.database));
+        firedata = new Firebase("https://uni-database.firebaseio.com/");
         firedata.addAuthStateListener(new Firebase.AuthStateListener(){
             @Override
             public void onAuthStateChanged(AuthData authData){

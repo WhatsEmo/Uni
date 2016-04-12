@@ -1,5 +1,8 @@
 package com.example.whatsemo.classmates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  *
  * Used to store User data
  */
-public class User {
+public class User implements Parcelable {
     private String uid;
     private String name;
     private String schoolId;
@@ -25,6 +28,40 @@ public class User {
         this.schoolId = school;
         this.email = email;
         this.interests = interests;
+    }
+
+    protected User(Parcel in) {
+        uid = in.readString();
+        name = in.readString();
+        schoolId = in.readString();
+        email = in.readString();
+        interests = in.createStringArrayList();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(uid);
+        dest.writeString(name);
+        dest.writeString(schoolId);
+        dest.writeString(email);
+        dest.writeStringList(interests);
     }
 
     public String getEmail() {
@@ -66,4 +103,5 @@ public class User {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
 }
