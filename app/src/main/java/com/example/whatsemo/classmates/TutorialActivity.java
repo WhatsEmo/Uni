@@ -210,7 +210,7 @@ public class TutorialActivity extends Activity {
         }
         else if(label.equals("interest")){
             Firebase addingDataRef = fireData.child("users").child(uid).child("interests"); //firebase reference
-            addingDataRef.setValue("interests",userInterests);
+            addingDataRef.setValue(userInterests);
 
 
             title.setText("Uni: Adding Groups");
@@ -218,9 +218,11 @@ public class TutorialActivity extends Activity {
             addingGroupsLayout.setVisibility(View.VISIBLE);
         }
         else if(label.equals("group")){
+            Firebase addingDataRef = fireData.child("users").child(uid).child("groups"); //firebase reference
+            addingDataRef.setValue(userGroups);
 
-            Firebase addingDataRef = fireData.child("users").child(uid).child("groups");; //firebase reference
-            addingDataRef.setValue("isTutorialDone", null);
+            Firebase makingNull = fireData.child("users").child(uid).child("isTutorialDone");; //firebase reference
+            makingNull.setValue(null);
 
             finish();
         }

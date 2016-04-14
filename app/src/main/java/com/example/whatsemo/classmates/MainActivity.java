@@ -12,10 +12,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -40,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-        ButterKnife.bind(this);
+        thisActivity = this;
+        setContentView(R.layout.loading_screen);
 
         Firebase.setAndroidContext(this);
         firedata = new Firebase("https://uni-database.firebaseio.com/");
@@ -50,14 +46,19 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(AuthData authData){
                 if(authData != null){
                     //user is logged on
+                    checkTutorialDone();
                 }else{
                     //user is not logged on
                     startLoginActivity();
+                    setView();
                 }
             }
         });
+    }
 
-
+    private void setView(){
+        setContentView(R.layout.main_activity);
+        ButterKnife.bind(this);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         String uid = firedata.getAuth().getUid();
 
-        firedata.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        firedata.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //if isTutorialDone exists then we start the tutorial
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent startTutoiralIntent = new Intent(thisActivity, TutorialActivity.class);
                     startActivity(startTutoiralIntent);
                 }
+                setView();
             }
 
             @Override
