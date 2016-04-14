@@ -12,14 +12,19 @@ import java.util.Map;
 public class QueryManager {
     private static Firebase fireData;
 
-    public QueryManager(Firebase data) {
+    public QueryManager(Firebase data, User appUser) {
         fireData = data;
     }
 
-    public void AddUserData(User user, String label, List<String> data){
+    /*
+        Function adds lists of either Courses/Interests/Groups into the database
+        Target locations: User, School->Interests/Classes/Groups
+        This is only used when the Tutorial Activity is called.
+     */
+    public void tutorialHelper(User user, String label, List<String> data){
         Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
 
-        if (label.equals("class")){
+        if (label.equals("classes")){
 
             addingDataRef.child("classes").setValue("classes", data);
 
@@ -31,8 +36,8 @@ public class QueryManager {
             }
 
         }
-        else if(label.equals("interest")){
-            addingDataRef.child("interests").setValue("interests",data);
+        else if(label.equals("interests")){
+            addingDataRef.child("interests").setValue("interests", data);
 
             Firebase addingToSchoolInterests = fireData.child("school").child(user.getSchoolId()).child("interests");
             Map<String, Object> addUser = new HashMap<String, Object>();
@@ -42,10 +47,71 @@ public class QueryManager {
             }
 
         }
-        else if(label.equals("group")){
+        else if(label.equals("groups")){
+            addingDataRef.child("groups").setValue("groups", data);
 
+            Firebase addingToSchoolInterests = fireData.child("school").child(user.getSchoolId()).child("groups");
+            Map<String, Object> addUser = new HashMap<String, Object>();
+            addUser.put(user.getUid(), user.getName());
+            for (String group: data){
+                addingToSchoolInterests.child(group).updateChildren(addUser);
+            }
         }
     }
+
+    /*
+        Function allows user to edit only these categories in DB:
+            email, name, school, isTutorialDone
+     */
+    public User modifyingUserStringData(User user, String label, String data){
+        Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
+
+        if(label.equals("email")){
+            user.setEmail(data);
+            addingDataRef.child(label).setValue(data);
+        }
+        else if(label.equals("name")){
+            user.setName(data);
+            addingDataRef.child(label).setValue(data);
+        }
+        else if(label.equals("school")){
+            user.setSchoolId(data);
+            addingDataRef.child(label).setValue(data);
+        }else if(label.equals("isTutorialDone")){
+            addingDataRef.child(label).setValue(data);
+        }else{
+            //show some sort of error
+        }
+        return user;
+    }
+
+/*
+    public User modifyingUserListData(User user, String label, List<String> data){
+        Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
+
+        if(label.equals("classes")){
+            addingDataRef.child("classes").setValue("classes", data);
+
+            Firebase addingToSchool = fireData.child("school").child(user.getSchoolId());
+            user.setEmail(data);
+            addingDataRef.child(label).setValue(data);
+        }
+        else if(label.equals("interests")){
+            user.setName(data);
+            addingDataRef.child(label).setValue(data);
+        }
+        else if(label.equals("groups")){
+            user.setSchoolId(data);
+            addingDataRef.child(label).setValue(data);
+        }else if(label.equals("isTutorialDone")){
+            addingDataRef.child(label).setValue(data);
+        }else{
+            //show some sort of error
+        }
+        return user;
+    }
+
+*/
 
 
 }
