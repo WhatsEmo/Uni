@@ -86,18 +86,6 @@ public class HomePageFragment extends Fragment {
                 }
             });
 
-            ref.child("Test").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Map<String, String> map = (Map<String, String>)dataSnapshot.getValue();
-                    System.out.print(map.values());
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-                    System.out.println(" The test read failed: " + firebaseError.getMessage());
-                }
-            });
         }
         else{
             System.out.println("Authentication failed");

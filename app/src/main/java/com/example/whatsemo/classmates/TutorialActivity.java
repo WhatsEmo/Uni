@@ -154,6 +154,7 @@ public class TutorialActivity extends Activity {
             }
         });
         classesListView.addView(newClass);
+        classId.setText("");
     }
 
     private void addInterests(){
@@ -171,6 +172,7 @@ public class TutorialActivity extends Activity {
             }
         });
         interestsListView.addView(newInterest);
+        classId.setText("");
     }
 
     private void addGroups(){
@@ -188,6 +190,7 @@ public class TutorialActivity extends Activity {
             }
         });
         groupsListView.addView(newGroup);
+        classId.setText("");
     }
 
 

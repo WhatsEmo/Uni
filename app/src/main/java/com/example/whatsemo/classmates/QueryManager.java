@@ -22,11 +22,11 @@ public class QueryManager {
         This is only used when the Tutorial Activity is called.
      */
     public void tutorialHelper(User user, String label, List<String> data){
-        Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
+        Firebase userDataRef = fireData.child("users").child(user.getUid()); //firebase reference
 
         if (label.equals("classes")){
 
-            addingDataRef.child("classes").setValue("classes", data);
+            userDataRef.child("classes").setValue("classes", data);
 
             Firebase addingToSchool = fireData.child("school").child(user.getSchoolId());
             Map<String, Object> addClass = new HashMap<String, Object>();
@@ -37,7 +37,7 @@ public class QueryManager {
 
         }
         else if(label.equals("interests")){
-            addingDataRef.child("interests").setValue("interests", data);
+            userDataRef.child("interests").setValue("interests", data);
 
             Firebase addingToSchoolInterests = fireData.child("school").child(user.getSchoolId()).child("interests");
             Map<String, Object> addUser = new HashMap<String, Object>();
@@ -48,7 +48,7 @@ public class QueryManager {
 
         }
         else if(label.equals("groups")){
-            addingDataRef.child("groups").setValue("groups", data);
+            userDataRef.child("groups").setValue("groups", data);
 
             Firebase addingToSchoolInterests = fireData.child("school").child(user.getSchoolId()).child("groups");
             Map<String, Object> addUser = new HashMap<String, Object>();
@@ -63,7 +63,7 @@ public class QueryManager {
         Function allows user to edit only these categories in DB:
             email, name, school, isTutorialDone
      */
-    public User modifyingUserStringData(User user, String label, String data){
+    public User modifyUserStringData(User user, String label, String data){
         Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
 
         if(label.equals("email")){
@@ -77,7 +77,8 @@ public class QueryManager {
         else if(label.equals("school")){
             user.setSchoolId(data);
             addingDataRef.child(label).setValue(data);
-        }else if(label.equals("isTutorialDone")){
+        }
+        else if(label.equals("isTutorialDone")){
             addingDataRef.child(label).setValue(data);
         }else{
             //show some sort of error

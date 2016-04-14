@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_classes_button_text"
-            android:id="@+id/classId" />
+            android:id="@+id/classId"
+            android:inputType="textPersonName" />
 
         <Button
             android:layout_width="wrap_content"
@@ -65,7 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_interests_button_text"
-            android:id="@+id/interest" />
+            android:id="@+id/interest"
+            android:inputType="textPersonName" />
 
         <Button
             android:layout_width="wrap_content"
@@ -103,7 +105,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_groups_button_text"
-            android:id="@+id/groupName" />
+            android:id="@+id/groupName"
+            android:inputType="textPersonName" />
 
         <Button
             android:layout_width="wrap_content"
