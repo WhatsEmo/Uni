@@ -66,7 +66,7 @@ public class SignUpActivity extends Activity {
         final String password = passwordBox.getText().toString();
         final String firstName = firstNameBox.getText().toString();
         final String lastName = lastNameBox.getText().toString();
-        final String schoolName = schoolNameBox.getText().toString();
+        final String schoolName = schoolNameBox.getText().toString().toLowerCase();
 
         if(email.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || schoolName.isEmpty()){
             // If anything is empty, do something here.

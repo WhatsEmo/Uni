@@ -200,7 +200,7 @@ public class TutorialActivity extends Activity {
             Firebase addingDataRef = fireData.child("users").child(uid).child("classes"); //firebase reference
             addingDataRef.setValue(userClasses);
 
-            Firebase addingToSchool = fireData.child("school").child(schoolId);
+            Firebase addingToSchool = fireData.child("schools").child(schoolId).child("classes");
             Map<String, Object> addClass = new HashMap<String, Object>();
             addClass.put(uid,userName);
             for(String classes : userClasses){
@@ -211,11 +211,18 @@ public class TutorialActivity extends Activity {
             addingClassesLayout.setVisibility(View.GONE);
             addingInterestsLayout.setVisibility(View.VISIBLE);
         }
-        else if(label.equals("interest")){
+        else if(label.equals("interest")) {
             Firebase addingDataRef = fireData.child("users").child(uid).child("interests"); //firebase reference
             addingDataRef.setValue(userInterests);
 
+            Firebase tutorialRef = fireData.child("users").child(uid).child("isTutorialDone");; //firebase reference
+            tutorialRef.setValue(null);
 
+
+            finish();
+        }
+
+        /*
             title.setText("Uni: Adding Groups");
             addingInterestsLayout.setVisibility(View.GONE);
             addingGroupsLayout.setVisibility(View.VISIBLE);
@@ -229,6 +236,7 @@ public class TutorialActivity extends Activity {
 
             finish();
         }
+        */
     }
 
 
