@@ -50,8 +50,8 @@ public class QueryManager {
         return user;
     }
 
-    public void updateRoster(User user, String label, List<String> data){
-        Firebase schoolRef = fireData.child("school").child(user.getSchoolId());
+    public static void updateRoster(User user, String label, List<String> data){
+        Firebase schoolRef = fireData.child("schools").child(user.getSchoolId());
         Map<String, Object> addUser = new HashMap<String, Object>();
         addUser.put(user.getUid(), user.getName());
         for(String key : data){
