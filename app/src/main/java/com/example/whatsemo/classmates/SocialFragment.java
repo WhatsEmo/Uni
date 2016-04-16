@@ -8,7 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.List;
+
+import butterknife.ButterKnife;
 
 
 /**
@@ -27,6 +34,9 @@ public class SocialFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Firebase ref;
+    private List<String> userInterests;
+    private List<String> userCourses;
+    private List<String> userGroups;
 
     public SocialFragment() {
         // Required empty public constructor
@@ -52,6 +62,34 @@ public class SocialFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.social_layout, container, false);
+        ButterKnife.bind(this, view);
+        ref = new Firebase(getResources().getString(R.string.database));
+
+
+        if (ref.getAuth() != null){
+            String uid = ref.getAuth().getUid();
+            ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    userCourses = snapshot.child("courses").getValue(List.class);
+                    userInterests = snapshot.child("interests").getValue(List.class);
+                    userGroups = snapshot.child("groups").getValue(List.class);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    System.out.println("The name read failed: " + firebaseError.getMessage());
+                }
+            });
+
+        }
+        else{
+            System.out.println("Authentication failed");
+        }
+
+
+
         return inflater.inflate(R.layout.social_layout, container, false);
     }
 
