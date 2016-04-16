@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Firebase firedata;
     private String uid;
     private User appUser;
-    private QueryManager qm;
+    private QueryManager QM;
     private AppCompatActivity thisActivity;
 
     @Override
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     createUserObject();
                     checkTutorialDone();
                     List<String> bogus = Arrays.asList("64523");
-                    QueryManager.updateRoster(appUser, "classes", bogus);
+                    QM.updateRoster(appUser, "classes", bogus);
                 }else{
                     //user is not logged on
                     startLoginActivity();
