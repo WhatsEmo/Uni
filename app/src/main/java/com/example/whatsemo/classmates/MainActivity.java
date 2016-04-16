@@ -12,6 +12,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -30,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Firebase firedata;
+    private String uid;
     private User appUser;
+    private QueryManager QM;
     private AppCompatActivity thisActivity;
 
     @Override
@@ -46,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(AuthData authData){
                 if(authData != null){
                     //user is logged on
+                    uid = firedata.getAuth().getUid();
+                    createUserObject();
                     checkTutorialDone();
+                    List<String> bogus = Arrays.asList("64523");
+                    QM.updateRoster(appUser, "classes", bogus);
                 }else{
                     //user is not logged on
                     startLoginActivity();
@@ -75,10 +84,30 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void createUserObject(){
+        firedata.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Populates a local object with user data obtained from the database
+                String email = dataSnapshot.child("email").getValue(String.class);
+                String name = dataSnapshot.child("name").getValue(String.class);
+                String schoolId = dataSnapshot.child("sid").getValue(String.class);
+
+                appUser.setUid(uid);
+                appUser.setEmail(email);
+                appUser.setName(name);
+                appUser.setSchoolId(schoolId);
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                //What happen?
+            }
+        });
+    }
+
     private void checkTutorialDone(){
-
-        String uid = firedata.getAuth().getUid();
-
         firedata.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
