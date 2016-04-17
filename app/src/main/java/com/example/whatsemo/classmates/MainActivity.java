@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.loading_screen);
 
         Firebase.setAndroidContext(this);
-        firedata = new Firebase("https://uni-database.firebaseio.com/");
+        firedata = new Firebase(getResources().getString(R.string.database));
 
         firedata.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
@@ -93,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 QM = new QueryManager(firedata);
                 // Populates a local object with user data obtained from the database
-                String email = dataSnapshot.child("email").getValue(String.class);
-                String name = dataSnapshot.child("name").getValue(String.class);
-                String schoolId = dataSnapshot.child("school").getValue(String.class);
+                String email = dataSnapshot.child(getResources().getString(R.string.user_email_key)).getValue(String.class);
+                String name = dataSnapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
+                String schoolId = dataSnapshot.child(getResources().getString(R.string.user_school_key)).getValue(String.class);
                 List<String> interests = new ArrayList<String>();
 
                 appUser = new User(uid, name, schoolId, email, interests);
 
                 List<String> bogus = Arrays.asList("64523");
-                QM.updateRoster(appUser, "classes", bogus);
+                QM.updateRoster(appUser, getResources().getString(R.string.school_courses_key), bogus);
 
             }
 
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 //if isTutorialDone exists then we start the tutorial
                 if (dataSnapshot.child("isTutorialDone").exists()) {
                     //start tutorial
-                    Intent startTutoiralIntent = new Intent(thisActivity, TutorialActivity.class);
-                    startActivity(startTutoiralIntent);
+                    Intent startTutorialIntent = new Intent(thisActivity, TutorialActivity.class);
+                    startActivity(startTutorialIntent);
                 }
                 setView();
             }
