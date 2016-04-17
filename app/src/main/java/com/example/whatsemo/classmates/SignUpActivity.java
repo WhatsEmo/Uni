@@ -64,11 +64,10 @@ public class SignUpActivity extends Activity {
 
         final String email = emailBox.getText().toString();
         final String password = passwordBox.getText().toString();
-        final String firstName = firstNameBox.getText().toString();
-        final String lastName = lastNameBox.getText().toString();
+        final String name = firstNameBox.getText().toString() + ' ' + lastNameBox.getText().toString();
         final String schoolName = schoolNameBox.getText().toString().toLowerCase();
 
-        if(email.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || schoolName.isEmpty()){
+        if(email.isEmpty() || password.isEmpty() || name.isEmpty() || schoolName.isEmpty()){
             // If anything is empty, do something here.
         }else { //Only happens if all the fields are filled in
             ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
@@ -80,18 +79,17 @@ public class SignUpActivity extends Activity {
                     ref.authWithPassword(email,password, new Firebase.AuthResultHandler(){
                         @Override
                         public void onAuthenticated(AuthData authData) {
-                            ref.child("users").setValue(userInfo.get("uid").toString()); // this creates a new user (with their uid) in database
+                            ref.child(getResources().getString(R.string.database_users_key)).setValue(userInfo.get(getResources().getString(R.string.user_id_key)).toString()); // this creates a new user (with their uid) in database
 
-                            Firebase newUserRef = ref.child("users").child(userInfo.get("uid").toString()); //firebase reference
+                            Firebase newUserRef = ref.child(getResources().getString(R.string.database_users_key)).child(userInfo.get(getResources().getString(R.string.user_id_key)).toString()); //firebase reference
 
 
                             //Begin setting First Name, Last Name, School Name, etc
-                            newUserRef.child("firstName").setValue(firstName);
-                            newUserRef.child("lastName").setValue(lastName);
-                            newUserRef.child("school").setValue(schoolName);
-                            newUserRef.child("email").setValue(email);
-                            newUserRef.child("interests").setValue(null);
-                            newUserRef.child("classes").setValue(null);
+                            newUserRef.child(getResources().getString(R.string.user_name_key)).setValue(name);
+                            newUserRef.child(getResources().getString(R.string.user_school_key)).setValue(schoolName);
+                            newUserRef.child(getResources().getString(R.string.user_email_key)).setValue(email);
+                            newUserRef.child(getResources().getString(R.string.user_interests_key)).setValue(null);
+                            newUserRef.child(getResources().getString(R.string.user_courses_key)).setValue(null);
                             newUserRef.child("isTutorialDone").setValue(false);
 
                             //Ends this Acitivty -> LoginActivity -> MainActivity

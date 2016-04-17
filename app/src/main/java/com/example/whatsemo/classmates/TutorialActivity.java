@@ -106,7 +106,7 @@ public class TutorialActivity extends Activity {
                 public void onDataChange(DataSnapshot snapshot) {
                     //Should always return a string.
                     schoolId = (String) snapshot.child("school").getValue();
-                    userName = snapshot.child("firstName").getValue() + " " + snapshot.child("lastName").getValue();
+                    userName = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
                 }
 
                 @Override
