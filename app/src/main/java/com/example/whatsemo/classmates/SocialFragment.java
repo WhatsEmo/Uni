@@ -18,6 +18,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,9 +60,12 @@ public class SocialFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Firebase ref;
-    private List<String> userFriends = new ArrayList<String>();
-    private List<String> userCourses = new ArrayList<String>();
-    private List<String> userGroups = new ArrayList<String>();
+    private List<String> userFriendIds = new ArrayList<String>();
+    private List<String> userFriendNames = new ArrayList<String>();
+    private List<String> userCourseIds = new ArrayList<String>();
+    private List<String> userCourseNames = new ArrayList<String>();
+    private List<String> userGroupIds = new ArrayList<String>();
+    private List<String> userGroupNames = new ArrayList<String>();
 
     public SocialFragment() {
         // Required empty public constructor
@@ -96,9 +100,18 @@ public class SocialFragment extends Fragment {
             ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    //userCourses = (List<String>) snapshot.child("courses").getValue(HashMap.class).keySet();
-                    //userFriends.addAll(snapshot.child("friends").getValue(HashMap.class).values());
-                    //userGroups = (List<String>) snapshot.child("groups").getValue(HashMap.class).keySet();
+                    // Retrieves (key, value) data from friebase and stores them in proportional Java Lists
+                    Map<String, String> map = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
+                    userCourseIds = (List<String>) map.keySet();
+                    userCourseNames = (List<String>) map.values();
+
+                    map = (Map<String, String>) snapshot.child("friends").getValue();
+                    userFriendIds = (List<String>) map.keySet();
+                    userFriendNames = (List<String>) map.values();
+
+                    map = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
+                    userGroupIds = (List<String>) map.keySet();
+                    userGroupNames = (List<String>) map.values();
                     setVisibility();
                 }
 
@@ -152,25 +165,25 @@ public class SocialFragment extends Fragment {
     }
 
     private void setVisibility(){
-        if(userCourses == null || userCourses.isEmpty()){
+        if(userCourseNames == null || userCourseNames.isEmpty()){
             socialCoursesLayout.setVisibility(View.GONE);
         }else{
             socialCoursesLayout.setVisibility(View.VISIBLE);
-            populate(userCourses, coursesListView, getResources().getString(R.string.user_courses_key));
+            populate(userCourseNames, coursesListView, getResources().getString(R.string.user_courses_key));
         }
 
-        if(userFriends == null || userFriends.isEmpty()){
+        if(userFriendNames == null || userFriendNames.isEmpty()){
             socialFriendsLayout.setVisibility(View.GONE);
         }else{
             socialFriendsLayout.setVisibility(View.VISIBLE);
-            populate(userFriends, friendListView, "friends");
+            populate(userFriendNames, friendListView, "friends");
         }
 
-        if(userGroups == null || userGroups.isEmpty()){
+        if(userFriendNames == null || userFriendNames.isEmpty()){
             socialGroupsLayout.setVisibility(View.GONE);
         }else{
             socialGroupsLayout.setVisibility(View.VISIBLE);
-            populate(userGroups, groupsListView, getResources().getString(R.string.user_groups_key));
+            populate(userFriendNames, groupsListView, getResources().getString(R.string.user_groups_key));
         }
     }
 
