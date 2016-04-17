@@ -44,8 +44,8 @@ public class SocialFragment extends Fragment {
     @Bind(R.id.coursesListView)
     ListView coursesListView;
 
-    @Bind(R.id.friendListTitle)
-    ListView friendListTitle;
+    @Bind(R.id.friendListView)
+    ListView friendListView;
 
     @Bind(R.id.groupsListView)
     ListView groupsListView;
@@ -96,7 +96,7 @@ public class SocialFragment extends Fragment {
             ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    userCourses.addAll(snapshot.child("courses").getValue(HashMap.class).values());
+                    userCourses.addAll(snapshot.child("courses").getValue());
                     //userFriends.addAll(snapshot.child("friends").getValue(HashMap.class).values());
                     userGroups.addAll(snapshot.child("groups").getValue(HashMap.class).values());
                     setVisibility();
