@@ -101,11 +101,11 @@ public class TutorialActivity extends Activity {
 
         //Get school ID
         if(uid != null) {
-            fireData.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            fireData.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     //Should always return a string.
-                    schoolId = (String) snapshot.child("school").getValue();
+                    schoolId = (String) snapshot.child(getResources().getString(R.string.user_school_key)).getValue();
                     userName = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
                 }
 
@@ -197,14 +197,14 @@ public class TutorialActivity extends Activity {
     private void addToDatabase(String label){
 
         if(label.equals("class")){
-            Firebase addingDataRef = fireData.child("users").child(uid).child("classes"); //firebase reference
+            Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_courses_key)); //firebase reference
             addingDataRef.setValue(userClasses);
 
-            Firebase addingToSchool = fireData.child("schools").child(schoolId).child("classes");
+            Firebase addingToSchool = fireData.child(getResources().getString(R.string.database_schools_key)).child(schoolId).child(getResources().getString(R.string.user_courses_key));
             Map<String, Object> addClass = new HashMap<String, Object>();
             addClass.put(uid,userName);
             for(String classes : userClasses){
-                addingToSchool.child(classes).child("enrolled").updateChildren(addClass);
+                addingToSchool.child(classes).child(getResources().getString(R.string.school_courses_enrolled_key)).updateChildren(addClass);
             }
 
             title.setText("Uni: Adding Interests");
@@ -212,10 +212,10 @@ public class TutorialActivity extends Activity {
             addingInterestsLayout.setVisibility(View.VISIBLE);
         }
         else if(label.equals("interest")) {
-            Firebase addingDataRef = fireData.child("users").child(uid).child("interests"); //firebase reference
+            Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_interests_key)); //firebase reference
             addingDataRef.setValue(userInterests);
 
-            Firebase tutorialRef = fireData.child("users").child(uid).child("isTutorialDone");; //firebase reference
+            Firebase tutorialRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child("isTutorialDone");; //firebase reference
             tutorialRef.setValue(null);
 
 
@@ -228,10 +228,10 @@ public class TutorialActivity extends Activity {
             addingGroupsLayout.setVisibility(View.VISIBLE);
         }
         else if(label.equals("group")){
-            Firebase addingDataRef = fireData.child("users").child(uid).child("groups"); //firebase reference
+            Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child("groups"); //firebase reference
             addingDataRef.setValue(userGroups);
 
-            Firebase makingNull = fireData.child("users").child(uid).child("isTutorialDone");; //firebase reference
+            Firebase makingNull = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child("isTutorialDone");; //firebase reference
             makingNull.setValue(null);
 
             finish();

@@ -10,6 +10,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,9 +24,6 @@ public class SignUpActivity extends Activity {
 
     @Bind(R.id.lastNameField)
     public EditText lastNameBox;
-
-    @Bind(R.id.schoolNameField)
-    public EditText schoolNameBox;
 
     @Bind(R.id.singUpEmailField)
     public EditText emailBox;
@@ -65,11 +64,26 @@ public class SignUpActivity extends Activity {
         final String email = emailBox.getText().toString();
         final String password = passwordBox.getText().toString();
         final String name = firstNameBox.getText().toString() + ' ' + lastNameBox.getText().toString();
-        final String schoolName = schoolNameBox.getText().toString().toLowerCase();
+        final String schoolId;
 
-        if(email.isEmpty() || password.isEmpty() || name.isEmpty() || schoolName.isEmpty()){
+
+
+        if(email.isEmpty() || password.isEmpty() || name.isEmpty()){
             // If anything is empty, do something here.
         }else { //Only happens if all the fields are filled in
+
+            //Regular expression that matches @schoolID.edu or @something.schoolID.edu
+            String pattern = "([@\\.])\\w+(\\.)edu";
+            Pattern reg = Pattern.compile(pattern);
+            Matcher m = reg.matcher(email);
+            if(m.find()){
+                schoolId = m.group(0).substring(1, m.group(0).length()-4);
+            }else{
+                emailBox.setHint("Enter .edu email!");
+                emailBox.setText("");
+                return;
+            }
+
             ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                 @Override
                 public void onSuccess(Map<String, Object> result) {
@@ -86,7 +100,7 @@ public class SignUpActivity extends Activity {
 
                             //Begin setting First Name, Last Name, School Name, etc
                             newUserRef.child(getResources().getString(R.string.user_name_key)).setValue(name);
-                            newUserRef.child(getResources().getString(R.string.user_school_key)).setValue(schoolName);
+                            newUserRef.child(getResources().getString(R.string.user_school_key)).setValue(schoolId);
                             newUserRef.child(getResources().getString(R.string.user_email_key)).setValue(email);
                             newUserRef.child(getResources().getString(R.string.user_interests_key)).setValue(null);
                             newUserRef.child(getResources().getString(R.string.user_courses_key)).setValue(null);

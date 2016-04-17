@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -15,7 +16,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -58,9 +59,9 @@ public class SocialFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Firebase ref;
-    private List<String> userFriends;
-    private List<String> userCourses;
-    private List<String> userGroups;
+    private List<String> userFriends = new ArrayList<String>();
+    private List<String> userCourses = new ArrayList<String>();
+    private List<String> userGroups = new ArrayList<String>();
 
     public SocialFragment() {
         // Required empty public constructor
@@ -90,15 +91,14 @@ public class SocialFragment extends Fragment {
         ButterKnife.bind(this, view);
         ref = new Firebase(getResources().getString(R.string.database));
 
-
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
-            ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    userCourses.addAll(snapshot.child("courses").getValue());
+                    //userCourses = (List<String>) snapshot.child("courses").getValue(HashMap.class).keySet();
                     //userFriends.addAll(snapshot.child("friends").getValue(HashMap.class).values());
-                    userGroups.addAll(snapshot.child("groups").getValue(HashMap.class).values());
+                    //userGroups = (List<String>) snapshot.child("groups").getValue(HashMap.class).keySet();
                     setVisibility();
                 }
 
@@ -152,22 +152,41 @@ public class SocialFragment extends Fragment {
     }
 
     private void setVisibility(){
-        if(userCourses.isEmpty()){
+        if(userCourses == null || userCourses.isEmpty()){
             socialCoursesLayout.setVisibility(View.GONE);
         }else{
             socialCoursesLayout.setVisibility(View.VISIBLE);
+            populate(userCourses, coursesListView, getResources().getString(R.string.user_courses_key));
         }
 
-        if(userFriends.isEmpty()){
+        if(userFriends == null || userFriends.isEmpty()){
             socialFriendsLayout.setVisibility(View.GONE);
         }else{
             socialFriendsLayout.setVisibility(View.VISIBLE);
+            populate(userFriends, friendListView, "friends");
         }
 
-        if(userGroups.isEmpty()){
+        if(userGroups == null || userGroups.isEmpty()){
             socialGroupsLayout.setVisibility(View.GONE);
         }else{
             socialGroupsLayout.setVisibility(View.VISIBLE);
+            populate(userGroups, groupsListView, getResources().getString(R.string.user_groups_key));
+        }
+    }
+
+    private void populate(List<String> list, ListView listView, String label){
+        //Helps populate all ListViews
+        for(String courses : list){
+            Button bttn = new Button(this.getContext());
+            bttn.setText(courses);
+            bttn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Add stuff later
+                }
+            });
+
+            listView.addView(bttn);
         }
     }
 }

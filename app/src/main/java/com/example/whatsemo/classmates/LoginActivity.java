@@ -116,7 +116,7 @@ public class LoginActivity extends Activity {
 
         String uid = ref.getAuth().getUid();
 
-        ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //if isTutorialDone exists then we start the tutorial

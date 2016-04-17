@@ -22,7 +22,7 @@ public class QueryManager {
         This is only used when the Tutorial Activity is called.
      */
     public void setListData(User user, String label, List<String> data){
-        Firebase userDataRef = fireData.child("users").child(user.getUid()); //firebase reference
+        Firebase userDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(user.getUid()); //firebase reference
         userDataRef.child(label).setValue(label, data);
     }
 
@@ -31,7 +31,7 @@ public class QueryManager {
             email, name, school, isTutorialDone
      */
     public User setUserStringData(User user, String label, String data){
-        Firebase userDataRef = fireData.child("users").child(user.getUid()); //firebase reference
+        Firebase userDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(user.getUid()); //firebase reference
 
         if(label.equals("email")){
             user.setEmail(data);
@@ -51,7 +51,7 @@ public class QueryManager {
     }
 
     public void updateRoster(User user, String label, List<String> data){
-        Firebase schoolRef = fireData.child("schools").child(user.getSchoolId());
+        Firebase schoolRef = fireData.child(getResources().getString(R.string.database_schools_key)).child(user.getSchoolId());
         Map<String, Object> addUser = new HashMap<String, Object>();
         addUser.put(user.getUid(), user.getName());
         for(String key : data){
@@ -61,10 +61,10 @@ public class QueryManager {
 
 /*
     public User modifyingUserListData(User user, String label, List<String> data){
-        Firebase addingDataRef = fireData.child("users").child(user.getUid()); //firebase reference
+        Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(user.getUid()); //firebase reference
 
-        if(label.equals("classes")){
-            addingDataRef.child("classes").setValue("classes", data);
+        if(label.equals(getResources().getString(R.string.user_courses_key))){
+            addingDataRef.child(getResources().getString(R.string.user_courses_key)).setValue(getResources().getString(R.string.user_courses_key), data);
 
             Firebase addingToSchool = fireData.child("school").child(user.getSchoolId());
             user.setEmail(data);

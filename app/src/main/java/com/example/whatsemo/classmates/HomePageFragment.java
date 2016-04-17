@@ -14,9 +14,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -73,7 +70,7 @@ public class HomePageFragment extends Fragment {
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
-            ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     String name = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);

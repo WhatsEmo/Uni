@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUserObject(){
-        firedata.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        firedata.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 QM = new QueryManager(firedata);
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkTutorialDone(){
-        firedata.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        firedata.child(getResources().getString(R.string.database_users_key)).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //if isTutorialDone exists then we start the tutorial

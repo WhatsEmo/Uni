@@ -49,22 +49,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="320dp"
-        android:ems="10"
-        android:id="@+id/schoolNameField"
-        android:layout_below="@+id/lastNameField"
-        android:layout_alignRight="@+id/lastNameField"
-        android:layout_alignEnd="@+id/lastNameField"
-        android:hint="@string/school_name_hint"
-        android:inputType="textCapSentences|textEmailSubject" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="320dp"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/singUpEmailField"
-        android:layout_below="@+id/schoolNameField"
+        android:layout_below="@+id/lastNameField"
         android:layout_alignRight="@+id/signUpPasswordField"
         android:layout_alignEnd="@+id/signUpPasswordField"
         android:hint="@string/email_login_hint" />

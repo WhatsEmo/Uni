@@ -4,7 +4,7 @@
     
     <string name="login_button_text">Log in</string>
     <string name="sign_up_button_text">Sign up</string>
-    <string name="email_login_hint">Email</string>
+    <string name="email_login_hint">.edu Email</string>
     <string name="password_login_hint">Password</string>
 
     <string name="first_name_hint">First Name</string>
@@ -31,6 +31,7 @@
     <string name="database_users_key">users</string>
     <string name="database_schools_key">schools</string>
     <string name="school_courses_key">courses</string>
+    <string name="school_courses_enrolled_key">enrolled</string>
     <string name="school_interests_key">interests</string>
     <string name="student_roster_key">roster</string>
     <string name="user_email_key">email</string>
@@ -39,6 +40,7 @@
     <string name="user_school_key">sid</string>
     <string name="user_courses_key">courses</string>
     <string name="user_interests_key">interests</string>
+    <string name="user_groups_key">groups</string>
 
-    
+
 </resources>

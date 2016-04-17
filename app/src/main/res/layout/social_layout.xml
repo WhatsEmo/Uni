@@ -29,7 +29,7 @@
             android:layout_below="@+id/courseListTitle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#f2564e35" />
+            android:background="#f2564e35" ></ListView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/groupsListView"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/groupListTitle" />
+            android:layout_below="@+id/groupListTitle" ></ListView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -85,6 +85,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/friendListTitle" />
+            android:layout_below="@+id/friendListTitle" ></ListView>
     </RelativeLayout>
 </RelativeLayout>
