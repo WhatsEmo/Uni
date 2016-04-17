@@ -44,27 +44,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         thisActivity = this;
         setContentView(R.layout.loading_screen);
-        QM = new QueryManager(firedata);
 
         Firebase.setAndroidContext(this);
         firedata = new Firebase("https://uni-database.firebaseio.com/");
-        firedata.addAuthStateListener(new Firebase.AuthStateListener(){
+
+        firedata.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(AuthData authData){
-                if(authData != null){
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
                     //user is logged on
                     uid = firedata.getAuth().getUid();
+                    checkTutorialDone();
                     createUserObject();
-                    //checkTutorialDone();
-                    List<String> bogus = Arrays.asList("64523");
-                    QM.updateRoster(appUser, "classes", bogus);
-                }else{
+
+                } else {
                     //user is not logged on
                     startLoginActivity();
                     setView();
                 }
             }
         });
+
+
     }
 
     private void setView(){
@@ -87,18 +88,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUserObject(){
-        firedata.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        firedata.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                QM = new QueryManager(firedata);
                 // Populates a local object with user data obtained from the database
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String name = dataSnapshot.child("name").getValue(String.class);
-                String schoolId = dataSnapshot.child("sid").getValue(String.class);
+                String schoolId = dataSnapshot.child("school").getValue(String.class);
                 List<String> interests = new ArrayList<String>();
 
                 appUser = new User(uid, name, schoolId, email, interests);
 
-                System.out.println("hlep:" + appUser.getSchoolId());
+                List<String> bogus = Arrays.asList("64523");
+                QM.updateRoster(appUser, "classes", bogus);
 
             }
 
