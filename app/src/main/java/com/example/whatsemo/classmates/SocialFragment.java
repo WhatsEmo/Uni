@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -15,6 +17,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
@@ -27,6 +30,26 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
+
+    @Bind(R.id.SocialCoursesLayout)
+    RelativeLayout socialCoursesLayout;
+
+    @Bind(R.id.SocialFriendsLayout)
+    RelativeLayout socialFriendsLayout;
+
+    @Bind(R.id.SocialGroupsLayout)
+    RelativeLayout socialGroupsLayout;
+
+    @Bind(R.id.coursesListView)
+    ListView coursesListView;
+
+    @Bind(R.id.interestsListView)
+    ListView interestsListView;
+
+    @Bind(R.id.groupsListView)
+    ListView groupsListView;
+
+
     private static final String ARG_PAGE = "param1";
 
     private int mPage;
@@ -34,7 +57,7 @@ public class SocialFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Firebase ref;
-    private List<String> userInterests;
+    private List<String> userFriends;
     private List<String> userCourses;
     private List<String> userGroups;
 
@@ -73,8 +96,9 @@ public class SocialFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     userCourses = snapshot.child("courses").getValue(List.class);
-                    userInterests = snapshot.child("interests").getValue(List.class);
+                    //userFriends = snapshot.child("friends").getValue(List.class);
                     userGroups = snapshot.child("groups").getValue(List.class);
+                    setVisibility();
                 }
 
                 @Override
@@ -115,5 +139,25 @@ public class SocialFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void setVisibility(){
+        if(userCourses.isEmpty()){
+            socialCoursesLayout.setVisibility(View.GONE);
+        }else{
+            socialCoursesLayout.setVisibility(View.VISIBLE);
+        }
+
+        if(userFriends.isEmpty()){
+            socialFriendsLayout.setVisibility(View.GONE);
+        }else{
+            socialFriendsLayout.setVisibility(View.VISIBLE);
+        }
+
+        if(userGroups.isEmpty()){
+            socialGroupsLayout.setVisibility(View.GONE);
+        }else{
+            socialGroupsLayout.setVisibility(View.VISIBLE);
+        }
     }
 }
