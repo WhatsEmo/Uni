@@ -44,14 +44,14 @@ public class SocialFragment extends Fragment {
     @Bind(R.id.coursesListView)
     ListView coursesListView;
 
-    @Bind(R.id.interestsListView)
-    ListView interestsListView;
+    @Bind(R.id.friendListTitle)
+    ListView friendListTitle;
 
     @Bind(R.id.groupsListView)
     ListView groupsListView;
 
 
-    private static final String ARG_PAGE = "param1";
+    private static final String ARG_PAGE = "param2";
 
     private int mPage;
 
@@ -115,7 +115,7 @@ public class SocialFragment extends Fragment {
 
 
 
-        return inflater.inflate(R.layout.social_layout, container, false);
+        return view;
     }
 
     @Override
@@ -127,8 +127,7 @@ public class SocialFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
-        */
+        }*/
     }
 
     @Override
@@ -137,6 +136,16 @@ public class SocialFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

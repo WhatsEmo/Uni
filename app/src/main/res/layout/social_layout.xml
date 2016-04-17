@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_below="@+id/SocialClassesLayout"
+        android:layout_below="@+id/SocialCoursesLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/SocialGroupsLayout"
@@ -55,7 +55,7 @@
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/groupListView"
+            android:id="@+id/groupsListView"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/groupListTitle" />
     </RelativeLayout>
