@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Uni</string>
-    <string name="database">https://uni-database.firebaseio.com/</string>
     <string name="login_message">Uni</string>
-
-
+    
     <string name="login_button_text">Log in</string>
     <string name="sign_up_button_text">Sign up</string>
     <string name="email_login_hint">Email</string>
@@ -27,5 +25,20 @@
     <string name="adding_groups_button_text">Add Group</string>
     <string name="adding_schools_button_text">Add School</string>
     <string name="done_adding">Done</string>
+    
+    <!-- Database Resources -->
+    <string name="database">https://uni-database.firebaseio.com/</string>
+    <string name="database_users_key">users</string>
+    <string name="database_schools_key">schools</string>
+    <string name="school_courses_key">courses</string>
+    <string name="school_interests_key">interests</string>
+    <string name="student_roster_key">roster</string>
+    <string name="user_email_key">email</string>
+    <string name="user_name_key">name</string>
+    <string name="user_id_key">uid</string>
+    <string name="user_school_key">sid</string>
+    <string name="user_courses_key">courses</string>
+    <string name="user_interests_key">interests</string>
 
+    
 </resources>

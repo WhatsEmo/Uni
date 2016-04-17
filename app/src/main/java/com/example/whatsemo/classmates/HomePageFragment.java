@@ -76,7 +76,7 @@ public class HomePageFragment extends Fragment {
             ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    String name = snapshot.child("firstName").getValue() + " " + snapshot.child("lastName").getValue();
+                    String name = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
                     userName.setText(name);
                 }
 
