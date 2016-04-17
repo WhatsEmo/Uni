@@ -12,6 +12,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         thisActivity = this;
         setContentView(R.layout.loading_screen);
+        QM = new QueryManager(firedata);
 
         Firebase.setAndroidContext(this);
         firedata = new Firebase("https://uni-database.firebaseio.com/");
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     //user is logged on
                     uid = firedata.getAuth().getUid();
                     createUserObject();
-                    checkTutorialDone();
+                    //checkTutorialDone();
                     List<String> bogus = Arrays.asList("64523");
                     QM.updateRoster(appUser, "classes", bogus);
                 }else{
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createUserObject(){
+    private void createUserObject(){
         firedata.child("users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -92,17 +94,17 @@ public class MainActivity extends AppCompatActivity {
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String schoolId = dataSnapshot.child("sid").getValue(String.class);
+                List<String> interests = new ArrayList<String>();
 
-                appUser.setUid(uid);
-                appUser.setEmail(email);
-                appUser.setName(name);
-                appUser.setSchoolId(schoolId);
+                appUser = new User(uid, name, schoolId, email, interests);
+
+                System.out.println("hlep:" + appUser.getSchoolId());
 
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                //What happen?
+                System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
     }
