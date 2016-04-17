@@ -15,6 +15,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -95,9 +96,9 @@ public class SocialFragment extends Fragment {
             ref.child("users").child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    userCourses = snapshot.child("courses").getValue(List.class);
-                    //userFriends = snapshot.child("friends").getValue(List.class);
-                    userGroups = snapshot.child("groups").getValue(List.class);
+                    userCourses.addAll(snapshot.child("courses").getValue(HashMap.class).values());
+                    //userFriends.addAll(snapshot.child("friends").getValue(HashMap.class).values());
+                    userGroups.addAll(snapshot.child("groups").getValue(HashMap.class).values());
                     setVisibility();
                 }
 
