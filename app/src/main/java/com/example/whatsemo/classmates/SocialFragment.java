@@ -126,8 +126,6 @@ public class SocialFragment extends Fragment {
             System.out.println("Authentication failed");
         }
 
-
-
         return view;
     }
 

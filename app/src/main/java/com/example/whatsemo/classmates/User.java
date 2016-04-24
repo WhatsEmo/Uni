@@ -13,7 +13,7 @@ import java.util.List;
 public class User implements Parcelable {
     private String uid;
     private String name;
-    private String schoolId;
+    private String sid;
     private String email;
     private List<String> interests;
 
@@ -25,15 +25,24 @@ public class User implements Parcelable {
                 ){
         this.uid = uid;
         this.name = name;
-        this.schoolId = school;
+        this.sid = school;
         this.email = email;
         this.interests = interests;
+    }
+
+    public User(String name,
+                String email,
+                String school){
+        this.name = name;
+        this.sid = school;
+        this.email = email;
+
     }
 
     protected User(Parcel in) {
         uid = in.readString();
         name = in.readString();
-        schoolId = in.readString();
+        sid = in.readString();
         email = in.readString();
         interests = in.createStringArrayList();
     }
@@ -59,7 +68,7 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(uid);
         dest.writeString(name);
-        dest.writeString(schoolId);
+        dest.writeString(sid);
         dest.writeString(email);
         dest.writeStringList(interests);
     }
@@ -80,12 +89,12 @@ public class User implements Parcelable {
         this.interests = interests;
     }
 
-    public String getSchoolId() {
-        return schoolId;
+    public String getSid() {
+        return sid;
     }
 
-    public void setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
+    public void setSid(String schoolId) {
+        this.sid = schoolId;
     }
 
     public String getName() {

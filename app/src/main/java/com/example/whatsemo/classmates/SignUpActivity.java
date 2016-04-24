@@ -96,14 +96,17 @@ public class SignUpActivity extends Activity {
                             ref.child(getResources().getString(R.string.database_users_key)).setValue(userInfo.get(getResources().getString(R.string.user_id_key)).toString()); // this creates a new user (with their uid) in database
 
                             Firebase newUserRef = ref.child(getResources().getString(R.string.database_users_key)).child(userInfo.get(getResources().getString(R.string.user_id_key)).toString()); //firebase reference
-
+                            User user = new User(name, email, schoolId);
 
                             //Begin setting First Name, Last Name, School Name, etc
+                            /*
                             newUserRef.child(getResources().getString(R.string.user_name_key)).setValue(name);
                             newUserRef.child(getResources().getString(R.string.user_school_key)).setValue(schoolId);
                             newUserRef.child(getResources().getString(R.string.user_email_key)).setValue(email);
                             newUserRef.child(getResources().getString(R.string.user_interests_key)).setValue(null);
                             newUserRef.child(getResources().getString(R.string.user_courses_key)).setValue(null);
+                            */
+                            newUserRef.setValue(user);
                             newUserRef.child("isTutorialDone").setValue(false);
 
                             //Ends this Acitivty -> LoginActivity -> MainActivity

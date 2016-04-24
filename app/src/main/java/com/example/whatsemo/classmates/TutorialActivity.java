@@ -105,7 +105,7 @@ public class TutorialActivity extends Activity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     //Should always return a string.
-                    schoolId = (String) snapshot.child(getResources().getString(R.string.user_school_key)).getValue();
+                    schoolId = snapshot.child(getResources().getString(R.string.user_school_key)).getValue(String.class);
                     userName = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
                 }
 
@@ -145,7 +145,6 @@ public class TutorialActivity extends Activity {
 
         userClasses.add(classId.getText().toString());
 
-
         newClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +171,7 @@ public class TutorialActivity extends Activity {
             }
         });
         interestsListView.addView(newInterest);
-        classId.setText("");
+        interest.setText("");
     }
 
     private void addGroups(){
@@ -190,36 +189,39 @@ public class TutorialActivity extends Activity {
             }
         });
         groupsListView.addView(newGroup);
-        classId.setText("");
+        groupName.setText("");
     }
 
 
     private void addToDatabase(String label){
 
         if(label.equals("class")){
-            Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_courses_key)); //firebase reference
-            addingDataRef.setValue(userClasses);
+            if(!userClasses.isEmpty()) {
+                Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_courses_key)); //firebase reference
+                addingDataRef.setValue(userClasses);
 
-            Firebase addingToSchool = fireData.child(getResources().getString(R.string.database_schools_key)).child(schoolId).child(getResources().getString(R.string.user_courses_key));
-            Map<String, Object> addClass = new HashMap<String, Object>();
-            addClass.put(uid,userName);
-            for(String classes : userClasses){
-                addingToSchool.child(classes).child(getResources().getString(R.string.school_courses_enrolled_key)).updateChildren(addClass);
+                Firebase addingToSchool = fireData.child(getResources().getString(R.string.database_schools_key)).child(schoolId).child(getResources().getString(R.string.user_courses_key));
+                Map<String, Object> addClass = new HashMap<String, Object>();
+                addClass.put(uid, userName);
+                for (String classes : userClasses) {
+                    addingToSchool.child(classes).child(getResources().getString(R.string.school_courses_enrolled_key)).updateChildren(addClass);
+                }
+
+                title.setText("Uni: Adding Interests");
+                addingClassesLayout.setVisibility(View.GONE);
+                addingInterestsLayout.setVisibility(View.VISIBLE);
             }
-
-            title.setText("Uni: Adding Interests");
-            addingClassesLayout.setVisibility(View.GONE);
-            addingInterestsLayout.setVisibility(View.VISIBLE);
         }
         else if(label.equals("interest")) {
-            Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_interests_key)); //firebase reference
-            addingDataRef.setValue(userInterests);
+            if(!userInterests.isEmpty()) {
+                Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_interests_key)); //firebase reference
+                addingDataRef.setValue(userInterests);
 
-            Firebase tutorialRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child("isTutorialDone");; //firebase reference
-            tutorialRef.setValue(null);
+                Firebase tutorialRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child("isTutorialDone");; //firebase reference
+                tutorialRef.setValue(null);
 
-
-            finish();
+                finish();
+            }
         }
 
         /*
@@ -238,7 +240,6 @@ public class TutorialActivity extends Activity {
         }
         */
     }
-
 
     @Override
     public void onBackPressed(){

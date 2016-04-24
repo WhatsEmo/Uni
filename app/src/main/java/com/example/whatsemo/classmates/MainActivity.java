@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     uid = firedata.getAuth().getUid();
                     checkTutorialDone();
                     createUserObject();
+                    setView();
 
                 } else {
                     //user is not logged on
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private void setView(){
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
+
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new BaseFragmentAdapter(getSupportFragmentManager(),
@@ -100,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
                 appUser = new User(uid, name, schoolId, email, interests);
 
+                System.out.println(appUser.getName());
+
                 List<String> bogus = Arrays.asList("64523");
                 QM.updateRoster(appUser, getResources().getString(R.string.school_courses_key), bogus);
 
@@ -122,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent startTutorialIntent = new Intent(thisActivity, TutorialActivity.class);
                     startActivity(startTutorialIntent);
                 }
-                setView();
             }
 
             @Override

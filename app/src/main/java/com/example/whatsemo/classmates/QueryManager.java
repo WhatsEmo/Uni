@@ -40,7 +40,7 @@ public class QueryManager {
             user.setName(data);
         }
         else if(label.equals("school")){
-            user.setSchoolId(data);
+            user.setSid(data);
         }
         else if(!(label.equals("isTutorialDone"))){
             //show some sort of error
@@ -51,7 +51,7 @@ public class QueryManager {
     }
 
     public void updateRoster(User user, String label, List<String> data){
-        Firebase schoolRef = fireData.child("schools").child(user.getSchoolId());
+        Firebase schoolRef = fireData.child("schools").child(user.getSid());
         Map<String, Object> addUser = new HashMap<String, Object>();
         addUser.put(user.getUid(), user.getName());
         for(String key : data){
