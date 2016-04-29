@@ -13,15 +13,11 @@ import java.util.Map;
  * Created by WhatsEmo on 4/8/2016.
  */
 public class QueryManager {
-    private static Firebase fireData;
+    private static Firebase fireData = new Firebase("https://uni-database.firebaseio.com/");
 
     public Map <String, String> courseMap;
 
     public List<String> courseList;
-
-    public QueryManager(Firebase data) {
-        fireData = data;
-    }
 
     /*
         Function adds lists of either Courses/Interests/Groups into the database
@@ -38,10 +34,14 @@ public class QueryManager {
         userDataRef.child(label).setValue(data);
     }
 
+    /*
+    Set user's 'courses' field in the database as a map with course codes as keys and course names as values
+     */
     public void setUserCourses(User user, List<String> courses){
         courseList = courses;
+        courseMap = new HashMap<String, String>();
 
-        fireData.child("courses").addValueEventListener(new ValueEventListener() {
+        fireData.child("schools").child(user.getSid()).child("courses").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (String course : courseList) {
@@ -52,7 +52,7 @@ public class QueryManager {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The name read failed: " + firebaseError.getMessage());
+                System.out.println("The course read failed: " + firebaseError.getMessage());
             }
         });
 

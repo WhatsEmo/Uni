@@ -86,8 +86,7 @@ public class TutorialActivity extends Activity {
 
     private User user;
 
-    private QueryManager qm;
-
+    private QueryManager qm = new QueryManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +174,8 @@ public class TutorialActivity extends Activity {
 
         if(label.equals("class")){
             if(!userClasses.isEmpty()) {
+                System.out.println(user.getName());
+                qm.updateRoster(user, "courses", userClasses);
                 qm.setUserCourses(user, userClasses);
 
                 title.setText("Uni: Adding Interests");
@@ -185,6 +186,7 @@ public class TutorialActivity extends Activity {
         else if(label.equals("interest")) {
             if(!userInterests.isEmpty()) {
                 qm.setListData(user, "interests", userInterests);
+                qm.updateRoster(user, "interests", userInterests);
 
                 Firebase tutorialRef = fireData.child(getResources().getString(R.string.database_users_key)).child(user.getUid()).child("isTutorialDone");; //firebase reference
                 tutorialRef.setValue(null);
