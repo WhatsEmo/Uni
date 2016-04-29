@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 if (authData != null) {
                     //user is logged on
                     uid = firedata.getAuth().getUid();
-                    checkTutorialDone();
                     createUserObject();
+                    checkTutorialDone();
                     setView();
 
                 } else {
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         firedata.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                QM = new QueryManager(firedata);
                 // Populates a local object with user data obtained from the database
                 String email = dataSnapshot.child(getResources().getString(R.string.user_email_key)).getValue(String.class);
                 String name = dataSnapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
@@ -101,11 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 List<String> interests = new ArrayList<String>();
 
                 appUser = new User(uid, name, schoolId, email, interests);
-
-                System.out.println(appUser.getName());
-
-                List<String> bogus = Arrays.asList("64523");
-                QM.updateRoster(appUser, getResources().getString(R.string.school_courses_key), bogus);
 
             }
 
@@ -124,13 +117,16 @@ public class MainActivity extends AppCompatActivity {
                 if (dataSnapshot.child("isTutorialDone").exists()) {
                     //start tutorial
                     Intent startTutorialIntent = new Intent(thisActivity, TutorialActivity.class);
+                    Bundle parcelBundle = new Bundle();
+                    parcelBundle.putParcelable("user", appUser);
+                    startTutorialIntent.putExtras(parcelBundle);
                     startActivity(startTutorialIntent);
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("Checking tutorial done failed");
             }
         });
     }

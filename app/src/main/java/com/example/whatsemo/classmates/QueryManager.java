@@ -1,6 +1,9 @@
 package com.example.whatsemo.classmates;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +13,11 @@ import java.util.Map;
  * Created by WhatsEmo on 4/8/2016.
  */
 public class QueryManager {
-    private static Firebase fireData;
+    private static Firebase fireData = new Firebase("https://uni-database.firebaseio.com/");
 
-    public QueryManager(Firebase data) {
-        fireData = data;
-    }
+    public Map <String, String> courseMap;
+
+    public List<String> courseList;
 
     /*
         Function adds lists of either Courses/Interests/Groups into the database
@@ -23,7 +26,37 @@ public class QueryManager {
      */
     public void setListData(User user, String label, List<String> data){
         Firebase userDataRef = fireData.child("users").child(user.getUid()); //firebase reference
-        userDataRef.child(label).setValue(label, data);
+        userDataRef.child(label).setValue(data);
+    }
+
+    public void setMapData(User user, String label, Map<String, String> data){
+        Firebase userDataRef = fireData.child("users").child(user.getUid());
+        userDataRef.child(label).setValue(data);
+    }
+
+    /*
+    Set user's 'courses' field in the database as a map with course codes as keys and course names as values
+     */
+    public void setUserCourses(User user, List<String> courses){
+        courseList = courses;
+        courseMap = new HashMap<String, String>();
+
+        fireData.child("schools").child(user.getSid()).child("courses").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (String course : courseList) {
+                    String name = snapshot.child(course).child("name").getValue(String.class);
+                    courseMap.put(course, name);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The course read failed: " + firebaseError.getMessage());
+            }
+        });
+
+        fireData.child("users").child(user.getUid()).child("courses").setValue(courseMap);
     }
 
     /*

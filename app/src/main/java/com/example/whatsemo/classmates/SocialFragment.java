@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -59,7 +60,10 @@ public class SocialFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private ArrayAdapter<String> adapter;
+
     private Firebase ref;
+    private Map<String, String> courseMap;
     private List<String> userFriendIds = new ArrayList<String>();
     private List<String> userFriendNames = new ArrayList<String>();
     private List<String> userCourseIds = new ArrayList<String>();
@@ -101,17 +105,20 @@ public class SocialFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     // Retrieves (key, value) data from friebase and stores them in proportional Java Lists
-                    Map<String, String> map = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
-                    userCourseIds = (List<String>) map.keySet();
-                    userCourseNames = (List<String>) map.values();
+                    //Map<String, String> map = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue(Map.class);
 
-                    map = (Map<String, String>) snapshot.child("friends").getValue();
-                    userFriendIds = (List<String>) map.keySet();
-                    userFriendNames = (List<String>) map.values();
+                    System.out.println(snapshot.child(getResources().getString(R.string.user_courses_key)).getValue());
+                    courseMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
+                    //userCourseIds = (List<String>) map.keySet();
+                    //userCourseNames = (List<String>) map.values();
 
-                    map = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
-                    userGroupIds = (List<String>) map.keySet();
-                    userGroupNames = (List<String>) map.values();
+                    //Map<String, String> friendMap = (Map<String, String>) snapshot.child("friends").getValue();
+                    //userFriendIds = (List<String>) map.keySet();
+                    //userFriendNames = (List<String>) map.values();
+
+                    //Map<String, String> groupMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
+                    //userGroupIds = (List<String>) map.keySet();
+                    //userGroupNames = (List<String>) map.values();
                     setVisibility();
                 }
 
@@ -123,7 +130,7 @@ public class SocialFragment extends Fragment {
 
         }
         else{
-            System.out.println("Authentication failed");
+            System.out.println("Social: Authentication failed");
         }
 
         return view;
@@ -163,12 +170,10 @@ public class SocialFragment extends Fragment {
     }
 
     private void setVisibility(){
-        if(userCourseNames == null || userCourseNames.isEmpty()){
-            socialCoursesLayout.setVisibility(View.GONE);
-        }else{
-            socialCoursesLayout.setVisibility(View.VISIBLE);
-            populate(userCourseNames, coursesListView, getResources().getString(R.string.user_courses_key));
-        }
+
+        socialCoursesLayout.setVisibility(View.VISIBLE);
+        populate(courseMap, coursesListView);
+        //populate(userCourseNames, coursesListView, getResources().getString(R.string.user_courses_key));
 
         if(userFriendNames == null || userFriendNames.isEmpty()){
             socialFriendsLayout.setVisibility(View.GONE);
@@ -182,6 +187,21 @@ public class SocialFragment extends Fragment {
         }else{
             socialGroupsLayout.setVisibility(View.VISIBLE);
             populate(userFriendNames, groupsListView, getResources().getString(R.string.user_groups_key));
+        }
+    }
+
+    private void populate(Map<String, String> map, ListView listView){
+        for (String key : map.keySet()){
+            Button bttn = new Button(this.getContext());
+            bttn.setText(map.get(key));
+            bttn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Add stuff later
+                }
+            });
+
+            listView.addView(bttn);
         }
     }
 

@@ -80,11 +80,13 @@ public class TutorialActivity extends Activity {
     private List<String> userClasses;
     private List<String> userGroups;
 
-    private Firebase fireData;
-    private String uid;
-    private String schoolId;
-    private String userName;
+    private Map<String, String> userCourses;
 
+    private Firebase fireData;
+
+    private User user;
+
+    private QueryManager qm = new QueryManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,31 +95,10 @@ public class TutorialActivity extends Activity {
         ButterKnife.bind(this);
         Firebase.setAndroidContext(this);
 
+        user = getIntent().getExtras().getParcelable("user");
+
         fireData = new Firebase(getResources().getString(R.string.database));
-        if(fireData.getAuth().getUid() != null){
-            uid = fireData.getAuth().getUid();
-        }
 
-
-        //Get school ID
-        if(uid != null) {
-            fireData.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    //Should always return a string.
-                    schoolId = snapshot.child(getResources().getString(R.string.user_school_key)).getValue(String.class);
-                    userName = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-                    System.out.println("The read failed: " + firebaseError.getMessage());
-                }
-            });
-        }else{
-            //logs user out if for some reason they have no uid
-            fireData.unauth();
-        }
 
         //Sets all layouts other than classes invisible first
         addingInterestsLayout.setVisibility(View.GONE);
@@ -127,9 +108,6 @@ public class TutorialActivity extends Activity {
         userInterests = new ArrayList<String>();
         userClasses = new ArrayList<String>();
         userGroups = new ArrayList<String>();
-
-        //Set up GridViews
-
 
         //Set the Title
         title.setText("Uni: Adding Classes");
@@ -192,20 +170,13 @@ public class TutorialActivity extends Activity {
         groupName.setText("");
     }
 
-
     private void addToDatabase(String label){
 
         if(label.equals("class")){
             if(!userClasses.isEmpty()) {
-                Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_courses_key)); //firebase reference
-                addingDataRef.setValue(userClasses);
-
-                Firebase addingToSchool = fireData.child(getResources().getString(R.string.database_schools_key)).child(schoolId).child(getResources().getString(R.string.user_courses_key));
-                Map<String, Object> addClass = new HashMap<String, Object>();
-                addClass.put(uid, userName);
-                for (String classes : userClasses) {
-                    addingToSchool.child(classes).child(getResources().getString(R.string.school_courses_enrolled_key)).updateChildren(addClass);
-                }
+                System.out.println(user.getName());
+                qm.updateRoster(user, "courses", userClasses);
+                qm.setUserCourses(user, userClasses);
 
                 title.setText("Uni: Adding Interests");
                 addingClassesLayout.setVisibility(View.GONE);
@@ -214,10 +185,10 @@ public class TutorialActivity extends Activity {
         }
         else if(label.equals("interest")) {
             if(!userInterests.isEmpty()) {
-                Firebase addingDataRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child(getResources().getString(R.string.user_interests_key)); //firebase reference
-                addingDataRef.setValue(userInterests);
+                qm.setListData(user, "interests", userInterests);
+                qm.updateRoster(user, "interests", userInterests);
 
-                Firebase tutorialRef = fireData.child(getResources().getString(R.string.database_users_key)).child(uid).child("isTutorialDone");; //firebase reference
+                Firebase tutorialRef = fireData.child(getResources().getString(R.string.database_users_key)).child(user.getUid()).child("isTutorialDone");; //firebase reference
                 tutorialRef.setValue(null);
 
                 finish();
