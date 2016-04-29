@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class HomePageFragment extends Fragment {
-    private static final String ARG_PAGE = "param1";
+    private static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
 
@@ -85,9 +85,8 @@ public class HomePageFragment extends Fragment {
 
         }
         else{
-            System.out.println("Authentication failed");
+            System.out.println("Home Page: Authentication failed");
         }
-
         return view;
     }
 

@@ -102,11 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
                 appUser = new User(uid, name, schoolId, email, interests);
 
-                System.out.println(appUser.getName());
-
-                List<String> bogus = Arrays.asList("64523");
-                QM.updateRoster(appUser, getResources().getString(R.string.school_courses_key), bogus);
-
             }
 
             @Override
@@ -124,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if (dataSnapshot.child("isTutorialDone").exists()) {
                     //start tutorial
                     Intent startTutorialIntent = new Intent(thisActivity, TutorialActivity.class);
+                    startTutorialIntent.putExtra("user", appUser);
                     startActivity(startTutorialIntent);
                 }
             }
