@@ -43,4 +43,6 @@
     <string name="user_groups_key">groups</string>
 
 
+    <!-- Search Resources -->
+    <string name="search_hint">Search by Interests!</string>
 </resources>
