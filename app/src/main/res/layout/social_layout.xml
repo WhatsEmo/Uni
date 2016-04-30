@@ -5,10 +5,29 @@
     tools:context="com.example.whatsemo.classmates.SocialFragment">
 
 
+    <LinearLayout
+        android:id="@+id/chat_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_search"/>
+
+        <EditText
+            android:id="@+id/chat_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_hint"
+            android:inputType="textAutoCorrect"
+            android:imeOptions="actionSearch"/>
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
+        android:layout_below="@+id/chat_search_layout"
         android:id="@+id/SocialCoursesLayout"
         android:background="#f2564e35">
 
@@ -22,14 +41,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/coursesListView"
+            android:id="@+id/coursesRecyclerView"
             android:layout_below="@+id/courseListTitle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#f2564e35" ></ListView>
+            android:background="#f2564e35" ></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -52,12 +71,12 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/groupsListView"
+            android:id="@+id/groupsRecyclerView"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/groupListTitle" ></ListView>
+            android:layout_below="@+id/groupListTitle" ></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -78,13 +97,13 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/friendListView"
+            android:id="@+id/friendRecyclerView"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/friendListTitle" ></ListView>
+            android:layout_below="@+id/friendListTitle" ></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 </RelativeLayout>

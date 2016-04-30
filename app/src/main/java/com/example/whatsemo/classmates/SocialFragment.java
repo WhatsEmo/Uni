@@ -4,12 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.firebase.client.DataSnapshot;
@@ -44,15 +45,17 @@ public class SocialFragment extends Fragment {
     @Bind(R.id.SocialGroupsLayout)
     RelativeLayout socialGroupsLayout;
 
-    @Bind(R.id.coursesListView)
-    ListView coursesListView;
+    @Bind(R.id.coursesRecyclerView)
+    RecyclerView coursesRecyclerView;
 
-    @Bind(R.id.friendListView)
-    ListView friendListView;
+    @Bind(R.id.friendRecyclerView)
+    RecyclerView friendRecyclerView;
 
-    @Bind(R.id.groupsListView)
-    ListView groupsListView;
+    @Bind(R.id.groupsRecyclerView)
+    RecyclerView groupsRecyclerView;
 
+    @Bind(R.id.chat_search)
+    EditText chatSearchEditText;
 
     private static final String ARG_PAGE = "param2";
 
@@ -172,25 +175,25 @@ public class SocialFragment extends Fragment {
     private void setVisibility(){
 
         socialCoursesLayout.setVisibility(View.VISIBLE);
-        populate(courseMap, coursesListView);
-        //populate(userCourseNames, coursesListView, getResources().getString(R.string.user_courses_key));
+        populate(courseMap, coursesRecyclerView);
+        //populate(userCourseNames, coursesRecyclerView, getResources().getString(R.string.user_courses_key));
 
         if(userFriendNames == null || userFriendNames.isEmpty()){
             socialFriendsLayout.setVisibility(View.GONE);
         }else{
             socialFriendsLayout.setVisibility(View.VISIBLE);
-            populate(userFriendNames, friendListView, "friends");
+            populate(userFriendNames, friendRecyclerView, "friends");
         }
 
         if(userFriendNames == null || userFriendNames.isEmpty()){
             socialGroupsLayout.setVisibility(View.GONE);
         }else{
             socialGroupsLayout.setVisibility(View.VISIBLE);
-            populate(userFriendNames, groupsListView, getResources().getString(R.string.user_groups_key));
+            populate(userFriendNames, groupsRecyclerView, getResources().getString(R.string.user_groups_key));
         }
     }
 
-    private void populate(Map<String, String> map, ListView listView){
+    private void populate(Map<String, String> map, RecyclerView recyclerView){
         for (String key : map.keySet()){
             Button bttn = new Button(this.getContext());
             bttn.setText(map.get(key));
@@ -201,11 +204,11 @@ public class SocialFragment extends Fragment {
                 }
             });
 
-            listView.addView(bttn);
+            recyclerView.addView(bttn);
         }
     }
 
-    private void populate(List<String> list, ListView listView, String label){
+    private void populate(List<String> list, RecyclerView recyclerView, String label){
         //Helps populate all ListViews
         for(String courses : list){
             Button bttn = new Button(this.getContext());
@@ -217,7 +220,7 @@ public class SocialFragment extends Fragment {
                 }
             });
 
-            listView.addView(bttn);
+            recyclerView.addView(bttn);
         }
     }
 }

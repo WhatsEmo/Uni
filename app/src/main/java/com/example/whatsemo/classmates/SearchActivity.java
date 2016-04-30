@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnEditorAction;
+import butterknife.OnClick;
 
 /**
  * Created by WhatsEmo on 4/29/2016.
@@ -24,11 +24,11 @@ public class SearchActivity extends Activity {
     @Bind(R.id.search_text)
     EditText searchText;
 
-    @OnEditorAction(R.id.search_text)
-    public void search(){
-        String searchString = searchText.getText().toString();
-        queryFireBase(searchString);
+    @OnClick(R.id.search_back_button)
+    public void back(){
+        onBackPressed();
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
