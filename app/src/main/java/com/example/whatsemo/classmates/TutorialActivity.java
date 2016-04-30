@@ -86,7 +86,7 @@ public class TutorialActivity extends Activity {
 
     private User user;
 
-    private QueryManager qm = new QueryManager();
+    private QueryManager qm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class TutorialActivity extends Activity {
 
         fireData = new Firebase(getResources().getString(R.string.database));
 
-
+        qm = new QueryManager();
         //Sets all layouts other than classes invisible first
         addingInterestsLayout.setVisibility(View.GONE);
         addingGroupsLayout.setVisibility(View.GONE);

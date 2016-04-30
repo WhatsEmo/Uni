@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.search_icon)
     public void startSearchActivity(){
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
     }
 
