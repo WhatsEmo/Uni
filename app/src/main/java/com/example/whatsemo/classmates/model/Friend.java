@@ -1,7 +1,9 @@
-package com.example.whatsemo.classmates;
+package com.example.whatsemo.classmates.model;
 
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.whatsemo.classmates.ChatActivity;
 
 /**
  * Created by WhatsEmo on 4/29/2016.

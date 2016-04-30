@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.whatsemo.classmates.adapter.FriendAdapter;
+import com.example.whatsemo.classmates.model.Friend;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
@@ -115,10 +117,6 @@ public class SocialFragment extends Fragment {
 
         ArrayList<Friend> myDataset = new ArrayList<Friend>();
         Friend bahubali = new Friend("ID","Done");
-        myDataset.add(bahubali);
-        myDataset.add(bahubali);
-        myDataset.add(bahubali);
-        myDataset.add(bahubali);
 
         coursesAdapter = new FriendAdapter(myDataset, getContext());
         coursesRecyclerView.setAdapter(coursesAdapter);

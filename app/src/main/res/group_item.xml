@@ -4,21 +4,20 @@
     android:layout_height="?android:attr/listPreferredItemHeight">
 
     <ImageView
-        android:id="@+id/user_icon"
+        android:id="@+id/group_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_account_circle"/>
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/group_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/user_icon"
         android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description" />
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/last_message"
@@ -28,7 +27,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/user_icon"
-        android:gravity="center_vertical"
-        android:text="Example application" />
+        android:gravity="center_vertical" />
 
 </RelativeLayout>

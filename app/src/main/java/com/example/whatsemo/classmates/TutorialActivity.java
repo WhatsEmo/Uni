@@ -9,13 +9,10 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

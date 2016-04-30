@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.search_icon)
     public void startSearchActivity(){
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 
