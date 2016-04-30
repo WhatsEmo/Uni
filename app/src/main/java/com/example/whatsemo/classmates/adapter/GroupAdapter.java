@@ -64,7 +64,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Group group = mDataset.get(position);
-        holder.groupName.setText(mDataset.get(position).getName());
+        holder.groupName.setText(mDataset.get(position).getGroupName());
         holder.groupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -117,6 +117,7 @@ public class SocialFragment extends Fragment {
 
         ArrayList<Friend> myDataset = new ArrayList<Friend>();
         Friend bahubali = new Friend("ID","Done");
+        myDataset.add(bahubali);
 
         coursesAdapter = new FriendAdapter(myDataset, getContext());
         coursesRecyclerView.setAdapter(coursesAdapter);
