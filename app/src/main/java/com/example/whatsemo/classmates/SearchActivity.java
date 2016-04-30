@@ -1,40 +1,43 @@
 package com.example.whatsemo.classmates;
 
-import android.app.ListActivity;
-import android.app.SearchManager;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnEditorAction;
 
 /**
  * Created by WhatsEmo on 4/29/2016.
  */
-public class SearchActivity extends ListActivity {
+public class SearchActivity extends Activity {
+
+    @Bind(R.id.search_results)
+    ListView searchResults;
+
+    @Bind(R.id.search_back_button)
+    ImageButton searchBackButton;
+
+    @Bind(R.id.search_text)
+    EditText searchText;
+
+    @OnEditorAction(R.id.search_text)
+    public void search(){
+        String searchString = searchText.getText().toString();
+        queryFireBase(searchString);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        handleIntent(getIntent());
+        setContentView(R.layout.search_activity);
+        ButterKnife.bind(this);
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    public void queryFireBase(String searchString){
 
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-
-            showResults(query);
-        }
-    }
-
-    private void showResults(String query) {
-        // Query your data set and show results
-        // ...
     }
 }

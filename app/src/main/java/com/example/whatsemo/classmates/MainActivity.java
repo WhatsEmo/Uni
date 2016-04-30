@@ -13,7 +13,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -30,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         firedata.unauth();
         Intent intent = getIntent();
         finish();
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.search_icon)
+    public void startSearchActivity(){
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 
