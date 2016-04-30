@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,12 @@ public class SocialFragment extends Fragment {
     @Bind(R.id.groupsRecyclerView)
     RecyclerView groupsRecyclerView;
 
+    @Bind(R.id.chat_search_layout)
+    LinearLayout chatSearchLayout;
+
     @Bind(R.id.chat_search)
     EditText chatSearchEditText;
+
 
     private static final String ARG_PAGE = "param2";
 
@@ -64,6 +67,9 @@ public class SocialFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private ArrayAdapter<String> adapter;
+
+    private RecyclerView.Adapter coursesAdapter;
+    private RecyclerView.LayoutManager coursesLayoutManager;
 
     private Firebase ref;
     private Map<String, String> courseMap;
@@ -99,7 +105,25 @@ public class SocialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.social_layout, container, false);
+
         ButterKnife.bind(this, view);
+        // use a linear layout manager
+        coursesLayoutManager = new LinearLayoutManager(this.getContext());
+        coursesRecyclerView.setLayoutManager(coursesLayoutManager);
+
+        // specify an adapter (see also next example)
+
+        ArrayList<Friend> myDataset = new ArrayList<Friend>();
+        Friend bahubali = new Friend("ID","Done");
+        myDataset.add(bahubali);
+        myDataset.add(bahubali);
+        myDataset.add(bahubali);
+        myDataset.add(bahubali);
+
+        coursesAdapter = new FriendAdapter(myDataset, getContext());
+        coursesRecyclerView.setAdapter(coursesAdapter);
+
+        /*
         ref = new Firebase(getResources().getString(R.string.database));
 
         if (ref.getAuth() != null){
@@ -135,7 +159,7 @@ public class SocialFragment extends Fragment {
         else{
             System.out.println("Social: Authentication failed");
         }
-
+*/
         return view;
     }
 

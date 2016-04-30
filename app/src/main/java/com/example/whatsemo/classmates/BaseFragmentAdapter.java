@@ -33,7 +33,7 @@ public class BaseFragmentAdapter extends FragmentPagerAdapter {
             return SocialFragment.newInstance(position + 1);
         }*/
         else{
-            return BaseFragment.newInstance(position + 1);
+            return SocialFragment.newInstance(position + 1);
         }
     }
 
