@@ -1,5 +1,6 @@
 package com.example.whatsemo.classmates;
 
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;

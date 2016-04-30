@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Uni</string>
     <string name="login_message">Uni</string>
-    
+
     <string name="login_button_text">Log in</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="not_member">Not a member?</string>
@@ -27,7 +27,7 @@
     <string name="adding_groups_button_text">Add Group</string>
     <string name="adding_schools_button_text">Add School</string>
     <string name="done_adding">Done</string>
-    
+
     <!-- Database Resources -->
     <string name="database">https://uni-database.firebaseio.com/</string>
     <string name="database_users_key">users</string>
@@ -47,4 +47,5 @@
 
     <!-- Search Resources -->
     <string name="search_hint">Search by Interests!</string>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>
