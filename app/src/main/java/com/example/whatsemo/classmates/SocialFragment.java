@@ -9,18 +9,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.whatsemo.classmates.adapter.CourseAdapter;
 import com.example.whatsemo.classmates.adapter.FriendAdapter;
+import com.example.whatsemo.classmates.adapter.GroupAdapter;
+import com.example.whatsemo.classmates.model.Course;
+import com.example.whatsemo.classmates.model.DatabaseObject;
 import com.example.whatsemo.classmates.model.Friend;
+import com.example.whatsemo.classmates.model.Group;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -68,19 +75,26 @@ public class SocialFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private ArrayAdapter<String> adapter;
+
+    private Firebase ref;
+    private Comparator<DatabaseObject> customSorter;
+    private Map<String, String> retrieveDataMap;
+
+    private ArrayList<Friend> userFriends;
+    private ArrayList<Course> userCourses;
+    private ArrayList<Group> userGroups;
+
 
     private RecyclerView.Adapter coursesAdapter;
     private RecyclerView.LayoutManager coursesLayoutManager;
 
-    private Firebase ref;
-    private Map<String, String> courseMap;
-    private List<String> userFriendIds = new ArrayList<String>();
-    private List<String> userFriendNames = new ArrayList<String>();
-    private List<String> userCourseIds = new ArrayList<String>();
-    private List<String> userCourseNames = new ArrayList<String>();
-    private List<String> userGroupIds = new ArrayList<String>();
-    private List<String> userGroupNames = new ArrayList<String>();
+
+    private RecyclerView.Adapter friendsAdapter;
+    private RecyclerView.LayoutManager friendsLayoutManager;
+
+    private RecyclerView.Adapter groupsAdapter;
+    private RecyclerView.LayoutManager groupsLayoutManager;
+
 
     public SocialFragment() {
         // Required empty public constructor
@@ -109,20 +123,21 @@ public class SocialFragment extends Fragment {
         View view = inflater.inflate(R.layout.social_layout, container, false);
 
         ButterKnife.bind(this, view);
-        // use a linear layout manager
-        coursesLayoutManager = new LinearLayoutManager(this.getContext());
-        coursesRecyclerView.setLayoutManager(coursesLayoutManager);
 
-        // specify an adapter (see also next example)
+        customSorter = new Comparator<DatabaseObject>() {
+            @Override
+            public int compare(DatabaseObject lhs, DatabaseObject rhs) {
+                return lhs.getName().compareTo(rhs.getName());
+            }
+        };
 
-        ArrayList<Friend> myDataset = new ArrayList<Friend>();
-        Friend bahubali = new Friend("ID","Done");
-        myDataset.add(bahubali);
+        userFriends = new ArrayList<Friend>();
+        userCourses = new ArrayList<Course>();
+        userGroups = new ArrayList<Group>();
 
-        coursesAdapter = new FriendAdapter(myDataset, getContext());
-        coursesRecyclerView.setAdapter(coursesAdapter);
+        setUpAdapters();
 
-        /*
+
         ref = new Firebase(getResources().getString(R.string.database));
 
         if (ref.getAuth() != null){
@@ -130,21 +145,37 @@ public class SocialFragment extends Fragment {
             ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    // Retrieves (key, value) data from friebase and stores them in proportional Java Lists
-                    //Map<String, String> map = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue(Map.class);
 
-                    System.out.println(snapshot.child(getResources().getString(R.string.user_courses_key)).getValue());
-                    courseMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
-                    //userCourseIds = (List<String>) map.keySet();
-                    //userCourseNames = (List<String>) map.values();
+                    //Used to prevent crashes from happening
+                    boolean hasCourses = snapshot.child(getResources().getString(R.string.user_courses_key)).exists();
+                    boolean hasFriends = snapshot.child(getResources().getString(R.string.user_friends_key)).exists();
+                    boolean hasGroups = snapshot.child(getResources().getString(R.string.user_groups_key)).exists();
 
-                    //Map<String, String> friendMap = (Map<String, String>) snapshot.child("friends").getValue();
-                    //userFriendIds = (List<String>) map.keySet();
-                    //userFriendNames = (List<String>) map.values();
+                    if (hasCourses) {
+                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
+                        for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
+                            userCourses.add(new Course(entry.getKey(), entry.getValue()));
+                        }
+                        Collections.sort(userCourses, customSorter);
+                        coursesAdapter.notifyDataSetChanged();
+                    }
+                    if (hasFriends) {
+                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_friends_key)).getValue();
+                        for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
+                            userFriends.add(new Friend(entry.getKey(), entry.getValue()));
+                        }
+                        Collections.sort(userFriends, customSorter);
+                        friendsAdapter.notifyDataSetChanged();
 
-                    //Map<String, String> groupMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
-                    //userGroupIds = (List<String>) map.keySet();
-                    //userGroupNames = (List<String>) map.values();
+                    }
+                    if (hasGroups) {
+                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
+                        for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
+                            userGroups.add(new Group(entry.getKey(), entry.getValue()));
+                        }
+                        Collections.sort(userGroups, customSorter);
+                        groupsAdapter.notifyDataSetChanged();
+                    }
                     setVisibility();
                 }
 
@@ -158,7 +189,7 @@ public class SocialFragment extends Fragment {
         else{
             System.out.println("Social: Authentication failed");
         }
-*/
+
         return view;
     }
 
@@ -197,29 +228,30 @@ public class SocialFragment extends Fragment {
 
     private void setVisibility(){
 
-        socialCoursesLayout.setVisibility(View.VISIBLE);
-        populate(courseMap, coursesRecyclerView);
-        //populate(userCourseNames, coursesRecyclerView, getResources().getString(R.string.user_courses_key));
+        if(userCourses == null || userCourses.isEmpty()){
+            socialCoursesLayout.setVisibility(View.GONE);
+        }
+        else{
+            socialCoursesLayout.setVisibility(View.VISIBLE);
+        }
 
-        if(userFriendNames == null || userFriendNames.isEmpty()){
+        if(userFriends == null || userFriends.isEmpty()){
             socialFriendsLayout.setVisibility(View.GONE);
         }else{
             socialFriendsLayout.setVisibility(View.VISIBLE);
-            populate(userFriendNames, friendRecyclerView, "friends");
         }
 
-        if(userFriendNames == null || userFriendNames.isEmpty()){
+        if(userGroups == null || userGroups.isEmpty()){
             socialGroupsLayout.setVisibility(View.GONE);
         }else{
             socialGroupsLayout.setVisibility(View.VISIBLE);
-            populate(userFriendNames, groupsRecyclerView, getResources().getString(R.string.user_groups_key));
         }
     }
-
-    private void populate(Map<String, String> map, RecyclerView recyclerView){
-        for (String key : map.keySet()){
+/*
+    private void populate(List<DatabaseObject> userData, RecyclerView recyclerView){
+        for (DatabaseObject data : userData){
             Button bttn = new Button(this.getContext());
-            bttn.setText(map.get(key));
+            bttn.setText(data.getName());
             bttn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -245,5 +277,46 @@ public class SocialFragment extends Fragment {
 
             recyclerView.addView(bttn);
         }
+    }
+*/
+    /*
+        Sets up RecycleViewAdapters and a LayoutManager
+     */
+    private void setUpAdapters(){
+        /*
+            *************COURSES*************
+         */
+        // use a linear layout manager
+        coursesLayoutManager = new LinearLayoutManager(this.getContext());
+        coursesRecyclerView.setLayoutManager(coursesLayoutManager);
+
+        // specify an adapter
+        coursesAdapter = new CourseAdapter(userCourses, getContext());
+        coursesRecyclerView.setAdapter(coursesAdapter);
+
+        /*
+            *************FRIENDS*************
+         */
+
+        // use a linear layout manager
+        friendsLayoutManager = new LinearLayoutManager(this.getContext());
+        friendRecyclerView.setLayoutManager(friendsLayoutManager);
+
+        // specify an adapter
+        friendsAdapter = new FriendAdapter(userFriends, getContext());
+        friendRecyclerView.setAdapter(friendsAdapter);
+
+        /*
+            *************GROUPS*************
+         */
+
+        // use a linear layout manager
+        groupsLayoutManager = new LinearLayoutManager(this.getContext());
+        groupsRecyclerView.setLayoutManager(groupsLayoutManager);
+
+        // specify an adapter
+        groupsAdapter = new GroupAdapter(userGroups, getContext());
+        groupsRecyclerView.setAdapter(groupsAdapter);
+
     }
 }

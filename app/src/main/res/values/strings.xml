@@ -43,6 +43,7 @@
     <string name="user_courses_key">courses</string>
     <string name="user_interests_key">interests</string>
     <string name="user_groups_key">groups</string>
+    <string name="user_friends_key">friends</string>
 
 
     <!-- Search Resources -->

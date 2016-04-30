@@ -64,7 +64,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Course course = mDataset.get(position);
-        holder.courseName.setText(mDataset.get(position).getCourseName());
+        holder.courseName.setText(mDataset.get(position).getName());
         holder.courseName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

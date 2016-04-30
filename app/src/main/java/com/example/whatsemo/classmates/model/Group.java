@@ -8,7 +8,7 @@ import com.example.whatsemo.classmates.ChatActivity;
 /**
  * Created by WhatsEmo on 4/30/2016.
  */
-public class Group {
+public class Group extends DatabaseObject{
     private String groupID;
     private String groupName;
 
@@ -25,7 +25,8 @@ public class Group {
         this.groupID = groupID;
     }
 
-    public String getGroupName() {
+    @Override
+    public String getName() {
         return groupName;
     }
 

@@ -41,6 +41,7 @@ public class QueryManager {
     public void setUserCourses(User user, List<String> courses){
         courseList = courses;
         courseMap = new HashMap<String, String>();
+        final String uid = user.getUid();
 
         fireData.child("schools").child(user.getSid()).child("courses").addValueEventListener(new ValueEventListener() {
             @Override
@@ -49,6 +50,7 @@ public class QueryManager {
                     String name = snapshot.child(course).child("name").getValue(String.class);
                     courseMap.put(course, name);
                 }
+                fireData.child("users").child(uid).child("courses").setValue(courseMap);
             }
 
             @Override
@@ -57,7 +59,6 @@ public class QueryManager {
             }
         });
 
-        fireData.child("users").child(user.getUid()).child("courses").setValue(courseMap);
     }
 
     /*

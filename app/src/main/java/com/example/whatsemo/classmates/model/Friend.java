@@ -8,7 +8,7 @@ import com.example.whatsemo.classmates.ChatActivity;
 /**
  * Created by WhatsEmo on 4/29/2016.
  */
-public class Friend {
+public class Friend extends DatabaseObject{
     private String uid;
     private String name;
 
@@ -26,6 +26,7 @@ public class Friend {
         this.uid = uid;
     }
 
+    @Override
     public String getName() {
         return name;
     }
