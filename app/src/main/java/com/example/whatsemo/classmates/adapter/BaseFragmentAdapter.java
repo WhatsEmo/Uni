@@ -1,9 +1,12 @@
-package com.example.whatsemo.classmates;
+package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.whatsemo.classmates.HomePageFragment;
+import com.example.whatsemo.classmates.SocialFragment;
 
 /**
  * Created by WhatsEmo on 3/11/2016.
