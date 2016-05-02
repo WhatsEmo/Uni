@@ -5,84 +5,120 @@
     android:layout_height="match_parent"
     android:columnCount="2"
     android:rowCount="3"
-    android:background="@color/orange">
+    android:background="@drawable/gradient_bg">
 
-
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/login_message"
-        android:id="@+id/welcomeMessage"
-        android:layout_marginTop="104dp"
-        android:soundEffectsEnabled="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="50sp" />
+        android:scaleType="fitCenter"
+        android:layout_marginTop="100dp"
+        android:maxWidth="200dp"
+        android:id="@+id/logo"
+        android:src="@drawable/logo_white"
+        android:adjustViewBounds="true"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true" />
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:width="320dp"
+        android:width="250dp"
         android:ems="10"
         android:id="@+id/firstNameField"
-        android:layout_marginTop="63dp"
-        android:layout_below="@+id/welcomeMessage"
-        android:layout_alignRight="@+id/singUpEmailField"
-        android:layout_alignEnd="@+id/singUpEmailField"
+        android:layout_marginTop="30dp"
+        android:textSize="14sp"
+        android:layout_below="@+id/logo"
+        android:layout_centerInParent="true"
         android:hint="@string/first_name_hint"
+        android:background="@drawable/line_white"
         android:inputType="textCapSentences|textPersonName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:width="320dp"
+        android:width="250dp"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:id="@+id/lastNameField"
         android:layout_below="@+id/firstNameField"
-        android:layout_alignRight="@+id/firstNameField"
-        android:layout_alignEnd="@+id/firstNameField"
+        android:layout_centerInParent="true"
         android:hint="@string/last_name_hint"
+        android:background="@drawable/line_white"
         android:inputType="textCapSentences|textPersonName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:width="320dp"
+        android:width="250dp"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/singUpEmailField"
         android:layout_below="@+id/lastNameField"
-        android:layout_alignRight="@+id/signUpPasswordField"
-        android:layout_alignEnd="@+id/signUpPasswordField"
+        android:layout_centerInParent="true"
+        android:background="@drawable/line_white"
         android:hint="@string/email_login_hint" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:width="320dp"
+        android:width="250dp"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
         android:inputType="textPassword"
+        android:fontFamily="sans-serif"
         android:ems="10"
         android:id="@+id/signUpPasswordField"
         android:layout_below="@+id/singUpEmailField"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/line_white"
         android:hint="@string/password_login_hint" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_button_text"
-        android:id="@+id/loginButtonSignUpScreen"
-        android:layout_below="@+id/signUpScreenButton"
-        android:layout_alignRight="@+id/welcomeMessage"
-        android:layout_alignEnd="@+id/welcomeMessage"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up_button_text"
+        android:width="270dp"
+        android:text="@string/sign_up_button"
+        android:textColor="@color/orange"
+        android:background="@drawable/button_white"
         android:id="@+id/signUpScreenButton"
+        android:layout_marginTop="35dp"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_below="@+id/signUpPasswordField"
-        android:layout_alignLeft="@+id/loginButtonSignUpScreen"
-        android:layout_alignStart="@+id/loginButtonSignUpScreen" />
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signUpScreenButton"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/already_member"
+            android:layout_marginTop="15dp"
+            android:id="@+id/not_member" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log in!"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:id="@+id/loginButtonSignUpScreen"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:width="40dp"
+            android:layout_marginLeft="-15dp"
+            android:layout_toRightOf="@+id/not_member" />
+    </RelativeLayout>
+
 </RelativeLayout>
