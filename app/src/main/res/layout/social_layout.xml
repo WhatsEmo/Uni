@@ -11,18 +11,13 @@
         android:layout_height="wrap_content"
         >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_search"/>
-
-        <EditText
-            android:id="@+id/chat_search"
+        <android.support.v7.widget.SearchView
+            android:id="@+id/action_search"
+            android:title="@string/search_hint"
+            android:actionViewClass="android.support.v7.widget.SearchView"
+            android:showAsAction="always"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_hint"
-            android:inputType="textAutoCorrect"
-            android:imeOptions="actionSearch"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 
@@ -48,8 +43,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/coursesRecyclerView"
             android:layout_below="@+id/courseListTitle"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:background="#f2564e35"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
@@ -74,8 +67,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/groupsRecyclerView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/groupListTitle"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
@@ -100,9 +91,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/friendRecyclerView"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/friendListTitle"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 </RelativeLayout>

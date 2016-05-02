@@ -35,16 +35,56 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         notifyItemInserted(position);
     }
 
-    public void remove(Course course) {
-        int position = mDataset.indexOf(course);
-        mDataset.remove(position);
+    public Course remove(int position) {
+        final Course removedCourse = mDataset.remove(position);
         notifyItemRemoved(position);
+        return removedCourse;
+    }
+
+    public void move(int fromPosition, int toPosition){
+        final Course course = mDataset.remove(fromPosition);
+        mDataset.add(toPosition, course);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void animateTo(ArrayList<Course> courses){
+        applyAndAnimateRemovals(courses);
+        applyAndAnimateAdditions(courses);
+        applyAndAnimateMovedItems(courses);
+    }
+
+    private void applyAndAnimateRemovals(ArrayList<Course> newCourses) {
+        for (int i = mDataset.size() - 1; i >= 0; i--) {
+            final Course course = mDataset.get(i);
+            if (!newCourses.contains(course)) {
+                remove(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(ArrayList<Course> newCourses) {
+        for (int i = 0, count = newCourses.size(); i < count; i++) {
+            final Course course = newCourses.get(i);
+            if (!mDataset.contains(course)) {
+                add(i, course);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(ArrayList<Course> newCourses) {
+        for (int toPosition = newCourses.size() - 1; toPosition >= 0; toPosition--) {
+            final Course course = newCourses.get(toPosition);
+            final int fromPosition = mDataset.indexOf(course);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                move(fromPosition, toPosition);
+            }
+        }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public CourseAdapter(ArrayList<Course> myDataset, Context context) {
         mContext = context;
-        mDataset = myDataset;
+        mDataset = new ArrayList<>(myDataset);
     }
 
     // Create new views (invoked by the layout manager)
