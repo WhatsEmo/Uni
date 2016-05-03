@@ -71,11 +71,8 @@ public class LoginActivity extends Activity {
             ref.authWithPassword(email,password, new Firebase.AuthResultHandler(){
                 @Override
                 public void onAuthenticated(AuthData authData) {
-                    //Checks if user has done the tutorial, if not we start the tutorial.
-                    //After tutorial is done, we exit to MainActivity
-                    //first checks if the isTutorialDone variable a null because it would crash otherwise
-                    checkTutorialDone();
                     //Ends this Acitivty and goes back to the Main Activity
+                    System.out.println(authData.getUid());
                     thisActivity.finish();
                 }
                 @Override

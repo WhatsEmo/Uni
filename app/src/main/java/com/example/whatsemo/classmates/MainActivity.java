@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         firedata = new Firebase(getResources().getString(R.string.database));
 
+        appUser = new User();
+
         firedata.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
@@ -105,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
                 String schoolId = dataSnapshot.child(getResources().getString(R.string.user_school_key)).getValue(String.class);
                 List<String> interests = new ArrayList<String>();
 
-                appUser = new User(uid, name, schoolId, email, interests);
+                appUser.setUid(uid);
+                appUser.setName(name);
+
+                //appUser = new User(uid, name, schoolId, email, interests);
 
             }
 
@@ -138,5 +143,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public User getUser(){
+        return appUser;
+    }
 }
 

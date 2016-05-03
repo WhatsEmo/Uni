@@ -10,7 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +54,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private Firebase firedata;
 
+    private Firebase chatRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +64,60 @@ public class ChatActivity extends AppCompatActivity {
 
         firedata = new Firebase(getResources().getString(R.string.database));
 
-        senderUid = "621e31dd-c8e0-468d-abc3-c2556fbb0e74";
-        recipientUid = "607d4e3a-03d7-44f6-b426-a5d85eb35b1e";
+        senderUid = getIntent().getExtras().getString("user");
+        System.out.println(senderUid);
+        recipientUid = getIntent().getExtras().getString("friend");
 
+        checkChatExists();
+
+        chatRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                System.out.println(dataSnapshot.child("message").getValue());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
+    }
+
+    private void checkChatExists(){
+        String uid = firedata.getAuth().getUid();
+
+        firedata.child("users").child(senderUid).child("friends").child(recipientUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.child("chatId").exists()){
+                    chatRef = firedata.child("chats").push();
+                    firedata.child("users").child(senderUid).child("friends").child(recipientUid).child("chatId").setValue(chatRef.getKey());
+                }
+                else{
+                    chatRef = firedata.child("chats").child(dataSnapshot.child("chatId").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("Failed checking chat: " + firebaseError);
+            }
+
+        });
     }
 
     @OnClick(R.id.chatSendButton)
     public void sendMessage(){
         String message = messageInput.getText().toString();
         messageInput.setText("");
-        Firebase chatRef = firedata.child("chats").child(senderUid+recipientUid);
+
         Firebase messageRef = chatRef.push();
 
         Map<String, String> messageData = new HashMap<String, String>();

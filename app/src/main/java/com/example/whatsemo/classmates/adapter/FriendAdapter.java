@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     private ArrayList<Friend> mDataset;
     private Context mContext;
+    private String uid;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
@@ -82,9 +83,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         }
     }
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FriendAdapter(ArrayList<Friend> myDataset, Context context) {
+    public FriendAdapter(ArrayList<Friend> myDataset, Context context, String uid) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
+        this.uid = uid;
     }
 
     // Create new views (invoked by the layout manager)
@@ -108,7 +110,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         holder.friendName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                friend.openChatActivity(mContext);
+
+                friend.openChatActivity(mContext, uid);
             }
         });
 
