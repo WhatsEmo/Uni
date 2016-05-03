@@ -35,10 +35,50 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         notifyItemInserted(position);
     }
 
-    public void remove(Group group) {
-        int position = mDataset.indexOf(group);
-        mDataset.remove(position);
+    public Group remove(int position) {
+        final Group removedGroup = mDataset.remove(position);
         notifyItemRemoved(position);
+        return removedGroup;
+    }
+
+    public void move(int fromPosition, int toPosition){
+        final Group group = mDataset.remove(fromPosition);
+        mDataset.add(toPosition, group);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void animateTo(ArrayList<Group> groups){
+        applyAndAnimateRemovals(groups);
+        applyAndAnimateAdditions(groups);
+        applyAndAnimateMovedItems(groups);
+    }
+
+    private void applyAndAnimateRemovals(ArrayList<Group> newGroups) {
+        for (int i = mDataset.size() - 1; i >= 0; i--) {
+            final Group group = mDataset.get(i);
+            if (!newGroups.contains(group)) {
+                remove(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(ArrayList<Group> newGroups) {
+        for (int i = 0, count = newGroups.size(); i < count; i++) {
+            final Group group = newGroups.get(i);
+            if (!mDataset.contains(group)) {
+                add(i, group);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(ArrayList<Group> newGroups) {
+        for (int toPosition = newGroups.size() - 1; toPosition >= 0; toPosition--) {
+            final Group group = newGroups.get(toPosition);
+            final int fromPosition = mDataset.indexOf(group);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                move(fromPosition, toPosition);
+            }
+        }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)

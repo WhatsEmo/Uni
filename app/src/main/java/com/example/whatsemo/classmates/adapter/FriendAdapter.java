@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.whatsemo.classmates.model.Friend;
 import com.example.whatsemo.classmates.R;
+import com.example.whatsemo.classmates.model.Friend;
 
 import java.util.ArrayList;
 
@@ -35,16 +35,56 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         notifyItemInserted(position);
     }
 
-    public void remove(Friend friend) {
-        int position = mDataset.indexOf(friend);
-        mDataset.remove(position);
+
+    public Friend remove(int position) {
+        final Friend removedFriend = mDataset.remove(position);
         notifyItemRemoved(position);
+        return removedFriend;
     }
 
+    public void move(int fromPosition, int toPosition){
+        final Friend friend = mDataset.remove(fromPosition);
+        mDataset.add(toPosition, friend);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void animateTo(ArrayList<Friend> friends){
+        applyAndAnimateRemovals(friends);
+        applyAndAnimateAdditions(friends);
+        applyAndAnimateMovedItems(friends);
+    }
+
+    private void applyAndAnimateRemovals(ArrayList<Friend> newFriends) {
+        for (int i = mDataset.size() - 1; i >= 0; i--) {
+            final Friend friend = mDataset.get(i);
+            if (!newFriends.contains(friend)) {
+                remove(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(ArrayList<Friend> newFriends) {
+        for (int i = 0, count = newFriends.size(); i < count; i++) {
+            final Friend friend = newFriends.get(i);
+            if (!mDataset.contains(friend)) {
+                add(i, friend);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(ArrayList<Friend> newFriends) {
+        for (int toPosition = newFriends.size() - 1; toPosition >= 0; toPosition--) {
+            final Friend friend = newFriends.get(toPosition);
+            final int fromPosition = mDataset.indexOf(friend);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                move(fromPosition, toPosition);
+            }
+        }
+    }
     // Provide a suitable constructor (depends on the kind of dataset)
     public FriendAdapter(ArrayList<Friend> myDataset, Context context) {
         mContext = context;
-        mDataset = myDataset;
+        mDataset = new ArrayList<>(myDataset);
     }
 
     // Create new views (invoked by the layout manager)

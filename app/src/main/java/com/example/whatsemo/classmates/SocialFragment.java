@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.whatsemo.classmates.adapter.CourseAdapter;
@@ -26,7 +25,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 
@@ -62,12 +60,8 @@ public class SocialFragment extends Fragment {
     @Bind(R.id.groupsRecyclerView)
     RecyclerView groupsRecyclerView;
 
-    @Bind(R.id.chat_search_layout)
-    LinearLayout chatSearchLayout;
-
-    @Bind(R.id.chat_search)
-    EditText chatSearchEditText;
-
+    @Bind(R.id.action_search)
+    SearchView actionSearch;
 
     private static final String ARG_PAGE = "param2";
 
@@ -85,14 +79,14 @@ public class SocialFragment extends Fragment {
     private ArrayList<Group> userGroups;
 
 
-    private RecyclerView.Adapter coursesAdapter;
+    private CourseAdapter coursesAdapter;
     private RecyclerView.LayoutManager coursesLayoutManager;
 
 
-    private RecyclerView.Adapter friendsAdapter;
+    private FriendAdapter friendsAdapter;
     private RecyclerView.LayoutManager friendsLayoutManager;
 
-    private RecyclerView.Adapter groupsAdapter;
+    private GroupAdapter groupsAdapter;
     private RecyclerView.LayoutManager groupsLayoutManager;
 
 
@@ -111,11 +105,16 @@ public class SocialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+
 
         if (getArguments() != null) {
             mPage = getArguments().getInt(ARG_PAGE);
         }
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,7 +134,6 @@ public class SocialFragment extends Fragment {
         userCourses = new ArrayList<Course>();
         userGroups = new ArrayList<Group>();
 
-        setUpAdapters();
 
 
         ref = new Firebase(getResources().getString(R.string.database));
@@ -154,29 +152,34 @@ public class SocialFragment extends Fragment {
                     if (hasCourses) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
                         for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                            userCourses.add(new Course(entry.getKey(), entry.getValue()));
+                            Course course = new Course(entry.getKey(), entry.getValue());
+                            if(!userCourses.contains(course)){
+                                userCourses.add(course);
+                            }
                         }
-                        Collections.sort(userCourses, customSorter);
-                        coursesAdapter.notifyDataSetChanged();
                     }
                     if (hasFriends) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_friends_key)).getValue();
                         for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                            userFriends.add(new Friend(entry.getKey(), entry.getValue()));
+                            Friend friend = new Friend(entry.getKey(), entry.getValue());
+                            if(!userFriends.contains(friend)){
+                                userFriends.add(friend);
+                            }
                         }
-                        Collections.sort(userFriends, customSorter);
-                        friendsAdapter.notifyDataSetChanged();
 
                     }
                     if (hasGroups) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
                         for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                            userGroups.add(new Group(entry.getKey(), entry.getValue()));
+                            Group group = new Group(entry.getKey(), entry.getValue());
+                            if(!userGroups.contains(group)){
+                                userGroups.add(group);
+                            }
                         }
-                        Collections.sort(userGroups, customSorter);
-                        groupsAdapter.notifyDataSetChanged();
                     }
                     setVisibility();
+                    setUpAdapters();
+                    createSearchBar();
                 }
 
                 @Override
@@ -287,11 +290,11 @@ public class SocialFragment extends Fragment {
             *************COURSES*************
          */
         // use a linear layout manager
-        coursesLayoutManager = new LinearLayoutManager(this.getContext());
+        coursesLayoutManager = new LinearLayoutManager(this.getActivity());
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
 
         // specify an adapter
-        coursesAdapter = new CourseAdapter(userCourses, getContext());
+        coursesAdapter = new CourseAdapter(userCourses, getActivity());
         coursesRecyclerView.setAdapter(coursesAdapter);
 
         /*
@@ -299,7 +302,7 @@ public class SocialFragment extends Fragment {
          */
 
         // use a linear layout manager
-        friendsLayoutManager = new LinearLayoutManager(this.getContext());
+        friendsLayoutManager = new LinearLayoutManager(this.getActivity());
         friendRecyclerView.setLayoutManager(friendsLayoutManager);
 
         // specify an adapter
@@ -317,6 +320,96 @@ public class SocialFragment extends Fragment {
         // specify an adapter
         groupsAdapter = new GroupAdapter(userGroups, getContext());
         groupsRecyclerView.setAdapter(groupsAdapter);
-
     }
+
+    private void createSearchBar(){
+        final SearchView searchView = actionSearch;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                //***********COURSES***********
+                final ArrayList<Course> filteredCourses = filterCourses(userCourses, query);
+                coursesAdapter.animateTo(filteredCourses);
+                coursesRecyclerView.scrollToPosition(0);
+
+                //***********FRIENDS***********
+                final ArrayList<Friend> filteredFriends = filterFriends(userFriends, query);
+                friendsAdapter.animateTo(filteredFriends);
+                friendRecyclerView.scrollToPosition(0);
+
+                //***********GROUPS***********
+                final ArrayList<Group> filteredGroups = filterGroups(userGroups, query);
+                groupsAdapter.animateTo(filteredGroups);
+                groupsRecyclerView.scrollToPosition(0);
+/*
+                if(!filteredCourses.isEmpty() && coursesRecyclerView.getVisibility() == View.GONE){
+                    coursesRecyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    coursesRecyclerView.setVisibility(View.GONE);
+                }
+                if(!filteredFriends.isEmpty() && friendRecyclerView.getVisibility() == View.GONE){
+                    friendRecyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    friendRecyclerView.setVisibility(View.GONE);
+                }
+                if(!filteredGroups.isEmpty() && groupsRecyclerView.getVisibility() == View.GONE){
+                    groupsRecyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    groupsRecyclerView.setVisibility(View.GONE);
+                }
+*/
+                coursesAdapter.notifyDataSetChanged();
+                friendsAdapter.notifyDataSetChanged();
+                groupsAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
+
+    private ArrayList<Course> filterCourses(ArrayList<Course> courses, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<Course> filteredCourses = new ArrayList<>();
+        for (Course object : courses) {
+            final String text = object.getName().toLowerCase();
+            if (text.contains(query)) {
+                filteredCourses.add(object);
+            }
+        }
+        return filteredCourses;
+    }
+
+
+    private ArrayList<Friend> filterFriends(ArrayList<Friend> friends, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<Friend> filteredFriends = new ArrayList<>();
+        for (Friend object : friends) {
+            final String text = object.getName().toLowerCase();
+            if (text.contains(query)) {
+                filteredFriends.add(object);
+            }
+        }
+        return filteredFriends;
+    }
+
+
+    private ArrayList<Group> filterGroups(ArrayList<Group> groups, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<Group> filteredGroups = new ArrayList<>();
+        for (Group object : groups) {
+            final String text = object.getName().toLowerCase();
+            if (text.contains(query)) {
+                filteredGroups.add(object);
+            }
+        }
+        return filteredGroups;
+    }
+
 }
