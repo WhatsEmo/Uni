@@ -162,14 +162,14 @@ public class SearchActivity extends Activity {
 
                 // specify an adapter
                 //Put this here since it will be the default amount shown when the user enters the Activity.
-                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext());
+                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), userID);
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext());
+                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), userID);
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
             }
         });
