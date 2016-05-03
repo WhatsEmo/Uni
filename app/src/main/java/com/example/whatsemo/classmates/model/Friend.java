@@ -39,4 +39,11 @@ public class Friend extends DatabaseObject{
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         context.startActivity(startChatIntent);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(o instanceof Friend) return ((Friend) o).getUid().equals(uid);
+        return false;
+    }
 }

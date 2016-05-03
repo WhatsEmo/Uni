@@ -14,23 +14,19 @@
             android:background="@drawable/ic_back"
             />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_search"/>
+        <android.support.v7.widget.SearchView
+        android:id="@+id/activity_action_search"
+        android:title="@string/search_hint"
+        android:actionViewClass="android.support.v7.widget.SearchView"
+        android:showAsAction="always"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <EditText
-            android:id="@+id/search_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_hint"
-            android:inputType="textAutoCorrect"
-            android:imeOptions="actionSearch"/>
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/search_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:isScrollContainer="true"></ListView>
+        android:isScrollContainer="true"></android.support.v7.widget.RecyclerView>
 </LinearLayout>
