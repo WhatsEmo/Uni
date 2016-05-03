@@ -2,6 +2,7 @@ package com.example.whatsemo.classmates.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.example.whatsemo.classmates.ChatActivity;
 
@@ -35,8 +36,12 @@ public class Friend extends DatabaseObject{
         this.name = name;
     }
 
-    public void openChatActivity(Context context){
+    public void openChatActivity(Context context, String uid){
         Intent startChatIntent = new Intent(context, ChatActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("user", uid);
+        bundle.putString("friend", this.getUid());
+        startChatIntent.putExtras(bundle);
         context.startActivity(startChatIntent);
     }
 
