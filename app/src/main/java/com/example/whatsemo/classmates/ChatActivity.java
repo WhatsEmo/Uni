@@ -1,8 +1,8 @@
 package com.example.whatsemo.classmates;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -127,4 +127,10 @@ public class ChatActivity extends AppCompatActivity {
         messageRef.setValue(messageData);
 
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+    }
 }
+
