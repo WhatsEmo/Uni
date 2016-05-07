@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+<script type="text/javascript">
+
+	var firebaseRef = new Firebase("https://uni-database.firebaseio.com/");
+	var USER_COUNT = 2;
+
+	function createUsers() {
+		var uidArray = [] ; // want to have an array of user IDs
+
+		for (i=0;i<USER_COUNT;i++){
+			firebaseRef.createUser({
+				email : "u" + i + "@uci.edu",
+				password : "p" + i
+			}, function(error, userData) {
+  			if (error) {
+    		console.log("Error creating user:", error);
+  			}
+				else {
+    		console.log("Successfully created user account with uid:", userData.uid); //need this uid data!
+				uidArray[i] = userData.uid //doesn't work...
+  			}
+			});
+		}
+		console.log(uidArray[1])
+		return uidArray;
+	}
+
+	function populateUsers(uidArray) {
+		// populate new users with name, email, sid, courses, interests
+
+		var userRef = firebaseRef;
+		for (i=0;i<USER_COUNT;i++){
+			userRef = userRef.child(uidArray[i]);
+			userRef.set({
+				name: "user" + i,
+				email: "u" + i + "@uci.edu",
+				sid: "uci",
+				courses: [111, 222, 333, 444, 555],
+				interests: ["ball", "is", "lyfe", "CreaTine"]
+			})
+		}
+	}
+
+	function init(){
+		//playing around with HTML :)
+		document.write("<h3>Generating Firebase data</h3>");
+		populateUsers(createUsers()); //is this how functional programming works??
+	}
+
+</script>
+
+</head>
+<body onload="init()">
+</body>
+</html>
