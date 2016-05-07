@@ -53,4 +53,5 @@ var interests = {
 };
 
 // adding 5 users
-firebase.authWithCustomToken('tYtVLWNEIHG7elPsrzBRs0taV9NBCwcknek6Bp7y', generateUsers(5));
+// put Firebase secret as 1st arg (as a string)
+firebase.authWithCustomToken('firebasesecretgoeshere', generateUsers(5));
