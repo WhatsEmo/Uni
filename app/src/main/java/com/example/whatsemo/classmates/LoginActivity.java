@@ -99,7 +99,6 @@ public class LoginActivity extends Activity {
 
         if(requestCode == SIGN_UP_RESULTS){
             if(resultCode == USER_LOGGED_IN_THROUGH_SIGNUP){
-                checkTutorialDone();
                 thisActivity.finish();
             }
             if(resultCode == USER_DID_NOT_LOG_IN){

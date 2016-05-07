@@ -115,4 +115,12 @@ public class User implements Parcelable {
         this.uid = uid;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(o instanceof User) return ((User) o).getUid().equals(uid);
+        return false;
+    }
+
 }

@@ -38,4 +38,11 @@ public class Course extends DatabaseObject{
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         context.startActivity(startChatIntent);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(o instanceof Course) return ((Course) o).getCourseID().equals(courseID);
+        return false;
+    }
 }

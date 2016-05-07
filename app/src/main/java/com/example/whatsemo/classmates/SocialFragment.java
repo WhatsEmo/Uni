@@ -110,7 +110,6 @@ public class SocialFragment extends Fragment {
         setHasOptionsMenu(true);
 
         appUser = ((MainActivity)getActivity()).getUser();
-        System.out.println(appUser.getName());
 
         if (getArguments() != null) {
             mPage = getArguments().getInt(ARG_PAGE);
@@ -153,29 +152,38 @@ public class SocialFragment extends Fragment {
 
                     if (hasCourses) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
-                        for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                            Course course = new Course(entry.getKey(), entry.getValue());
-                            if(!userCourses.contains(course)){
-                                userCourses.add(course);
+                        if(retrieveDataMap.keySet().size() != userCourses.size()) {
+                            userCourses.clear();
+                            for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
+                                Course course = new Course(entry.getKey(), entry.getValue());
+                                if (!userCourses.contains(course)) {
+                                    userCourses.add(course);
+                                }
                             }
                         }
                     }
                     if (hasFriends) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_friends_key)).getValue();
-                        for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                            Friend friend = new Friend(entry.getKey(), entry.getValue());
-                            if(!userFriends.contains(friend)){
-                                userFriends.add(friend);
+                        if(retrieveDataMap.keySet().size() != userFriends.size()) {
+                            userFriends.clear();
+                            for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
+                                Friend friend = new Friend(entry.getKey(), entry.getValue());
+                                if (!userFriends.contains(friend)) {
+                                    userFriends.add(friend);
+                                }
                             }
                         }
 
                     }
                     if (hasGroups) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
-                        for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                            Group group = new Group(entry.getKey(), entry.getValue());
-                            if(!userGroups.contains(group)){
-                                userGroups.add(group);
+                        if(retrieveDataMap.keySet().size() != userGroups.size()) {
+                            userGroups.clear();
+                            for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
+                                Group group = new Group(entry.getKey(), entry.getValue());
+                                if (!userGroups.contains(group)) {
+                                    userGroups.add(group);
+                                }
                             }
                         }
                     }

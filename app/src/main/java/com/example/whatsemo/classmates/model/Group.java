@@ -38,4 +38,11 @@ public class Group extends DatabaseObject{
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         context.startActivity(startChatIntent);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(o instanceof Group) return ((Group) o).getGroupID().equals(groupID);
+        return false;
+    }
 }

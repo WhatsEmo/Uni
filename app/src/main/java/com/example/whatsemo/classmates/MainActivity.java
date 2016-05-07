@@ -64,13 +64,12 @@ public class MainActivity extends AppCompatActivity {
                     //user is logged on
                     uid = firedata.getAuth().getUid();
                     createUserObject();
+                    //sets the view if user finished tutorial
                     checkTutorialDone();
-                    setView();
 
                 } else {
                     //user is not logged on
                     startLoginActivity();
-                    setView();
                 }
             }
         });
@@ -107,16 +106,13 @@ public class MainActivity extends AppCompatActivity {
                 String schoolId = dataSnapshot.child(getResources().getString(R.string.user_school_key)).getValue(String.class);
                 List<String> interests = new ArrayList<String>();
 
-                appUser.setUid(uid);
-                appUser.setName(name);
 
-                //appUser = new User(uid, name, schoolId, email, interests);
-
+                appUser = new User(uid, name, schoolId, email, interests);
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+
             }
         });
     }
@@ -134,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     startTutorialIntent.putExtras(parcelBundle);
                     startActivity(startTutorialIntent);
                 }
+                setView();
             }
 
             @Override

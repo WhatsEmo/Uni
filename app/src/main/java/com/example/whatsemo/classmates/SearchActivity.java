@@ -100,25 +100,27 @@ public class SearchActivity extends Activity {
                 Map<String, Map<String, String>> getData;
                 if (dataSnapshot.exists()) {
                     getData = (Map<String, Map<String, String>>) dataSnapshot.getValue();
-                    List<Friend> checkUpdates = new ArrayList<Friend>();
-                    for (Map.Entry<String, Map<String, String>> data : getData.entrySet()) {
-                        for (Map.Entry<String, String> innerData : data.getValue().entrySet()) {
-                            //Prevents the user him/herself from being added into the list
-                            if (!innerData.getKey().equals(userID)) {
-                                Friend friend = new Friend(innerData.getKey(), innerData.getValue());
-                                checkUpdates.add(friend);
+                    if(getData != null) {
+                        for (Map.Entry<String, Map<String, String>> data : getData.entrySet()) {
+                            List<Friend> checkUpdates = new ArrayList<Friend>();
+                            for (Map.Entry<String, String> innerData : data.getValue().entrySet()) {
+                                //Prevents the user him/herself from being added into the list
+                                if (!innerData.getKey().equals(userID)) {
+                                    Friend friend = new Friend(innerData.getKey(), innerData.getValue());
+                                    checkUpdates.add(friend);
+                                }
                             }
-                        }
 
-                        //Check to prevent crashes and increase speed
-                        if (interestQuery.get(data.getKey()) == null) {
-                            interestQuery.put(data.getKey(), checkUpdates);
-                        } else if (interestQuery.get(data.getKey()).size() != checkUpdates.size()) {
-                            //If there is a difference, then we will update the data we have
-                            interestQuery.get(data.getKey()).clear();
-                            interestQuery.get(data.getKey()).addAll(checkUpdates);
+                            //Check to prevent crashes and increase speed
+                            if (interestQuery.get(data.getKey()) == null) {
+                                interestQuery.put(data.getKey(), checkUpdates);
+                            } else if (interestQuery.get(data.getKey()).size() != checkUpdates.size()) {
+                                //If there is a difference, then we will update the data we have
+                                interestQuery.get(data.getKey()).clear();
+                                interestQuery.get(data.getKey()).addAll(checkUpdates);
+                            }
+                            //Else nothing happens
                         }
-                        //Else nothing happens
                     }
 
                 }

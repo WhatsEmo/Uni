@@ -90,7 +90,12 @@ public class QueryManager {
         Map<String, Object> addUser = new HashMap<String, Object>();
         addUser.put(user.getUid(), user.getName());
         for(String key : data){
-            schoolRef.child(label).child(key).child("roster").updateChildren(addUser);
+            if(label.equals("courses")) {
+                schoolRef.child(label).child(key).child("roster").updateChildren(addUser);
+            }else{
+                //If interests
+                schoolRef.child(label).child(key).updateChildren(addUser);
+            }
         }
     }
 
