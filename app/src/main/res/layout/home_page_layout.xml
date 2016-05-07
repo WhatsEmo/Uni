@@ -32,7 +32,7 @@
                 android:layout_height="140dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/profilePicture"
-                android:src="@drawable/default_profile_pic"
+                android:src="@drawable/dijkstra"
                 android:layout_marginTop="130dp"
                 android:layout_marginLeft="30dp"
                 android:background="@drawable/border"/>

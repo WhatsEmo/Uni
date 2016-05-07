@@ -17,6 +17,8 @@ public class User implements Parcelable {
     private String email;
     private List<String> interests;
 
+    public User(){};
+
     public User(String uid,
                 String name,
                 String school,

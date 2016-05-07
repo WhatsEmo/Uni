@@ -19,6 +19,7 @@ import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.DatabaseObject;
 import com.example.whatsemo.classmates.model.Friend;
 import com.example.whatsemo.classmates.model.Group;
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -71,6 +72,7 @@ public class SocialFragment extends Fragment {
 
 
     private Firebase ref;
+    private User appUser;
     private Comparator<DatabaseObject> customSorter;
     private Map<String, String> retrieveDataMap;
 
@@ -97,7 +99,7 @@ public class SocialFragment extends Fragment {
     public static SocialFragment newInstance(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-        SocialFragment fragment = new SocialFragment();
+                SocialFragment fragment = new SocialFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -107,13 +109,13 @@ public class SocialFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-
+        appUser = ((MainActivity)getActivity()).getUser();
+        System.out.println(appUser.getName());
 
         if (getArguments() != null) {
             mPage = getArguments().getInt(ARG_PAGE);
         }
     }
-
 
 
     @Override
@@ -306,7 +308,7 @@ public class SocialFragment extends Fragment {
         friendRecyclerView.setLayoutManager(friendsLayoutManager);
 
         // specify an adapter
-        friendsAdapter = new FriendAdapter(userFriends, getContext());
+        friendsAdapter = new FriendAdapter(userFriends, getActivity(), appUser.getUid());
         friendRecyclerView.setAdapter(friendsAdapter);
 
         /*
