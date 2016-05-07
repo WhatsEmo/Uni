@@ -21,6 +21,12 @@ function createUser(courses, email, interests, name, sid) {
 					sid: sid
 				}
 			users.child(userData.uid).set(newUser);
+			for (course in courses) {
+				firebase.child('schools').child('uci').child('courses').child(course).child('roster').child(userData.uid).set(name);
+			}
+			for (interest in interests) {
+				firebase.child('schools').child('uci').child('interests').child(interests[interest]).child(userData.uid).set(name);
+			}
 			console.log('Created user with uid: ' + userData.uid);
 		}
 	})
@@ -28,16 +34,16 @@ function createUser(courses, email, interests, name, sid) {
 
 function generateUsers(numUsers) {
 	for (var i = 0; i < numUsers; ++i) {
-		var func = createUser(courses, "u" + i + "@uci.edu", interests, "user " + i, "uci");
+		var func = createUser(courses, "a" + i + "@uci.edu", interests, "user a" + i, "uci");
 	}
 	firebase.unauth();
 }
 
 // creating dummy classes/interests
 var courses = {
-	111: "class one",
-	333: "class three",
-	999: "class nine"
+	111: "dicks",
+	333: "ICS 53",
+	555: "10101"
 };
 
 var interests = {
