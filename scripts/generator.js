@@ -34,7 +34,7 @@ function createUser(courses, email, interests, name, sid) {
 
 function generateUsers(numUsers) {
 	for (var i = 0; i < numUsers; ++i) {
-		var func = createUser(courses, "b" + i + "@uci.edu", interests, "user b" + i, "uci");
+		var func = createUser(courses, process.argv[2] + i + "@uci.edu", interests, "user " + process.argv[2] + i, "uci");
 	}
 	firebase.unauth();
 }
@@ -53,4 +53,4 @@ var interests = {
 };
 
 // put Firebase secret as 1st arg (as a string)
-firebase.authWithCustomToken('firebasesecretgoeshere', generateUsers(process.argv[2]));
+firebase.authWithCustomToken('firebasesecretgoeshere', generateUsers(process.argv[3]));
