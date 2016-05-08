@@ -80,6 +80,7 @@ public class ChatActivity extends AppCompatActivity {
                 if (!dataSnapshot.child("chatId").exists()){
                     chatRef = firedata.child("chats").push();
                     firedata.child("users").child(senderUid).child("friends").child(recipientUid).child("chatId").setValue(chatRef.getKey());
+                    firedata.child("users").child(recipientUid).child("friends").child(senderUid).child("chatId").setValue(chatRef.getKey());
                 }
                 else{
                     chatRef = firedata.child("chats").child(dataSnapshot.child("chatId").getValue().toString());
