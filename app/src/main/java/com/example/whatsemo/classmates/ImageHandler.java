@@ -10,6 +10,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
+import android.util.Base64;
+
+import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,6 +38,8 @@ public class ImageHandler {
         File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".png");
 
         FileOutputStream fileOutputStream;
+        Uri selectedImageUri = data.getData();
+        int orientation = getOrientation(selectedImageUri);
 
         try{
             destination.createNewFile();
@@ -45,7 +50,11 @@ public class ImageHandler {
             e.printStackTrace();
         }
 
-        return rotateProperly(cameraPicture, 90);
+        if(orientation > 0){
+            return rotateProperly(cameraPicture, orientation);
+        }else {
+            return cameraPicture;
+        }
     }
 
     public Bitmap fromLibrary(Intent data){
@@ -74,16 +83,40 @@ public class ImageHandler {
         options.inJustDecodeBounds = false;
         bitmap = BitmapFactory.decodeFile(selectedImagePath, options);
 
-        return rotateProperly(bitmap, 90);
+        int orientation = getOrientation(selectedImageUri);
+        if( orientation > 0){
+            return rotateProperly(bitmap, orientation);
+        }else {
+            return bitmap;
+        }
     }
 
     private Bitmap rotateProperly(Bitmap source, float angle){
         Bitmap rotatedImage;
 
         Matrix matrix = new Matrix();
-        matrix.postRotate(90);
+        matrix.postRotate(angle);
         rotatedImage = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
 
         return rotatedImage;
     }
+
+    private int getOrientation(Uri photoUri){
+        Cursor cursor = context.getContentResolver().query(photoUri, new String[]{ MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
+        if(cursor.getCount() != 1){
+            return -1;
+        }
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
+    public void uploadToFirebase(Firebase ref, Bitmap bm, String label){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        ref.child("users").child(ref.getAuth().getUid()).child(label).setValue(imageFile);
+    }
+
 }
