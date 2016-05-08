@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import com.example.whatsemo.classmates.adapter.FriendAdapter;
 import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.Friend;
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -45,6 +46,7 @@ public class SearchActivity extends Activity {
 
     private Firebase firedata;
     private String userID;
+    private User appUser;
     private ArrayList<Course> userCourses;
     private ArrayList<Friend> searchResults;
     private Map<String, List<Friend>> interestQuery;
@@ -63,6 +65,8 @@ public class SearchActivity extends Activity {
         userCourses = new ArrayList<Course>();
         searchResults = new ArrayList<Friend>();
         classmates = new ArrayList<Friend>();
+
+        appUser = getIntent().getExtras().getParcelable("appUser");
 
         firedata = new Firebase(getResources().getString(R.string.database));
         userID = firedata.getAuth().getUid();
@@ -164,14 +168,14 @@ public class SearchActivity extends Activity {
 
                 // specify an adapter
                 //Put this here since it will be the default amount shown when the user enters the Activity.
-                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), userID);
+                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), appUser);
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), userID);
+                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), appUser);
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
             }
         });

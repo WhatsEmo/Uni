@@ -316,7 +316,7 @@ public class SocialFragment extends Fragment {
         friendRecyclerView.setLayoutManager(friendsLayoutManager);
 
         // specify an adapter
-        friendsAdapter = new FriendAdapter(userFriends, getActivity(), appUser.getUid());
+        friendsAdapter = new FriendAdapter(userFriends, getActivity(), appUser);
         friendRecyclerView.setAdapter(friendsAdapter);
 
         /*

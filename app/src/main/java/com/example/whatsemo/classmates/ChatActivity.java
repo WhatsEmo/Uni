@@ -79,8 +79,8 @@ public class ChatActivity extends AppCompatActivity {
         firedata = new Firebase(getResources().getString(R.string.database));
 
         senderUid = getIntent().getExtras().getString("uid");
-        recipientUid = getIntent().getExtras().getString("friend");
         senderName = getIntent().getExtras().getString("userName");
+        recipientUid = getIntent().getExtras().getString("friendID");
         recipientName = getIntent().getExtras().getString("friendName");
 
         messages = new ArrayList<Message>();

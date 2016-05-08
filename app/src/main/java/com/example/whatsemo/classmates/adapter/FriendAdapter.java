@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Friend;
+import com.example.whatsemo.classmates.model.User;
 
 import java.util.ArrayList;
 
@@ -16,10 +17,9 @@ import java.util.ArrayList;
  * Created by WhatsEmo on 4/29/2016.
  */
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
-    private String appUserName;
+    private User appUser;
     private ArrayList<Friend> mDataset;
     private Context mContext;
-    private String uid;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
@@ -84,11 +84,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         }
     }
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FriendAdapter(ArrayList<Friend> myDataset, Context context, String uid, String appUserName) {
+    public FriendAdapter(ArrayList<Friend> myDataset, Context context, User user) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
-        this.uid = uid;
-        this.appUserName = appUserName;
+        appUser = user;
     }
 
     // Create new views (invoked by the layout manager)
@@ -113,7 +112,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             @Override
             public void onClick(View v) {
 
-                friend.openChatActivity(mContext, uid, appUserName);
+                friend.openChatActivity(mContext, appUser);
             }
         });
 

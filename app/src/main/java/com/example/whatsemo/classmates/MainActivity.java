@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.search_icon)
     public void startSearchActivity(){
         Intent intent = new Intent(this, SearchActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("appUser", appUser);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
