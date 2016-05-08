@@ -130,9 +130,9 @@ public class ChatActivity extends AppCompatActivity {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         String author = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
-                        String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
+                        //String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
 
-                        Message newMessage = new Message(author,message,timeStamp);
+                        Message newMessage = new Message(author,message,"");
                         messages.add(newMessage);
                     }
 
