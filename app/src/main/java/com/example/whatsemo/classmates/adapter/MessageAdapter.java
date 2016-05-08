@@ -22,11 +22,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView authorName;
         public TextView sentMessage;
+        public TextView timeStamp;
 
         public ViewHolder(View v) {
                 super(v);
             authorName = (TextView) v.findViewById(R.id.author_name);
             sentMessage = (TextView) v.findViewById(R.id.message);
+            timeStamp = (TextView) v.findViewById(R.id.time_stamp);
         }
     }
 
@@ -66,6 +68,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         final Message message = mDataset.get(position);
         holder.authorName.setText(mDataset.get(position).getAuthor());
         holder.sentMessage.setText(mDataset.get(position).getMessage());
+        holder.timeStamp.setText(mDataset.get(position).getTimeStamp());
         //ADD MORE LATER
     }
 

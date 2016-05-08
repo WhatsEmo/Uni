@@ -20,7 +20,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
                         String author;
                         String authorId = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
-                        //String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
+                        String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
 
                         if(authorId.equals(senderUid)){
                             author = senderName;
@@ -129,7 +131,7 @@ public class ChatActivity extends AppCompatActivity {
                             author = recipientName;
                         }
 
-                        Message newMessage = new Message(author,message,"");
+                        Message newMessage = new Message(author,message,timeStamp);
                         messages.add(newMessage);
 
                         messagesRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
@@ -165,12 +167,16 @@ public class ChatActivity extends AppCompatActivity {
 
         Firebase messageRef = chatRef.push();
         java.util.Date date= new java.util.Date();
-        Timestamp timeNow = new Timestamp(date.getTime());
+        //Calendar calendar = Calendar.getInstance();
+        //int timeNow = calendar.get(Calendar.SECOND);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("K:mm a");
+        String timeNow = sdf.format(date);
 
         Map<String, String> messageData = new HashMap<String, String>();
         messageData.put("author", senderUid);
         messageData.put("message", message);
-        messageData.put("timestamp", timeNow.toString());
+        messageData.put("timestamp", timeNow);
 
         messageRef.setValue(messageData);
 
