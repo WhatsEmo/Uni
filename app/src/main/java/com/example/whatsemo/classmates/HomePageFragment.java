@@ -1,12 +1,18 @@
 package com.example.whatsemo.classmates;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -16,6 +22,7 @@ import com.firebase.client.ValueEventListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,18 +34,30 @@ import butterknife.ButterKnife;
  */
 public class HomePageFragment extends Fragment {
     private static final String ARG_PAGE = "ARG_PAGE";
+    private static final int REQUEST_CAMERA = 0;
+    private static final int SELECT_FILE = 1;
 
     private int mPage;
 
     private OnFragmentInteractionListener mListener;
 
+    public ImageHandler imageHandler;
+
     private Firebase ref;
 
     @Bind(R.id.homeUserName)
-    public TextView userName;
+    TextView userName;
 
     @Bind(R.id.homeUserMajor)
-    public TextView userMajor;
+    TextView userMajor;
+
+    @Bind(R.id.profile_picture)
+    ImageButton profilePicture;
+
+    @OnClick(R.id.profile_picture)
+    public void changeProfilePicture(){
+        selectPicture();
+    }
 
     public HomePageFragment() {
         // Required empty public constructor
@@ -67,6 +86,8 @@ public class HomePageFragment extends Fragment {
         View view = inflater.inflate(R.layout.home_page_layout, container, false);
         ButterKnife.bind(this, view);
         ref = new Firebase(getResources().getString(R.string.database));
+
+        imageHandler = new ImageHandler(this.getActivity());
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
@@ -121,5 +142,50 @@ public class HomePageFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    private void selectPicture() {
+        final String[] options = {"Take Picture", "Choose from Library", "Cancel"};
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getActivity());
+        dialogBuilder.setTitle("Choose Profile Picture!");
+        dialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                switch (item) {
+                    case 0:
+                        //From Camera
+                        Intent startCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(startCameraIntent, REQUEST_CAMERA);
+                        break;
+                    case 1:
+                        //From Library
+                        Intent startLibraryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startLibraryIntent.setType("image/");
+                        startActivityForResult(Intent.createChooser(startLibraryIntent, "Select File"), SELECT_FILE);
+                        break;
+                    case 2:
+                        //Cancel
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        });
+        dialogBuilder.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Result code = either RESULT_OK = user selected image and RESULT_CANCEL = user didn't select image
+        if(resultCode == getActivity().RESULT_OK){
+            if(requestCode == REQUEST_CAMERA){
+                Bitmap bm = imageHandler.fromCamera(data);
+                profilePicture.setImageBitmap(bm);
+
+            }else if(requestCode == SELECT_FILE){
+                Bitmap bm = imageHandler.fromLibrary(data);
+                profilePicture.setImageBitmap(bm);
+            }
+        }
     }
 }

@@ -19,10 +19,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +42,6 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.recipientName)
     TextView recipientNameTextView;
 
-    @Bind(R.id.backButton)
-    Button backButton;
-
     @Bind(R.id.profilePicture)
     ImageView profilePicture;
 
@@ -58,6 +53,11 @@ public class ChatActivity extends AppCompatActivity {
 
     @Bind(R.id.messagesView)
     RecyclerView messagesRecyclerView;
+
+    @OnClick(R.id.chat_back_button)
+    public void finishActivity(){
+        finish();
+    }
 
     private String senderUid;
     private String recipientUid;
@@ -84,6 +84,8 @@ public class ChatActivity extends AppCompatActivity {
         senderName = getIntent().getExtras().getString("userName");
         recipientUid = getIntent().getExtras().getString("friendID");
         recipientName = getIntent().getExtras().getString("friendName");
+
+        recipientNameTextView.setText(recipientName);
 
         messages = new ArrayList<Message>();
 
@@ -133,7 +135,7 @@ public class ChatActivity extends AppCompatActivity {
 
                         Message newMessage = new Message(author,message,timeStamp);
                         messages.add(newMessage);
-
+                        messagesAdapter.notifyDataSetChanged();
                         messagesRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
                     }
 

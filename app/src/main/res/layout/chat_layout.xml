@@ -21,15 +21,11 @@
             android:layout_toEndOf="@+id/profilePicture"
             android:layout_alignBottom="@+id/profilePicture" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="O"
-            android:id="@+id/backButton"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:background="@drawable/ic_back"
+            android:id="@+id/chat_back_button"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,8 +33,8 @@
             android:id="@+id/profilePicture"
             android:background="@drawable/ic_search"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/backButton"
-            android:layout_alignBottom="@+id/backButton" />
+            android:layout_toRightOf="@+id/chat_back_button"
+            android:layout_alignBottom="@+id/chat_back_button" />
 
     </RelativeLayout>
 
