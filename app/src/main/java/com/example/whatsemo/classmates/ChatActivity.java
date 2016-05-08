@@ -131,6 +131,8 @@ public class ChatActivity extends AppCompatActivity {
 
                         Message newMessage = new Message(author,message,"");
                         messages.add(newMessage);
+
+                        messagesRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
                     }
 
                     @Override
