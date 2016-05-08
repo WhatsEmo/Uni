@@ -172,7 +172,7 @@ public class ChatActivity extends AppCompatActivity {
         //Calendar calendar = Calendar.getInstance();
         //int timeNow = calendar.get(Calendar.SECOND);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("K:mm a");
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
         String timeNow = sdf.format(date);
 
         Map<String, String> messageData = new HashMap<String, String>();
