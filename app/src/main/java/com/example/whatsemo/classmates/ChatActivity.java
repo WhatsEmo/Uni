@@ -19,6 +19,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     RelativeLayout inputLayout;
 
     @Bind(R.id.recipientName)
-    TextView recipientName;
+    TextView recipientNameTextView;
 
     @Bind(R.id.backButton)
     Button backButton;
@@ -58,6 +59,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private String senderUid;
     private String recipientUid;
+    private String senderName;
+    private String recipientName;
 
     private Firebase firedata;
     private Firebase chatRef;
@@ -75,8 +78,11 @@ public class ChatActivity extends AppCompatActivity {
 
         firedata = new Firebase(getResources().getString(R.string.database));
 
-        senderUid = getIntent().getExtras().getString("user");
+        senderUid = getIntent().getExtras().getString("uid");
         recipientUid = getIntent().getExtras().getString("friend");
+        senderName = getIntent().getExtras().getString("userName");
+        recipientName = getIntent().getExtras().getString("friendName");
+
         messages = new ArrayList<Message>();
 
         checkChatExists();
@@ -108,14 +114,20 @@ public class ChatActivity extends AppCompatActivity {
                 else{
                     //If chat has been created, add it into the chat List
                     chatRef = firedata.child("chats").child(dataSnapshot.child("chatId").getValue().toString());
-
                 }
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        String author = dataSnapshot.child("author").getValue().toString();
+                        String author;
+                        String authorId = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
                         //String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
+
+                        if(authorId.equals(senderUid)){
+                            author = senderName;
+                        }else{
+                            author = recipientName;
+                        }
 
                         Message newMessage = new Message(author,message,"");
                         messages.add(newMessage);
@@ -150,10 +162,13 @@ public class ChatActivity extends AppCompatActivity {
         messageInput.setText("");
 
         Firebase messageRef = chatRef.push();
+        java.util.Date date= new java.util.Date();
+        Timestamp timeNow = new Timestamp(date.getTime());
 
         Map<String, String> messageData = new HashMap<String, String>();
         messageData.put("author", senderUid);
         messageData.put("message", message);
+        messageData.put("timestamp", timeNow.toString());
 
         messageRef.setValue(messageData);
 
