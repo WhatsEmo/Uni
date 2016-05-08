@@ -163,11 +163,11 @@ public class SocialFragment extends Fragment {
                         }
                     }
                     if (hasFriends) {
-                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_friends_key)).getValue();
-                        if(retrieveDataMap.keySet().size() != userFriends.size()) {
+                        Map<String, Map<String,String>> getMap = (Map<String, Map<String,String>>) snapshot.child(getResources().getString(R.string.user_friends_key)).getValue();
+                        if(getMap.keySet().size() != userFriends.size()) {
                             userFriends.clear();
-                            for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                                Friend friend = new Friend(entry.getKey(), entry.getValue());
+                            for (Map.Entry<String, Map<String,String>> entry : getMap.entrySet()) {
+                                Friend friend = new Friend(entry.getKey(), entry.getValue().get("name"));
                                 if (!userFriends.contains(friend)) {
                                     userFriends.add(friend);
                                 }
