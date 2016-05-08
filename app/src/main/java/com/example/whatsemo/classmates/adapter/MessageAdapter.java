@@ -65,6 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // - replace the contents of the view with that element
         final Message message = mDataset.get(position);
         holder.authorName.setText(mDataset.get(position).getAuthor());
+        holder.sentMessage.setText(mDataset.get(position).getMessage());
         //ADD MORE LATER
     }
 

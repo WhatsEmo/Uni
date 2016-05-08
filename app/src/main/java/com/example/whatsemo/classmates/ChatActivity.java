@@ -76,7 +76,6 @@ public class ChatActivity extends AppCompatActivity {
         firedata = new Firebase(getResources().getString(R.string.database));
 
         senderUid = getIntent().getExtras().getString("user");
-        System.out.println(senderUid);
         recipientUid = getIntent().getExtras().getString("friend");
         messages = new ArrayList<Message>();
 
@@ -109,21 +108,7 @@ public class ChatActivity extends AppCompatActivity {
                 else{
                     //If chat has been created, add it into the chat List
                     chatRef = firedata.child("chats").child(dataSnapshot.child("chatId").getValue().toString());
-                    firedata.child("chats").child(dataSnapshot.child("chatId").getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Map<String, Map<String, String>> allChatMessages = (Map<String, Map<String, String>>) dataSnapshot.getValue();
-                            for(Map.Entry<String,  Map<String,String>> messageInfo : allChatMessages.entrySet()){
-                                Message newMessage = new Message(messageInfo.getValue().get("author"), messageInfo.getValue().get("message"), "TIME");
-                                messages.add(newMessage);
-                            }
-                        }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                        }
-                    });
                 }
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
