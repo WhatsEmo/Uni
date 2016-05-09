@@ -1,6 +1,7 @@
 package com.example.whatsemo.classmates;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,14 +44,14 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.recipientName)
     TextView recipientNameTextView;
 
-    @Bind(R.id.profilePicture)
-    ImageView profilePicture;
-
     @Bind(R.id.messageInput)
     EditText messageInput;
 
     @Bind(R.id.chatSendButton)
     Button sendButton;
+
+    @Bind(R.id.profile_picture)
+    ImageView profilePicture;
 
     @Bind(R.id.messagesView)
     RecyclerView messagesRecyclerView;
@@ -65,11 +66,13 @@ public class ChatActivity extends AppCompatActivity {
     private String recipientUid;
     private String senderName;
     private String recipientName;
+    private Bitmap bm;
 
     private Firebase firedata;
     private Firebase chatRef;
 
     private ArrayList<Message> messages;
+    private ImageHandler imageHandler;
 
     private MessageAdapter messagesAdapter;
     private RecyclerView.LayoutManager messagesLayoutManager;
@@ -81,6 +84,8 @@ public class ChatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         firedata = new Firebase(getResources().getString(R.string.database));
+
+        imageHandler = new ImageHandler(this);
 
         sender = getIntent().getExtras().getParcelable("appUser");
 
@@ -110,19 +115,24 @@ public class ChatActivity extends AppCompatActivity {
     private void checkChatExists(){
         String uid = firedata.getAuth().getUid();
 
-        firedata.child("users").child(senderUid).child("friends").child(recipientUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        firedata.child("users").child(recipientUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.child("chatId").exists()){
+                if (!dataSnapshot.child("friends").child(senderUid).child("chatId").exists()) {
                     //If the chat hasn't been created yet, create a new chatID
                     chatRef = firedata.child("chats").push();
                     firedata.child("users").child(senderUid).child("friends").child(recipientUid).child("chatId").setValue(chatRef.getKey());
                     firedata.child("users").child(recipientUid).child("friends").child(senderUid).child("chatId").setValue(chatRef.getKey());
-                }
-                else{
+                } else {
                     //If chat has been created, add it into the chat List
-                    chatRef = firedata.child("chats").child(dataSnapshot.child("chatId").getValue().toString());
+                    chatRef = firedata.child("chats").child(dataSnapshot.child("friends").child(senderUid).child("chatId").getValue().toString());
                 }
+
+                if (dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
+                    bm = imageHandler.convertByteArrayToBitmap(dataSnapshot.child(getString(R.string.users_picture_key)).getValue().toString());
+                    profilePicture.setImageBitmap(bm);
+                }
+
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -131,32 +141,42 @@ public class ChatActivity extends AppCompatActivity {
                         String authorId = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
                         String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
+                        Message newMessage;
 
-                        if(authorId.equals(senderUid)){
+                        if (authorId.equals(senderUid)) {
                             authorName = senderName;
                             mode = 'r';
-                        }else{
+                        } else {
                             authorName = recipientName;
                             mode = 'l';
                         }
 
-                        Message newMessage = new Message(authorId, authorName, mode, message,timeStamp);
+
+                        if (mode != 'r') {
+                            newMessage = new Message(authorId, authorName, mode, message, timeStamp, bm);
+                        } else {
+                            newMessage = new Message(authorId, authorName, mode, message, timeStamp);
+                        }
                         messages.add(newMessage);
                         messagesAdapter.notifyDataSetChanged();
                         messagesRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
                     }
 
                     @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
 
                     @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
 
                     @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
 
                     @Override
-                    public void onCancelled(FirebaseError firebaseError) {}
+                    public void onCancelled(FirebaseError firebaseError) {
+                    }
                 });
 
             }
@@ -171,24 +191,26 @@ public class ChatActivity extends AppCompatActivity {
 
     @OnClick(R.id.chatSendButton)
     public void sendMessage(){
-        String message = messageInput.getText().toString();
-        messageInput.setText("");
+        //STILL NEEDS TO CHECK IF IT'S JUST SPACES
+        if(!messageInput.getText().toString().equals("")) {
+            String message = messageInput.getText().toString();
+            messageInput.setText("");
 
-        Firebase messageRef = chatRef.push();
-        java.util.Date date= new java.util.Date();
-        //Calendar calendar = Calendar.getInstance();
-        //int timeNow = calendar.get(Calendar.SECOND);
+            Firebase messageRef = chatRef.push();
+            java.util.Date date = new java.util.Date();
+            //Calendar calendar = Calendar.getInstance();
+            //int timeNow = calendar.get(Calendar.SECOND);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
-        String timeNow = sdf.format(date);
+            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+            String timeNow = sdf.format(date);
 
-        Map<String, String> messageData = new HashMap<String, String>();
-        messageData.put("author", senderUid);
-        messageData.put("message", message);
-        messageData.put("timestamp", timeNow);
+            Map<String, String> messageData = new HashMap<String, String>();
+            messageData.put("author", senderUid);
+            messageData.put("message", message);
+            messageData.put("timestamp", timeNow);
 
-        messageRef.setValue(messageData);
-
+            messageRef.setValue(messageData);
+        }
     }
 
     @Override

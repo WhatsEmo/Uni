@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:fillViewport="false">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/coverPhoto"
-                android:src="@drawable/smug"
+                android:src="@drawable/banner_picture"
                 android:adjustViewBounds="false"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -49,6 +50,14 @@
                 android:layout_toRightOf="@+id/profile_picture"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Friend Requests"
+                android:id="@+id/friend_request_button"
+                android:layout_toRightOf="@id/profile_picture"
+                android:layout_above="@id/homeUserName"/>
 
             <TextView
                 android:layout_width="wrap_content"

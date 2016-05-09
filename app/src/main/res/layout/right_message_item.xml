@@ -28,6 +28,13 @@
             android:textColor="@android:color/transparent"
             android:layout_alignParentTop="true" />
 
+        <ImageView
+            android:id="@+id/author_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_name"/>
+
+
         <TextView
             android:id="@+id/message"
             android:layout_width="wrap_content"

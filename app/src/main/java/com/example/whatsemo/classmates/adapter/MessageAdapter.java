@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,13 +26,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView authorName;
         public TextView sentMessage;
         public TextView timeStamp;
+        public ImageView authorProfileImage;
 
         public ViewHolder(View v) {
-                super(v);
+            super(v);
             messageLayout = (RelativeLayout) v.findViewById(R.id.chat_message_layout);
             authorName = (TextView) v.findViewById(R.id.author_name);
             sentMessage = (TextView) v.findViewById(R.id.message);
             timeStamp = (TextView) v.findViewById(R.id.time_stamp);
+            authorProfileImage = (ImageView) v.findViewById(R.id.author_profile_image);
         }
     }
 
@@ -78,7 +81,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.authorName.setText(mDataset.get(position).getAuthorName());
         holder.sentMessage.setText(mDataset.get(position).getMessage());
         holder.timeStamp.setText(mDataset.get(position).getTimeStamp());
-
+        if(mDataset.get(position).getMode() == 'l'){
+            holder.authorProfileImage.setImageBitmap(mDataset.get(position).getBm());
+        }
         //ADD MORE LATER
     }
 
