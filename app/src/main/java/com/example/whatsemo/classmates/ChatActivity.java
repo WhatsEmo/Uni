@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.whatsemo.classmates.adapter.MessageAdapter;
 import com.example.whatsemo.classmates.model.Message;
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -59,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
         finish();
     }
 
+    private User sender;
     private String senderUid;
     private String recipientUid;
     private String senderName;
@@ -80,8 +82,10 @@ public class ChatActivity extends AppCompatActivity {
 
         firedata = new Firebase(getResources().getString(R.string.database));
 
-        senderUid = getIntent().getExtras().getString("uid");
-        senderName = getIntent().getExtras().getString("userName");
+        sender = getIntent().getExtras().getParcelable("appUser");
+
+        senderUid = sender.getUid();
+        senderName = sender.getName();
         recipientUid = getIntent().getExtras().getString("friendID");
         recipientName = getIntent().getExtras().getString("friendName");
 
@@ -122,18 +126,21 @@ public class ChatActivity extends AppCompatActivity {
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        String author;
+                        String authorName;
+                        char mode;
                         String authorId = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
                         String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
 
                         if(authorId.equals(senderUid)){
-                            author = senderName;
+                            authorName = senderName;
+                            mode = 'r';
                         }else{
-                            author = recipientName;
+                            authorName = recipientName;
+                            mode = 'l';
                         }
 
-                        Message newMessage = new Message(author,message,timeStamp);
+                        Message newMessage = new Message(authorId, authorName, mode, message,timeStamp);
                         messages.add(newMessage);
                         messagesAdapter.notifyDataSetChanged();
                         messagesRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
