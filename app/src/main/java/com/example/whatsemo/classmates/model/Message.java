@@ -1,5 +1,7 @@
 package com.example.whatsemo.classmates.model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by WhatsEmo on 5/7/2016.
  */
@@ -9,6 +11,7 @@ public class Message {
     private String authorName;
     private String message;
     private String timeStamp;
+    private Bitmap bm;
 
     public Message(String authorUid, String authorName, char mode,  String message, String timeStamp) {
         this.authorUid = authorUid;
@@ -16,6 +19,15 @@ public class Message {
         this.mode = mode;
         this.message = message;
         this.timeStamp = timeStamp;
+    }
+
+    public Message(String authorUid, String authorName, char mode,  String message, String timeStamp, Bitmap bm) {
+        this.authorUid = authorUid;
+        this.authorName = authorName;
+        this.mode = mode;
+        this.message = message;
+        this.timeStamp = timeStamp;
+        this.bm = bm;
     }
 
     public String getAuthorUid() { return authorUid; }
@@ -46,5 +58,18 @@ public class Message {
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public Bitmap getBm() {
+        if(mode == 'l') return bm;
+        return null;
+    }
+
+    public void setBm(Bitmap bm) {
+        this.bm = bm;
     }
 }

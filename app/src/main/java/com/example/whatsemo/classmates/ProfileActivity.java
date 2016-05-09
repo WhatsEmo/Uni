@@ -43,7 +43,7 @@ public class ProfileActivity extends Activity {
         if(isFriend){
             sendMessage();
         }else if(respondToRequest) {
-            acceptRequest();
+            startNotification();
         }else if(!friendRequestSent){
             sendFriendRequest();
         }

@@ -212,9 +212,6 @@ public class HomePageFragment extends Fragment {
 
     private void startNotificationActivity() {
         Intent startNotificationActivityIntent = new Intent(this.getActivity(), NotificationActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("appUser", appUser);
-        startNotificationActivityIntent.putExtras(bundle);
         this.getActivity().startActivity(startNotificationActivityIntent);
     }
 
