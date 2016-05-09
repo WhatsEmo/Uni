@@ -1,9 +1,7 @@
 package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,10 +59,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // create a new view
         View v;
         if (viewType == 1){
-             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.right_message, parent, false);
+             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.right_message_item, parent, false);
         }
         else {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.left_message, parent, false);
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.left_message_item, parent, false);
         }
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
