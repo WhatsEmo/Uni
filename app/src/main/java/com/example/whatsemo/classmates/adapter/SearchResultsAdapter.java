@@ -9,15 +9,13 @@ import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Friend;
-import com.example.whatsemo.classmates.model.User;
 
 import java.util.ArrayList;
 
 /**
  * Created by WhatsEmo on 4/29/2016.
  */
-public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
-    private User appUser;
+public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.ViewHolder> {
     private ArrayList<Friend> mDataset;
     private Context mContext;
 
@@ -84,15 +82,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         }
     }
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FriendAdapter(ArrayList<Friend> myDataset, Context context, User user) {
+    public SearchResultsAdapter(ArrayList<Friend> myDataset, Context context) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
-        appUser = user;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public FriendAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public SearchResultsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
@@ -111,8 +108,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         holder.friendName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                friend.openActivity(mContext, appUser);
+                friend.openActivity(mContext);
             }
         });
 

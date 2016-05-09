@@ -119,4 +119,8 @@ public class ImageHandler {
         ref.child("users").child(ref.getAuth().getUid()).child(label).setValue(imageFile);
     }
 
+    public Bitmap convertByteArrayToBitmap(String stringOfByteArray){
+        byte[] imageAsByte = Base64.decode(stringOfByteArray, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
+    }
 }

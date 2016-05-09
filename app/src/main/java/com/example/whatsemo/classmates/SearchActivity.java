@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.widget.ImageButton;
 
-import com.example.whatsemo.classmates.adapter.FriendAdapter;
+import com.example.whatsemo.classmates.adapter.SearchResultsAdapter;
 import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.Friend;
 import com.example.whatsemo.classmates.model.User;
@@ -52,7 +52,7 @@ public class SearchActivity extends Activity {
     private Map<String, List<Friend>> interestQuery;
     private ArrayList<Friend> classmates;
     private RecyclerView.LayoutManager searchLayoutManager;
-    private FriendAdapter searchResultAdapter;
+    private SearchResultsAdapter searchResultAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -168,14 +168,14 @@ public class SearchActivity extends Activity {
 
                 // specify an adapter
                 //Put this here since it will be the default amount shown when the user enters the Activity.
-                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), appUser);
+                searchResultAdapter = new SearchResultsAdapter(classmates, getApplicationContext());
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                searchResultAdapter = new FriendAdapter(classmates, getApplicationContext(), appUser);
+                searchResultAdapter = new SearchResultsAdapter(classmates, getApplicationContext());
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
             }
         });

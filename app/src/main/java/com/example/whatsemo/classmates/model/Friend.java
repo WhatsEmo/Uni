@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.whatsemo.classmates.ChatActivity;
+import com.example.whatsemo.classmates.ProfileActivity;
 
 /**
  * Created by WhatsEmo on 4/29/2016.
@@ -36,7 +37,8 @@ public class Friend extends DatabaseObject{
         this.name = name;
     }
 
-    public void openChatActivity(Context context, User user){
+    public void openActivity(Context context, User user){
+        //Opens Chat Activity
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("uid", user.getUid());
@@ -45,6 +47,17 @@ public class Friend extends DatabaseObject{
         bundle.putString("friendName", getName());
         startChatIntent.putExtras(bundle);
         context.startActivity(startChatIntent);
+    }
+
+    public void openActivity(Context context){
+        //Opens ProfileActivity
+        Intent startProfileActivity = new Intent(context, ProfileActivity.class);
+        startProfileActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putString("friendID", this.getUid());
+        bundle.putString("friendName", this.getName());
+        startProfileActivity.putExtras(bundle);
+        context.startActivity(startProfileActivity);
     }
 
     @Override
