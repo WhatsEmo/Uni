@@ -21,7 +21,7 @@
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/cover_photo"
-                android:src="@drawable/smug"
+                android:src="@drawable/banner_picture"
                 android:adjustViewBounds="false"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
