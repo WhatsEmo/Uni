@@ -39,8 +39,7 @@ public class Friend extends DatabaseObject{
     public void openChatActivity(Context context, User user){
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("uid", user.getUid());
-        bundle.putString("userName", user.getName());
+        bundle.putParcelable("appUser", user);
         bundle.putString("friendID", this.getUid());
         bundle.putString("friendName", getName());
         startChatIntent.putExtras(bundle);

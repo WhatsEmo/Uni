@@ -1,10 +1,13 @@
 package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
@@ -20,12 +23,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
+        public RelativeLayout messageLayout;
         public TextView authorName;
         public TextView sentMessage;
         public TextView timeStamp;
 
         public ViewHolder(View v) {
                 super(v);
+            messageLayout = (RelativeLayout) v.findViewById(R.id.chat_message_layout);
             authorName = (TextView) v.findViewById(R.id.author_name);
             sentMessage = (TextView) v.findViewById(R.id.message);
             timeStamp = (TextView) v.findViewById(R.id.time_stamp);
@@ -54,7 +59,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public MessageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, parent, false);
+        View v;
+        if (viewType == 1){
+             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.right_message, parent, false);
+        }
+        else {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.left_message, parent, false);
+        }
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -66,10 +77,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Message message = mDataset.get(position);
-        holder.authorName.setText(mDataset.get(position).getAuthor());
+        holder.authorName.setText(mDataset.get(position).getAuthorName());
         holder.sentMessage.setText(mDataset.get(position).getMessage());
         holder.timeStamp.setText(mDataset.get(position).getTimeStamp());
+
         //ADD MORE LATER
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(mDataset.get(position).getMode() == 'r'){
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
