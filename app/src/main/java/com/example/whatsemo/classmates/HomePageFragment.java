@@ -12,9 +12,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -45,6 +47,8 @@ public class HomePageFragment extends Fragment {
 
     private Firebase ref;
 
+    private User appUser;
+
     @Bind(R.id.homeUserName)
     TextView userName;
 
@@ -57,6 +61,14 @@ public class HomePageFragment extends Fragment {
     @OnClick(R.id.profile_picture)
     public void changeProfilePicture(){
         selectPicture();
+    }
+
+    @Bind(R.id.friend_request_button)
+    Button friendRequestButton;
+
+    @OnClick(R.id.friend_request_button)
+    public void viewNotifications(){
+        startNotificationActivity();
     }
 
     public HomePageFragment() {
@@ -86,6 +98,8 @@ public class HomePageFragment extends Fragment {
         View view = inflater.inflate(R.layout.home_page_layout, container, false);
         ButterKnife.bind(this, view);
         ref = new Firebase(getResources().getString(R.string.database));
+
+        appUser = ((MainActivity)getActivity()).getUser();
 
         imageHandler = new ImageHandler(this.getActivity());
 
@@ -194,4 +208,14 @@ public class HomePageFragment extends Fragment {
             }
         }
     }
+
+
+    private void startNotificationActivity() {
+        Intent startNotificationActivityIntent = new Intent(this.getActivity(), NotificationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("appUser", appUser);
+        startNotificationActivityIntent.putExtras(bundle);
+        this.getActivity().startActivity(startNotificationActivityIntent);
+    }
+
 }

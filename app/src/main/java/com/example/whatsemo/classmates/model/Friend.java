@@ -37,7 +37,7 @@ public class Friend extends DatabaseObject{
         this.name = name;
     }
 
-    public void openActivity(Context context, User user){
+    public void openChatActivity(Context context, User user){
         //Opens Chat Activity
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
@@ -48,11 +48,12 @@ public class Friend extends DatabaseObject{
         context.startActivity(startChatIntent);
     }
 
-    public void openActivity(Context context){
+    public void openProfileActivity(Context context, User user){
         //Opens ProfileActivity
         Intent startProfileActivity = new Intent(context, ProfileActivity.class);
         startProfileActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
+        bundle.putParcelable("appUser", user);
         bundle.putString("friendID", this.getUid());
         bundle.putString("friendName", this.getName());
         startProfileActivity.putExtras(bundle);

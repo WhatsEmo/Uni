@@ -111,7 +111,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         holder.friendName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                friend.openActivity(mContext, appUser);
+                friend.openChatActivity(mContext, appUser);
             }
         });
 

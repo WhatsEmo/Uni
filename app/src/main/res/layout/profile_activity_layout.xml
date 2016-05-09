@@ -54,8 +54,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/add_or_message_friend"
                 android:layout_above="@+id/friend_name"
-                android:layout_toRightOf="@+id/profile_picture"
-                android:text="@string/add_friend_button_text"/>
+                android:layout_toRightOf="@+id/profile_picture"/>
 
             <TextView
                 android:layout_width="wrap_content"
