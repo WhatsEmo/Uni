@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.example.whatsemo.classmates.ChatActivity;
 import com.example.whatsemo.classmates.ProfileActivity;
 
+import java.util.HashMap;
+
 /**
  * Created by WhatsEmo on 4/29/2016.
  */
@@ -41,9 +43,12 @@ public class Friend extends DatabaseObject{
         //Opens Chat Activity
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
+        HashMap<String, String> members = new HashMap<>();
+
+        members.put(this.getUid(), this.getName());
+
         bundle.putParcelable("appUser", user);
-        bundle.putString("friendID", this.getUid());
-        bundle.putString("friendName", getName());
+        bundle.putSerializable("members", members);
         startChatIntent.putExtras(bundle);
         context.startActivity(startChatIntent);
     }

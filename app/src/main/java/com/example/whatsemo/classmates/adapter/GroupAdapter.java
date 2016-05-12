@@ -11,6 +11,7 @@ import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Group;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by WhatsEmo on 4/29/2016.
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
     private ArrayList<Group> mDataset;
     private Context mContext;
+    private HashMap<String, String> members;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView groupName;
@@ -108,7 +110,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         holder.groupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                group.openChatActivity(mContext);
+                group.openChatActivity(mContext, members);
             }
         });
 

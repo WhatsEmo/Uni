@@ -31,10 +31,6 @@ public class BaseFragmentAdapter extends FragmentPagerAdapter {
         if (position == 0){
             return HomePageFragment.newInstance(position + 1);
         }
-        /*
-        if (position == 1){
-            return SocialFragment.newInstance(position + 1);
-        }*/
         else{
             return SocialFragment.newInstance(position + 1);
         }
