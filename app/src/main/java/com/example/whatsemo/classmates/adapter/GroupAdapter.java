@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Group;
+import com.example.whatsemo.classmates.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
     private ArrayList<Group> mDataset;
     private Context mContext;
-    private HashMap<String, String> members;
+    private User appUser;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView groupName;
@@ -84,9 +85,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public GroupAdapter(ArrayList<Group> myDataset, Context context) {
+    public GroupAdapter(ArrayList<Group> myDataset, Context context, User user) {
         mContext = context;
         mDataset = myDataset;
+        appUser = user;
     }
 
     // Create new views (invoked by the layout manager)
@@ -110,7 +112,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         holder.groupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                group.openChatActivity(mContext, members);
+                group.openChatActivity(mContext, appUser);
             }
         });
 

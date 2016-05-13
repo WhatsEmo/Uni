@@ -27,6 +27,8 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -176,11 +178,15 @@ public class SocialFragment extends Fragment {
 
                     }
                     if (hasGroups) {
-                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
                         if(retrieveDataMap.keySet().size() != userGroups.size()) {
                             userGroups.clear();
                             for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                                Group group = new Group(entry.getKey(), entry.getValue());
+                                DataSnapshot groupSnapshot = snapshot.child(getResources().getString(R.string.user_groups_key)).getChildren().iterator().next();
+                                String groupId = groupSnapshot.getKey();
+                                String groupName = groupSnapshot.child("name").getValue(String.class);
+                                HashMap<String, String> members = (HashMap<String, String>) groupSnapshot.child("members").getValue();
+
+                                Group group = new Group(groupId, groupName, members);
                                 if (!userGroups.contains(group)) {
                                     userGroups.add(group);
                                 }
@@ -328,7 +334,7 @@ public class SocialFragment extends Fragment {
         groupsRecyclerView.setLayoutManager(groupsLayoutManager);
 
         // specify an adapter
-        groupsAdapter = new GroupAdapter(userGroups, getContext());
+        groupsAdapter = new GroupAdapter(userGroups, getContext(), appUser);
         groupsRecyclerView.setAdapter(groupsAdapter);
     }
 
