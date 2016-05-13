@@ -91,19 +91,22 @@ public class ChatActivity extends AppCompatActivity {
         sender = getIntent().getExtras().getParcelable("appUser");
         senderUid = sender.getUid();
         senderName = sender.getName();
-        recipientId = getIntent().getExtras().getString("chatID");
+        recipientId = getIntent().getExtras().getString("recipientId");
+        recipientName = getIntent().getExtras().getString("recipientName");
         chatRecipients = (HashMap<String, String>) getIntent().getExtras().getSerializable("members");
-        recipientName = getIntent().getExtras().getString("recipient");
+
 
         recipientNameTextView.setText(recipientName);
 
         messages = new ArrayList<Message>();
 
         if(chatRecipients.size() > 1){
-            chatRoutine("friends");
+            chatRoutine("groups");
+            setHeaderPicture("groups");
         }
         else{
-            chatRoutine("groups");
+            chatRoutine("friends");
+            setHeaderPicture("users");
         }
 
         //User linear layout manager that starts from bottom up
@@ -138,14 +141,11 @@ public class ChatActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    //If chat has been created, add it into the chat List
+                    //If chat has been created, get chat reference from database
                     chatRef = firedata.child("chats").child(dataSnapshot.child(label).child(recipientId).child("chatId").getValue().toString());
+
                 }
 
-                if (dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
-                    bm = imageHandler.convertByteArrayToBitmap(dataSnapshot.child(getString(R.string.users_picture_key)).getValue().toString());
-                    profilePicture.setImageBitmap(bm);
-                }
 
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
@@ -177,16 +177,20 @@ public class ChatActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
 
                     @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
 
                     @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
 
                     @Override
-                    public void onCancelled(FirebaseError firebaseError) {}
+                    public void onCancelled(FirebaseError firebaseError) {
+                    }
                 });
             }
 
@@ -196,6 +200,25 @@ public class ChatActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+
+    public void setHeaderPicture(String label){
+        firedata.child(label).child(recipientId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
+                    bm = imageHandler.convertByteArrayToBitmap(dataSnapshot.child(getString(R.string.users_picture_key)).getValue(String.class));
+                    profilePicture.setImageBitmap(bm);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("Failed getting image: " + firebaseError);
+            }
+        });
+
     }
 
     @OnClick(R.id.chatSendButton)
