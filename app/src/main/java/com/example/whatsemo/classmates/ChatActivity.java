@@ -157,7 +157,7 @@ public class ChatActivity extends AppCompatActivity {
                         String authorId = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
                         String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
-                        
+
                         if (authorId.equals(senderUid)) {
                             authorName = senderName;
                             mode = 'r';

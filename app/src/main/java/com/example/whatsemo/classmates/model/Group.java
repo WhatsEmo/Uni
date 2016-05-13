@@ -14,10 +14,12 @@ import java.util.HashMap;
 public class Group extends DatabaseObject{
     private String groupID;
     private String groupName;
+    private HashMap<String, String> members;
 
-    public Group(String groupID, String groupName) {
+    public Group(String groupID, String groupName, HashMap<String, String> members) {
         this.groupID = groupID;
         this.groupName = groupName;
+        this.members = members;
     }
 
     public String getGroupID() {
@@ -37,10 +39,15 @@ public class Group extends DatabaseObject{
         this.groupName = groupName;
     }
 
+    public HashMap<String, String> getMembers() { return members; }
+
+    public void setMembers(HashMap<String, String> members) { this.members = members; }
+
     public void openChatActivity(Context context, User user){
         Intent startChatIntent = new Intent(context, ChatActivity.class);
         Bundle extras = new Bundle();
-        //extras.putSerializable("members", members);
+        extras.putParcelable("appUser", user);
+        extras.putSerializable("members", this.getMembers());
         extras.putString("recipient", this.getName());
         startChatIntent.putExtras(extras);
         context.startActivity(startChatIntent);
