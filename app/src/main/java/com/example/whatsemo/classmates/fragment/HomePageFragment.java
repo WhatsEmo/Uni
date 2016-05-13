@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.whatsemo.classmates.ImageHandler;
 import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.NotificationActivity;
+import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;

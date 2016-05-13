@@ -26,7 +26,6 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/user_icon"
-        android:layout_toLeftOf="@id/accept_button"
         android:gravity="center_vertical" />
 
     <Button

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Friend;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.Firebase;
@@ -21,7 +22,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private User appUser;
     private ArrayList<Friend> mDataset;
     private Context mContext;
-    private static final String databaseURL = "https://uni-database.firebaseio.com/";
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
@@ -57,7 +57,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Friend friend = mDataset.get(position);
@@ -65,27 +65,38 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Firebase modifyData = new Firebase(databaseURL).child("users")
-                                                               .child(appUser.getUid());
-                modifyData.child("requests")
+                Firebase modifyData = new Firebase(mContext.getString(R.string.database)).child("users");
+                //deletes request
+                modifyData.child(appUser.getUid())
+                        .child("requests")
                         .child(friend.getUid())
                         .setValue(null);
-
-                modifyData.child("friends")
+                //Add to appUser friend list
+                modifyData.child(appUser.getUid())
+                        .child("friends")
                         .child(friend.getUid())
                         .child("name")
                         .setValue(friend.getName());
+                //Add appUser to friend's friend list
+                modifyData.child(friend.getUid())
+                        .child("friends")
+                        .child(appUser.getUid())
+                        .child("name")
+                        .setValue(appUser.getName());
+                remove(position);
             }
         });
         holder.declineButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Firebase modifyData = new Firebase(databaseURL);
+                Firebase modifyData = new Firebase(mContext.getString(R.string.database));
+                //Deletes the request
                 modifyData.child("users")
                         .child(appUser.getUid())
                         .child("requests")
                         .child(friend.getUid())
                         .setValue(null);
+                remove(position);
             }
         });
 

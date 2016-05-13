@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.whatsemo.classmates.MainActivity;
+import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.adapter.CourseAdapter;
 import com.example.whatsemo.classmates.adapter.FriendAdapter;
 import com.example.whatsemo.classmates.adapter.GroupAdapter;

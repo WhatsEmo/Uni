@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.whatsemo.classmates.R;
+
 /**
  * Created by WhatsEmo on 3/11/2016.
  */
