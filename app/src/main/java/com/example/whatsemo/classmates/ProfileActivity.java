@@ -80,29 +80,28 @@ public class ProfileActivity extends Activity {
     private void setUpView() {
 
         friendNameTextView.setText(friendName);
-
-        firedata.child(getResources().getString(R.string.database_users_key)).addListenerForSingleValueEvent(new ValueEventListener() {
+        Firebase newRef = firedata.child(getResources().getString(R.string.database_users_key)).child(friendId);
+        newRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(friendId).child(getString(R.string.users_picture_key)).exists()) {
+                if(dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
                     Bitmap bm = imageHandler.convertByteArrayToBitmap(dataSnapshot.child(getString(R.string.users_picture_key)).getValue().toString());
                     profilePictureImageView.setImageBitmap(bm);
                 }
 
                 //Prevents crashes
-                if(dataSnapshot.child(friendId).child(getString(R.string.users_requests_key)).exists()) {
-                    isFriend = dataSnapshot.child(friendId).child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists();
-                }
+                isFriend = dataSnapshot.child(getString(R.string.users_friends_key)).child(appUser.getUid()).exists();
+
 
                 if(isFriend){
                     addOrMessageFriendButton.setText("Message");
-                }else if(dataSnapshot.child(appUser.getUid()).child("requests").child(friendId).exists()){
+                }else if(dataSnapshot.child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists()){
                     addOrMessageFriendButton.setText("Respond To Friend Request");
                     respondToRequest = true;
                 }else{
                     //Prevents crashes
-                    if(dataSnapshot.child(friendId).child(getString(R.string.users_requests_key)).exists()) {
-                        friendRequestSent = dataSnapshot.child(friendId).child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists();
+                    if(dataSnapshot.child(getString(R.string.users_requests_key)).exists()) {
+                        friendRequestSent = dataSnapshot.child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists();
                     }
 
                     if(friendRequestSent) {

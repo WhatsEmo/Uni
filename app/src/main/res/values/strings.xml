@@ -53,4 +53,5 @@
     <!-- Search Resources -->
     <string name="search_hint">Search by Interests!</string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="users_friends_key">friends</string>
 </resources>
