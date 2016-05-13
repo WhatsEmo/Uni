@@ -1,4 +1,4 @@
-package com.example.whatsemo.classmates;
+package com.example.whatsemo.classmates.fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.adapter.CourseAdapter;
 import com.example.whatsemo.classmates.adapter.FriendAdapter;
 import com.example.whatsemo.classmates.adapter.GroupAdapter;
@@ -28,7 +29,6 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.Bind;

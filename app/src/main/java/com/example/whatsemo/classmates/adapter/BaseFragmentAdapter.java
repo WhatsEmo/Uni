@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.whatsemo.classmates.HomePageFragment;
-import com.example.whatsemo.classmates.SocialFragment;
+import com.example.whatsemo.classmates.fragment.HomePageFragment;
+import com.example.whatsemo.classmates.fragment.SocialFragment;
 
 /**
  * Created by WhatsEmo on 3/11/2016.

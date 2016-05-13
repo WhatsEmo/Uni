@@ -1,4 +1,4 @@
-package com.example.whatsemo.classmates;
+package com.example.whatsemo.classmates.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

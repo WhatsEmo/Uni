@@ -1,4 +1,4 @@
-package com.example.whatsemo.classmates;
+package com.example.whatsemo.classmates.fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.whatsemo.classmates.ImageHandler;
+import com.example.whatsemo.classmates.MainActivity;
+import com.example.whatsemo.classmates.NotificationActivity;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -211,7 +214,18 @@ public class HomePageFragment extends Fragment {
 
 
     private void startNotificationActivity() {
+        /*
+        NotificationFragment notificationFragment = new NotificationFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_activity_layout, notificationFragment, null)
+                .addToBackStack(null)
+                .commit();
+*/
         Intent startNotificationActivityIntent = new Intent(this.getActivity(), NotificationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("appUser", appUser);
+        startNotificationActivityIntent.putExtras(bundle);
         this.getActivity().startActivity(startNotificationActivityIntent);
     }
 

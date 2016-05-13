@@ -1,4 +1,4 @@
-package com.example.whatsemo.classmates;
+package com.example.whatsemo.classmates.fragment;
 
 import android.content.Context;
 import android.net.Uri;
