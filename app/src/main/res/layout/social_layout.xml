@@ -9,6 +9,7 @@
         android:id="@+id/chat_search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         >
 
         <android.support.v7.widget.SearchView
@@ -16,8 +17,15 @@
             android:title="@string/search_hint"
             android:actionViewClass="android.support.v7.widget.SearchView"
             android:showAsAction="always"
-            android:layout_width="match_parent"
+            android:layout_width="290dp"
             android:layout_height="match_parent" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_group_icon"
+            android:background="@drawable/groups" />
+
     </LinearLayout>
 
 
@@ -93,4 +101,5 @@
             android:id="@+id/friendRecyclerView"
             android:layout_below="@+id/friendListTitle"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
+
 </RelativeLayout>

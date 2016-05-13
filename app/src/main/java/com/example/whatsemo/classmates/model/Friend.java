@@ -49,6 +49,8 @@ public class Friend extends DatabaseObject{
 
         bundle.putParcelable("appUser", user);
         bundle.putSerializable("members", members);
+        bundle.putString("recipientId", this.getUid());
+        bundle.putString("recipientName", this.getName());
         startChatIntent.putExtras(bundle);
         context.startActivity(startChatIntent);
     }

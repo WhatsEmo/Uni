@@ -48,7 +48,8 @@ public class Group extends DatabaseObject{
         Bundle extras = new Bundle();
         extras.putParcelable("appUser", user);
         extras.putSerializable("members", this.getMembers());
-        extras.putString("recipient", this.getName());
+        extras.putString("recipientId", this.getGroupID());
+        extras.putString("recipientName", this.getName());
         startChatIntent.putExtras(extras);
         context.startActivity(startChatIntent);
     }

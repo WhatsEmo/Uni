@@ -33,6 +33,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -65,6 +66,11 @@ public class SocialFragment extends Fragment {
 
     @Bind(R.id.action_search)
     SearchView actionSearch;
+
+    @OnClick(R.id.new_group_icon)
+    public void startGroupDialog(){
+
+    }
 
     private static final String ARG_PAGE = "param2";
 
