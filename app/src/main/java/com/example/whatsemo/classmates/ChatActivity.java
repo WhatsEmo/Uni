@@ -63,9 +63,10 @@ public class ChatActivity extends AppCompatActivity {
 
     private User sender;
     private String senderUid;
-    private String recipientUid;
+    private String recipientId;
     private String senderName;
     private String recipientName;
+    private HashMap<String, String> chatRecipients;
     private Bitmap bm;
 
     private Firebase firedata;
@@ -88,17 +89,22 @@ public class ChatActivity extends AppCompatActivity {
         imageHandler = new ImageHandler(this);
 
         sender = getIntent().getExtras().getParcelable("appUser");
-
         senderUid = sender.getUid();
         senderName = sender.getName();
-        recipientUid = getIntent().getExtras().getString("friendID");
-        recipientName = getIntent().getExtras().getString("friendName");
+        recipientId = getIntent().getExtras().getString("chatID");
+        chatRecipients = (HashMap<String, String>) getIntent().getExtras().getSerializable("members");
+        recipientName = getIntent().getExtras().getString("recipient");
 
         recipientNameTextView.setText(recipientName);
 
         messages = new ArrayList<Message>();
 
-        checkChatExists();
+        if(chatRecipients.size() > 1){
+            chatRoutine("friends");
+        }
+        else{
+            chatRoutine("groups");
+        }
 
         //User linear layout manager that starts from bottom up
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -112,20 +118,28 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void checkChatExists(){
+    private void chatRoutine(final String label){
         String uid = firedata.getAuth().getUid();
 
-        firedata.child("users").child(recipientUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        firedata.child("users").child(senderUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.child("friends").child(senderUid).child("chatId").exists()) {
+                if (!dataSnapshot.child(label).child(recipientId).child("chatId").exists()) {
                     //If the chat hasn't been created yet, create a new chatID
                     chatRef = firedata.child("chats").push();
-                    firedata.child("users").child(senderUid).child("friends").child(recipientUid).child("chatId").setValue(chatRef.getKey());
-                    firedata.child("users").child(recipientUid).child("friends").child(senderUid).child("chatId").setValue(chatRef.getKey());
+                    firedata.child("users").child(senderUid).child(label).child(recipientId).child("chatId").setValue(chatRef.getKey());
+                    for(String uid : chatRecipients.keySet()){
+                        if(recipientId.equals(chatRecipients.get(uid))) {
+                            firedata.child("users").child(chatRecipients.get(uid)).child(label).child(recipientId).child("chatId").setValue(chatRef.getKey());
+                        }
+                        else{
+                            firedata.child("users").child(chatRecipients.get(uid)).child(label).child(senderUid).child("chatId").setValue(chatRef.getKey());
+                        }
+                    }
+
                 } else {
                     //If chat has been created, add it into the chat List
-                    chatRef = firedata.child("chats").child(dataSnapshot.child("friends").child(senderUid).child("chatId").getValue().toString());
+                    chatRef = firedata.child("chats").child(dataSnapshot.child(label).child(recipientId).child("chatId").getValue().toString());
                 }
 
                 if (dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
@@ -136,21 +150,21 @@ public class ChatActivity extends AppCompatActivity {
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Message newMessage;
                         String authorName;
                         char mode;
+
                         String authorId = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
                         String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
-                        Message newMessage;
-
+                        
                         if (authorId.equals(senderUid)) {
                             authorName = senderName;
                             mode = 'r';
                         } else {
-                            authorName = recipientName;
+                            authorName = chatRecipients.get(authorId);
                             mode = 'l';
                         }
-
 
                         if (mode != 'r') {
                             newMessage = new Message(authorId, authorName, mode, message, timeStamp, bm);
@@ -163,22 +177,17 @@ public class ChatActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    }
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
 
                     @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    }
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {}
 
                     @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
 
                     @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                    }
+                    public void onCancelled(FirebaseError firebaseError) {}
                 });
-
             }
 
             @Override

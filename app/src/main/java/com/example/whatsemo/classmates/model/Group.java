@@ -2,8 +2,11 @@ package com.example.whatsemo.classmates.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.example.whatsemo.classmates.ChatActivity;
+
+import java.util.HashMap;
 
 /**
  * Created by WhatsEmo on 4/30/2016.
@@ -34,8 +37,12 @@ public class Group extends DatabaseObject{
         this.groupName = groupName;
     }
 
-    public void openChatActivity(Context context){
+    public void openChatActivity(Context context, User user){
         Intent startChatIntent = new Intent(context, ChatActivity.class);
+        Bundle extras = new Bundle();
+        //extras.putSerializable("members", members);
+        extras.putString("recipient", this.getName());
+        startChatIntent.putExtras(extras);
         context.startActivity(startChatIntent);
     }
 
