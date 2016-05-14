@@ -67,6 +67,8 @@ public class Friend extends DatabaseObject{
         context.startActivity(startProfileActivity);
     }
 
+    public void addToGroup(Context context){}
+
     @Override
     public boolean equals(Object o) {
         if(o == this) return true;
