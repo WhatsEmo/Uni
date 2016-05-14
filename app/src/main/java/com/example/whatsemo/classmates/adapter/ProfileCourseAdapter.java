@@ -28,6 +28,7 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     private ArrayList<Course> mDataset;
     private Context mContext;
     private FragmentManager mfragmentManager;
+    private Firebase mRef;
     private final static int ADD_COURSES = 0;
     private static final int NOT_REMOVED = 0;
     private static final int REMOVED = 1;
@@ -46,12 +47,13 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager) {
+    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager, Firebase ref) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         //Helps easily implement the "+" button in the recyclerview
         mDataset.add(new Course(null,null));
         mfragmentManager = fragmentManager;
+        mRef = ref;
     }
 
     // Create new views (invoked by the layout manager)
@@ -117,11 +119,6 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     public Course remove(int position) {
         final Course removedCourse = mDataset.remove(position);
         notifyItemRemoved(position);
-        Firebase updateChange = new Firebase(mContext.getString(R.string.database));
-        updateChange.child(mContext.getString(R.string.database_users_key))
-                .child(mContext.getString(R.string.user_courses_key))
-                .child(removedCourse.getCourseID())
-                .setValue(null);
         return removedCourse;
     }
 
@@ -140,7 +137,13 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                String courseID = mDataset.get(position).getCourseID();
                 remove(position);
+                mRef.child(mContext.getString(R.string.database_users_key))
+                        .child(mRef.getAuth().getUid())
+                        .child(mContext.getString(R.string.user_courses_key))
+                        .child(courseID)
+                        .setValue(null);
             }
         });
 

@@ -59,7 +59,7 @@ public class HomePageFragment extends Fragment {
     private ArrayList<Course> userCourses;
     //private ArrayList<Interest> userInterests;
 
-    private RecyclerView.LayoutManager coursesLayoutManager;
+    private LinearLayoutManager coursesLayoutManager;
     private RecyclerView.LayoutManager interestsLayoutManager;
 
     private ProfileCourseAdapter courseAdapter;
@@ -140,11 +140,14 @@ public class HomePageFragment extends Fragment {
                     }
 
                     if(snapshot.child(getString(R.string.user_courses_key)).exists()){
+                        ArrayList<Course> checkCourses = new ArrayList<Course>();
                         for(Map.Entry<String,String> courseMapEntry : ((Map<String, String>) snapshot.child(getString(R.string.user_courses_key)).getValue()).entrySet()){
                             Course course = new Course(courseMapEntry.getKey(), courseMapEntry.getValue());
-                            if(!userCourses.contains(course)){
-                                userCourses.add(course);
-                            }
+                            checkCourses.add(course);
+                        }
+
+                        if(checkCourses.size() != userCourses.size()){
+                            userCourses = checkCourses;
                         }
                     }
                     setUpAdapters();
@@ -264,9 +267,10 @@ public class HomePageFragment extends Fragment {
 
         //**********COURSES***********
         coursesLayoutManager = new LinearLayoutManager(getActivity());
+        coursesLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
 
-        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager());
+        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager(),ref);
         coursesRecyclerView.setAdapter(courseAdapter);
 /*
         //**********INTEREST***********
