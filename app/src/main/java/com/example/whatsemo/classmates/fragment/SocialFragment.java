@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -70,7 +71,9 @@ public class SocialFragment extends Fragment {
 
     @OnClick(R.id.new_group_icon)
     public void startGroupDialog(){
-
+        FragmentManager fm = getActivity().getFragmentManager();
+        NewGroupFragment newGroupFragment = new NewGroupFragment();
+        newGroupFragment.show(fm, "group_fragment");
     }
 
     private static final String ARG_PAGE = "param2";
@@ -329,7 +332,7 @@ public class SocialFragment extends Fragment {
         friendRecyclerView.setLayoutManager(friendsLayoutManager);
 
         // specify an adapter
-        friendsAdapter = new FriendAdapter(userFriends, getActivity(), appUser);
+        friendsAdapter = new FriendAdapter(userFriends, getActivity(), appUser, 0);
         friendRecyclerView.setAdapter(friendsAdapter);
 
         /*

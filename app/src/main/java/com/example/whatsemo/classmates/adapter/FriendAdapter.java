@@ -18,6 +18,10 @@ import java.util.ArrayList;
  * Created by WhatsEmo on 4/29/2016.
  */
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
+    private static final int SOCIAL_FRAGMENT_ADAPTER = 0;
+    private static final int ADD_FRIENDS_TO_GROUP_ADATPER = 1;
+
+    private int adapterMode;
     private User appUser;
     private ArrayList<Friend> mDataset;
     private Context mContext;
@@ -36,10 +40,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FriendAdapter(ArrayList<Friend> myDataset, Context context, User user) {
+    public FriendAdapter(ArrayList<Friend> myDataset, Context context, User user, int mode) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         appUser = user;
+        adapterMode = mode;
     }
 
     // Create new views (invoked by the layout manager)
@@ -63,7 +68,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                friend.openChatActivity(mContext, appUser);
+                if(adapterMode == SOCIAL_FRAGMENT_ADAPTER){
+                    friend.openChatActivity(mContext, appUser);
+                }
+                else if (adapterMode == ADD_FRIENDS_TO_GROUP_ADATPER){
+                    friend.addToGroup(mContext);
+                }
             }
         });
 
