@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +22,16 @@ import com.example.whatsemo.classmates.ImageHandler;
 import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.NotificationActivity;
 import com.example.whatsemo.classmates.R;
+import com.example.whatsemo.classmates.adapter.ProfileCourseAdapter;
+import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,14 +51,19 @@ public class HomePageFragment extends Fragment {
     private static final int SELECT_FILE = 1;
 
     private int mPage;
-
     private OnFragmentInteractionListener mListener;
-
     public ImageHandler imageHandler;
-
     private Firebase ref;
-
     private User appUser;
+
+    private ArrayList<Course> userCourses;
+    //private ArrayList<Interest> userInterests;
+
+    private RecyclerView.LayoutManager coursesLayoutManager;
+    private RecyclerView.LayoutManager interestsLayoutManager;
+
+    private ProfileCourseAdapter courseAdapter;
+    //private InterestAdapter interestAdapter;
 
     @Bind(R.id.homeUserName)
     TextView userName;
@@ -61,6 +73,12 @@ public class HomePageFragment extends Fragment {
 
     @Bind(R.id.profile_picture)
     ImageButton profilePicture;
+
+    @Bind(R.id.classes_recycler_view)
+    RecyclerView coursesRecyclerView;
+
+    @Bind(R.id.interests_recycler_view)
+    RecyclerView interestsRecyclerView;
 
     @OnClick(R.id.profile_picture)
     public void changeProfilePicture(){
@@ -104,6 +122,8 @@ public class HomePageFragment extends Fragment {
         ref = new Firebase(getResources().getString(R.string.database));
 
         appUser = ((MainActivity)getActivity()).getUser();
+        userCourses = new ArrayList<Course>();
+        //userInterests = new ArrayList<Interest>();
 
         imageHandler = new ImageHandler(this.getActivity());
 
@@ -118,6 +138,16 @@ public class HomePageFragment extends Fragment {
                         Bitmap bm = imageHandler.convertByteArrayToBitmap(snapshot.child("picture").getValue().toString());
                         profilePicture.setImageBitmap(bm);
                     }
+
+                    if(snapshot.child(getString(R.string.user_courses_key)).exists()){
+                        for(Map.Entry<String,String> courseMapEntry : ((Map<String, String>) snapshot.child(getString(R.string.user_courses_key)).getValue()).entrySet()){
+                            Course course = new Course(courseMapEntry.getKey(), courseMapEntry.getValue());
+                            if(!userCourses.contains(course)){
+                                userCourses.add(course);
+                            }
+                        }
+                    }
+                    setUpAdapters();
                 }
 
                 @Override
@@ -228,6 +258,24 @@ public class HomePageFragment extends Fragment {
         bundle.putParcelable("appUser", appUser);
         startNotificationActivityIntent.putExtras(bundle);
         this.getActivity().startActivity(startNotificationActivityIntent);
+    }
+
+    private void setUpAdapters() {
+
+        //**********COURSES***********
+        coursesLayoutManager = new LinearLayoutManager(getActivity());
+        coursesRecyclerView.setLayoutManager(coursesLayoutManager);
+
+        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager());
+        coursesRecyclerView.setAdapter(courseAdapter);
+/*
+        //**********INTEREST***********
+        interestsLayoutManager = new LinearLayoutManager(getActivity());
+        interestsRecyclerView.setLayoutManager(interestsLayoutManager);
+
+        interestAdapter = new InterestAdapter(userInterests, getActivity());
+        interestsRecyclerView.setAdapter(interestAdapter);
+*/
     }
 
 }
