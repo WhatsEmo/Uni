@@ -179,8 +179,6 @@ public class SearchActivity extends Activity {
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
             }
         });
-
-
     }
 
     /*

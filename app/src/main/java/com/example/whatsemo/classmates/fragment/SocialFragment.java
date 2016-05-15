@@ -72,7 +72,7 @@ public class SocialFragment extends Fragment {
     @OnClick(R.id.new_group_icon)
     public void startGroupDialog(){
         FragmentManager fm = getActivity().getFragmentManager();
-        NewGroupFragment newGroupFragment = new NewGroupFragment();
+        NewGroupFragment newGroupFragment = NewGroupFragment.newInstance(userFriends, appUser);
         newGroupFragment.show(fm, "group_fragment");
     }
 
@@ -147,13 +147,11 @@ public class SocialFragment extends Fragment {
         userCourses = new ArrayList<Course>();
         userGroups = new ArrayList<Group>();
 
-
-
         ref = new Firebase(getResources().getString(R.string.database));
 
         if (ref.getAuth() != null){
-            String uid = ref.getAuth().getUid();
-            ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
+
+            ref.child(getResources().getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 
@@ -276,41 +274,7 @@ public class SocialFragment extends Fragment {
             socialGroupsLayout.setVisibility(View.VISIBLE);
         }
     }
-/*
-    private void populate(List<DatabaseObject> userData, RecyclerView recyclerView){
-        for (DatabaseObject data : userData){
-            Button bttn = new Button(this.getContext());
-            bttn.setText(data.getName());
-            bttn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Add stuff later
-                }
-            });
 
-            recyclerView.addView(bttn);
-        }
-    }
-
-    private void populate(List<String> list, RecyclerView recyclerView, String label){
-        //Helps populate all ListViews
-        for(String courses : list){
-            Button bttn = new Button(this.getContext());
-            bttn.setText(courses);
-            bttn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Add stuff later
-                }
-            });
-
-            recyclerView.addView(bttn);
-        }
-    }
-*/
-    /*
-        Sets up RecycleViewAdapters and a LayoutManager
-     */
     private void setUpAdapters(){
         /*
             *************COURSES*************
