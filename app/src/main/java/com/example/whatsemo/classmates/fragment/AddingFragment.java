@@ -179,7 +179,7 @@ public class AddingFragment extends DialogFragment {
     }
 
     private void addInterests() {
-        final String addInterest = interest.getText().toString();
+        final String addInterest = interest.getText().toString().toLowerCase();
         if(addInterest.equals("")) {
             return;
         }
