@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main_activity_layout"
     android:orientation="vertical">
+
     <Button
         android:layout_width="25dp"
         android:layout_height="25dp"
@@ -33,17 +34,11 @@
         android:background="@drawable/ic_search"/>
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/pop_up_fragment"></FrameLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@android:color/black" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/black" />
 
 </LinearLayout>

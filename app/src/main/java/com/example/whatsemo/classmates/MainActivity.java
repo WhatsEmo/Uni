@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //user is not logged on
                     startLoginActivity();
+                    firedata.unauth();
                 }
             }
         });

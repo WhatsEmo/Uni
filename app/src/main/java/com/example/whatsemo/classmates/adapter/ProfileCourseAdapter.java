@@ -2,7 +2,6 @@ package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,7 @@ import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.fragment.AddingFragment;
 import com.example.whatsemo.classmates.fragment.DeleteItemDialog;
 import com.example.whatsemo.classmates.model.Course;
+import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     private Context mContext;
     private FragmentManager mfragmentManager;
     private Firebase mRef;
+    private User appUser;
     private final static int ADD_COURSES = 0;
     private static final int NOT_REMOVED = 0;
     private static final int REMOVED = 1;
@@ -47,13 +48,14 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager, Firebase ref) {
+    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         //Helps easily implement the "+" button in the recyclerview
         mDataset.add(new Course(null,null));
         mfragmentManager = fragmentManager;
         mRef = ref;
+        appUser = user;
     }
 
     // Create new views (invoked by the layout manager)
@@ -93,13 +95,13 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
                 @Override
                 public void onClick(View v) {
                     AddingFragment newFragment = new AddingFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(mContext.getString(R.string.home_frag_adding_info), ADD_COURSES);
-                    newFragment.setArguments(bundle);
+                    newFragment = newFragment.newInstance(ADD_COURSES, appUser);
+                    newFragment.show(mfragmentManager, "ASSHOLE");
+                    /*
                     mfragmentManager.beginTransaction()
                             .replace(R.id.pop_up_fragment, newFragment)
                             .addToBackStack(null)
-                            .commit();
+                            .commit();*/
                 }
             });
         }
@@ -140,9 +142,17 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
                 String courseID = mDataset.get(position).getCourseID();
                 remove(position);
                 mRef.child(mContext.getString(R.string.database_users_key))
-                        .child(mRef.getAuth().getUid())
+                        .child(appUser.getUid())
                         .child(mContext.getString(R.string.user_courses_key))
                         .child(courseID)
+                        .setValue(null);
+
+                mRef.child(mContext.getString(R.string.database_schools_key))
+                        .child(appUser.getSid())
+                        .child(mContext.getString(R.string.school_courses_key))
+                        .child(courseID)
+                        .child(mContext.getString(R.string.school_courses_enrolled_key))
+                        .child(appUser.getUid())
                         .setValue(null);
             }
         });

@@ -27,13 +27,15 @@
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_classes_button_text"
             android:id="@+id/classId"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_toLeftOf="@+id/addingClassesButton"
+            android:layout_toStartOf="@+id/addingClassesButton" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:text="@string/adding_classes_button_text"
+            android:layout_alignParentRight="true"
             android:id="@+id/addingClassesButton" />
 
         <GridLayout

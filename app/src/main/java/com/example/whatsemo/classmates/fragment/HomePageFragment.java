@@ -270,7 +270,7 @@ public class HomePageFragment extends Fragment {
         coursesLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
 
-        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager(),ref);
+        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager(),ref, appUser);
         coursesRecyclerView.setAdapter(courseAdapter);
 /*
         //**********INTEREST***********
