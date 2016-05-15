@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.SearchView;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.adapter.FriendAdapter;
@@ -102,7 +101,7 @@ public class NewGroupFragment extends DialogFragment {
     }
 
     private void setUpAdapter(){
-        RecyclerView.LayoutManager recyclerViewLayout = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager recyclerViewLayout = new LinearLayoutManager(this.getActivity().getApplicationContext());
         recyclerView.setLayoutManager(recyclerViewLayout);
 
         friendAdapter = new FriendAdapter(friendList, getActivity(), appUser, 1);

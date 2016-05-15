@@ -100,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
 
         messages = new ArrayList<Message>();
 
-        if(chatRecipients.size() > 1){
+        if(chatRecipients != null && chatRecipients.size() > 1){
             chatRoutine("groups");
             setHeaderPicture("groups");
         }

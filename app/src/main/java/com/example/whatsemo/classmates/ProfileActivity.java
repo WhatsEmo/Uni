@@ -65,10 +65,11 @@ public class ProfileActivity extends Activity {
         ButterKnife.bind(this);
 
         firedata = new Firebase(getResources().getString(R.string.database));
+        firedata.setAndroidContext(this);
         imageHandler = new ImageHandler(this);
 
-        friendId = getIntent().getStringExtra("friendID");
-        friendName = getIntent().getStringExtra("friendName");
+        friendId = getIntent().getStringExtra("recipientId");
+        friendName = getIntent().getStringExtra("recipientName");
         appUser = getIntent().getParcelableExtra("appUser");
         isFriend = false;
         friendRequestSent = false;
@@ -129,11 +130,17 @@ public class ProfileActivity extends Activity {
     }
 
     private void sendMessage() {
+        //Opens Chat Activity
         Intent startChatIntent = new Intent(this, ChatActivity.class);
         Bundle bundle = new Bundle();
+        HashMap<String, String> members = new HashMap<>();
+
+        members.put(friendId, friendName);
+
         bundle.putParcelable("appUser", appUser);
-        bundle.putString("friendID", friendId);
-        bundle.putString("friendName", friendName);
+        bundle.putSerializable("members", members);
+        bundle.putString("recipientId", friendId);
+        bundle.putString("recipientName", friendName);
         startChatIntent.putExtras(bundle);
         startActivity(startChatIntent);
         finish();
@@ -143,8 +150,8 @@ public class ProfileActivity extends Activity {
         Intent startChatIntent = new Intent(this, ChatActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("appUser", appUser);
-        bundle.putString("friendID", friendId);
-        bundle.putString("friendName", friendName);
+        bundle.putString("recipientId", friendId);
+        bundle.putString("recipientName", friendName);
         startChatIntent.putExtras(bundle);
         startActivity(startChatIntent);
         finish();

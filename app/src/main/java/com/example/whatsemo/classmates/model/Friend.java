@@ -61,8 +61,8 @@ public class Friend extends DatabaseObject{
         startProfileActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putParcelable("appUser", user);
-        bundle.putString("friendID", this.getUid());
-        bundle.putString("friendName", this.getName());
+        bundle.putString("recipientId", this.getUid());
+        bundle.putString("recipientName", this.getName());
         startProfileActivity.putExtras(bundle);
         context.startActivity(startProfileActivity);
     }

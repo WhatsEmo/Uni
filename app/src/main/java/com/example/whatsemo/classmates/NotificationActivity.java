@@ -44,6 +44,7 @@ public class NotificationActivity extends Activity{
         appUser = getIntent().getParcelableExtra("appUser");
         notifications = new ArrayList<Friend>();
         firedata = new Firebase(getString(R.string.database));
+        firedata.setAndroidContext(this);
 
 
         Firebase userRef = firedata.child(getString(R.string.database_users_key)).child(appUser.getUid());

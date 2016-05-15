@@ -69,6 +69,7 @@ public class SearchActivity extends Activity {
         appUser = getIntent().getExtras().getParcelable("appUser");
 
         firedata = new Firebase(getResources().getString(R.string.database));
+        firedata.setAndroidContext(this);
         userID = firedata.getAuth().getUid();
 
 
