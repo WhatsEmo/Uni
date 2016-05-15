@@ -135,7 +135,7 @@ public class TutorialActivity extends Activity {
         Button newInterest = new Button(this);
         newInterest.setText(interest.getText());
 
-        userInterests.add(interest.getText().toString());
+        userInterests.add(interest.getText().toString().toLowerCase());
 
 
         newInterest.setOnClickListener(new View.OnClickListener() {

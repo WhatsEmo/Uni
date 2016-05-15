@@ -21,6 +21,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,6 +74,9 @@ public class AddingFragment extends DialogFragment {
     @Bind(R.id.finishAddingClasses)
     Button finishAddingClasses;
 
+    @Bind(R.id.finishAddingInterests)
+    Button finishAddingInterests;
+
     public AddingFragment(){
         //
     }
@@ -93,10 +98,13 @@ public class AddingFragment extends DialogFragment {
 
         if(addingType == ADD_COURSES){
             addingInterestsLayout.setVisibility(View.GONE);
+            addingGroupsLayout.setVisibility(View.GONE);
             finishAddingClasses.setVisibility(View.GONE);
             title.setText("Add Class");
         }else if(addingType == ADD_INTERESTS){
             addingClassesLayout.setVisibility(View.GONE);
+            addingGroupsLayout.setVisibility(View.GONE);
+            finishAddingInterests.setVisibility(View.GONE);
             title.setText("Add Interest");
         }
 
@@ -171,6 +179,42 @@ public class AddingFragment extends DialogFragment {
     }
 
     private void addInterests() {
+        final String addInterest = interest.getText().toString();
+        if(addInterest.equals("")) {
+            return;
+        }
+        firebase.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<String> userInterest = new ArrayList<String>();
+                        if(dataSnapshot.child(getString(R.string.user_interests_key)).exists()){
+                            userInterest = (ArrayList<String>) dataSnapshot.child(getString(R.string.user_interests_key)).getValue();
+                        }
+                        userInterest.add(addInterest);
+                        //Add interest to User's database branch
+                        firebase.child(getString(R.string.database_users_key))
+                                .child(appUser.getUid())
+                                .child(getString(R.string.user_interests_key))
+                                .setValue(userInterest);
+
+                        //Add person into school interest map
+                        firebase.child(getString(R.string.database_schools_key))
+                                .child(appUser.getSid())
+                                .child(getString(R.string.school_interests_key))
+                                .child(addInterest)
+                                .child(appUser.getUid())
+                                .setValue(appUser.getName());
+
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
 
     }
 

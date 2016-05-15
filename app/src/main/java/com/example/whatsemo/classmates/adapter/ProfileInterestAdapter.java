@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.fragment.AddingFragment;
 import com.example.whatsemo.classmates.fragment.DeleteItemDialog;
-import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.Firebase;
 
@@ -24,13 +23,13 @@ import java.util.ArrayList;
 /**
  * Created by WhatsEmo on 4/29/2016.
  */
-public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdapter.ViewHolder> {
-    private ArrayList<Course> mDataset;
+public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterestAdapter.ViewHolder> {
+    private ArrayList<String> mDataset;
     private Context mContext;
     private FragmentManager mfragmentManager;
     private Firebase mRef;
     private User appUser;
-    private final static int ADD_COURSES = 0;
+    private final static int ADD_INTEREST = 1;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout layout;
@@ -46,11 +45,11 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user) {
+    public ProfileInterestAdapter(ArrayList<String> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         //Helps easily implement the "+" button in the recyclerview
-        mDataset.add(new Course(null,null));
+        mDataset.add("NULL");
         mfragmentManager = fragmentManager;
         mRef = ref;
         appUser = user;
@@ -58,7 +57,7 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ProfileCourseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public ProfileInterestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_course_item, parent, false);
@@ -73,15 +72,14 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         // If it's not the "+" button, then add in regular functions
-        final Course course = mDataset.get(position);
-        if(course.getCourseID() != null) {
-            holder.courseName.setText(course.getName());
+        final String interest = mDataset.get(position);
+        if(!interest.equals("NULL")) {
+            holder.courseName.setText(interest);
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String title = "Delete Course: ";
-                    String message = String.format("%s (%s)", course.getName(), course.getCourseID());
-                    AlertDialog.Builder alertDialogBuilder = setUpDialogBuilder(title, message, position);
+                    String title = "Delete Interest: ";
+                    AlertDialog.Builder alertDialogBuilder = setUpDialogBuilder(title, interest, position);
                     DeleteItemDialog dialogFragment = new DeleteItemDialog();
                     dialogFragment = dialogFragment.createCustomDialog(alertDialogBuilder);
                     dialogFragment.show(mfragmentManager, "dialog");
@@ -93,7 +91,7 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
                 @Override
                 public void onClick(View v) {
                     AddingFragment newFragment = new AddingFragment();
-                    newFragment = newFragment.newInstance(ADD_COURSES, appUser);
+                    newFragment = newFragment.newInstance(ADD_INTEREST, appUser);
                     newFragment.show(mfragmentManager, "dialog");
                     /*
                     mfragmentManager.beginTransaction()
@@ -111,20 +109,20 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
         return mDataset.size();
     }
 
-    public void add(int position, Course course) {
-        mDataset.add(position, course);
+    public void add(int position, String interest) {
+        mDataset.add(position, interest);
         notifyItemInserted(position);
     }
 
-    public Course remove(int position) {
-        final Course removedCourse = mDataset.remove(position);
+    public String remove(int position) {
+        final String removedInterest = mDataset.remove(position);
         notifyItemRemoved(position);
-        return removedCourse;
+        return removedInterest;
     }
 
     public void move(int fromPosition, int toPosition){
-        final Course course = mDataset.remove(fromPosition);
-        mDataset.add(toPosition, course);
+        final String interest = mDataset.remove(fromPosition);
+        mDataset.add(toPosition, interest);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -137,19 +135,20 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                String courseID = mDataset.get(position).getCourseID();
+                String interest = mDataset.get(position);
                 remove(position);
+                ArrayList<String> pushToDatabase = new ArrayList<String>();
+                pushToDatabase.addAll(mDataset);
+                pushToDatabase.remove(position);
                 mRef.child(mContext.getString(R.string.database_users_key))
                         .child(appUser.getUid())
-                        .child(mContext.getString(R.string.user_courses_key))
-                        .child(courseID)
-                        .setValue(null);
+                        .child(mContext.getString(R.string.user_interests_key))
+                        .setValue(pushToDatabase);
 
                 mRef.child(mContext.getString(R.string.database_schools_key))
                         .child(appUser.getSid())
-                        .child(mContext.getString(R.string.school_courses_key))
-                        .child(courseID)
-                        .child(mContext.getString(R.string.school_courses_enrolled_key))
+                        .child(mContext.getString(R.string.school_interests_key))
+                        .child(interest)
                         .child(appUser.getUid())
                         .setValue(null);
             }

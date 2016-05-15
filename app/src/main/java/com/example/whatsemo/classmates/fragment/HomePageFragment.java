@@ -23,6 +23,7 @@ import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.NotificationActivity;
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.adapter.ProfileCourseAdapter;
+import com.example.whatsemo.classmates.adapter.ProfileInterestAdapter;
 import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
@@ -57,13 +58,13 @@ public class HomePageFragment extends Fragment {
     private User appUser;
 
     private ArrayList<Course> userCourses;
-    //private ArrayList<Interest> userInterests;
+    private ArrayList<String> userInterests;
 
     private LinearLayoutManager coursesLayoutManager;
-    private RecyclerView.LayoutManager interestsLayoutManager;
+    private LinearLayoutManager interestsLayoutManager;
 
     private ProfileCourseAdapter courseAdapter;
-    //private InterestAdapter interestAdapter;
+    private ProfileInterestAdapter interestAdapter;
 
     @Bind(R.id.homeUserName)
     TextView userName;
@@ -116,14 +117,14 @@ public class HomePageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_page_layout, container, false);
         ButterKnife.bind(this, view);
         ref = new Firebase(getResources().getString(R.string.database));
 
         appUser = ((MainActivity)getActivity()).getUser();
         userCourses = new ArrayList<Course>();
-        //userInterests = new ArrayList<Interest>();
+        userInterests = new ArrayList<String>();
 
         imageHandler = new ImageHandler(this.getActivity());
 
@@ -137,6 +138,14 @@ public class HomePageFragment extends Fragment {
                     if(snapshot.child("picture").exists()) {
                         Bitmap bm = imageHandler.convertByteArrayToBitmap(snapshot.child("picture").getValue().toString());
                         profilePicture.setImageBitmap(bm);
+                    }
+
+                    if(snapshot.child(getString(R.string.user_interests_key)).exists()){
+                        ArrayList<String> checkInterests = (ArrayList<String>) snapshot.child(getString(R.string.user_interests_key)).getValue();
+
+                        if(userInterests.size() != checkInterests.size()){
+                            userInterests = checkInterests;
+                        }
                     }
 
                     if(snapshot.child(getString(R.string.user_courses_key)).exists()){
@@ -272,14 +281,15 @@ public class HomePageFragment extends Fragment {
 
         courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager(),ref, appUser);
         coursesRecyclerView.setAdapter(courseAdapter);
-/*
+
         //**********INTEREST***********
         interestsLayoutManager = new LinearLayoutManager(getActivity());
+        interestsLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         interestsRecyclerView.setLayoutManager(interestsLayoutManager);
 
-        interestAdapter = new InterestAdapter(userInterests, getActivity());
+        interestAdapter = new ProfileInterestAdapter(userInterests, getActivity(), getFragmentManager(), ref, appUser);
         interestsRecyclerView.setAdapter(interestAdapter);
-*/
+
     }
 
 }
