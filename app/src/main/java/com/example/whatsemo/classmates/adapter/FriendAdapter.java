@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
+import com.example.whatsemo.classmates.fragment.NewGroupFragment;
 import com.example.whatsemo.classmates.model.Friend;
 import com.example.whatsemo.classmates.model.User;
 
@@ -25,6 +26,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     private User appUser;
     private ArrayList<Friend> mDataset;
     private Context mContext;
+    private NewGroupFragment newGroupFragment;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
@@ -45,6 +47,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         mDataset = new ArrayList<>(myDataset);
         appUser = user;
         adapterMode = mode;
+    }
+
+    public FriendAdapter(ArrayList<Friend> myDataset, Context context, User user, int mode, NewGroupFragment newGroupFragment) {
+        mContext = context;
+        mDataset = new ArrayList<>(myDataset);
+        appUser = user;
+        adapterMode = mode;
+        this.newGroupFragment = newGroupFragment;
     }
 
     // Create new views (invoked by the layout manager)
@@ -72,7 +82,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     friend.openChatActivity(mContext, appUser);
                 }
                 else if (adapterMode == ADD_FRIENDS_TO_GROUP_ADATPER){
-                    friend.addToGroup(mContext);
+                    newGroupFragment.addToGroup(friend);
                 }
             }
         });
