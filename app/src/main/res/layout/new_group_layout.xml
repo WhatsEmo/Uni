@@ -16,7 +16,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textEmailSubject"
             android:ems="10"
             android:id="@+id/new_group_name"
             android:layout_alignParentTop="true"

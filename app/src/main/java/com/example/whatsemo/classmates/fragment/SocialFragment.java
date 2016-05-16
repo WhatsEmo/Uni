@@ -82,7 +82,6 @@ public class SocialFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-
     private Firebase ref;
     private User appUser;
     private Comparator<DatabaseObject> customSorter;
@@ -150,7 +149,6 @@ public class SocialFragment extends Fragment {
         ref = new Firebase(getResources().getString(R.string.database));
 
         if (ref.getAuth() != null){
-
             ref.child(getResources().getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -186,21 +184,41 @@ public class SocialFragment extends Fragment {
 
                     }
                     if (hasGroups) {
+                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
                         if(retrieveDataMap.keySet().size() != userGroups.size()) {
                             userGroups.clear();
                             for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
-                                DataSnapshot groupSnapshot = snapshot.child(getResources().getString(R.string.user_groups_key)).getChildren().iterator().next();
-                                String groupId = groupSnapshot.getKey();
-                                String groupName = groupSnapshot.child("name").getValue(String.class);
-                                HashMap<String, String> members = (HashMap<String, String>) groupSnapshot.child("members").getValue();
+                                final String groupId = entry.getKey();
+                                final String groupName = snapshot.child(getResources().getString(R.string.user_groups_key)).child(groupId).child("name").getValue(String.class);
 
-                                Group group = new Group(groupId, groupName, members);
-                                if (!userGroups.contains(group)) {
-                                    userGroups.add(group);
-                                }
+                                ref.child("groups").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot){
+                                        final HashMap<String, String> members = (HashMap<String, String>) dataSnapshot.child(groupId).child("members").getValue();
+
+                                        Group group = new Group(groupId, groupName, members);
+                                        if (!userGroups.contains(group)) {
+                                            userGroups.add(group);
+                                            System.out.println(userGroups);
+                                        }
+                                        // use a linear layout manager
+                                        groupsLayoutManager = new LinearLayoutManager(getContext());
+                                        groupsRecyclerView.setLayoutManager(groupsLayoutManager);
+
+                                        // specify an adapter
+                                        groupsAdapter = new GroupAdapter(userGroups, getContext(), appUser);
+                                        groupsRecyclerView.setAdapter(groupsAdapter);
+                                        System.out.println(userGroups);
+                                    }
+
+                                    public void onCancelled(FirebaseError firebaseError){
+                                        System.out.println("Group member check failed: " + firebaseError);
+                                    }
+                                });
                             }
                         }
                     }
+
                     setVisibility();
                     setUpAdapters();
                     createSearchBar();
@@ -301,7 +319,7 @@ public class SocialFragment extends Fragment {
 
         /*
             *************GROUPS*************
-         */
+
 
         // use a linear layout manager
         groupsLayoutManager = new LinearLayoutManager(this.getContext());
@@ -310,6 +328,7 @@ public class SocialFragment extends Fragment {
         // specify an adapter
         groupsAdapter = new GroupAdapter(userGroups, getContext(), appUser);
         groupsRecyclerView.setAdapter(groupsAdapter);
+        */
     }
 
     private void createSearchBar(){

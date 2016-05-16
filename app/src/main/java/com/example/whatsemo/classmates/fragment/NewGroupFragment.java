@@ -162,19 +162,34 @@ public class NewGroupFragment extends DialogFragment {
         return filteredFriends;
     }
 
-    private void addToDatabase(){
+    private void addToDatabase() {
         Firebase groupRef = firedata.child("groups").push();
 
         groupName = newGroupName.getText().toString();
 
-        if(!groupName.isEmpty()) {
+        if (!groupName.isEmpty() && !members.isEmpty()) {
+            members.put(appUser.getUid(), appUser.getName());
+
             firedata.child("groups").child(groupRef.getKey()).child("name").setValue(groupName);
             firedata.child("groups").child(groupRef.getKey()).child("members").setValue(members);
+
+            for (String key : members.keySet()) {
+                firedata.child("users").child(key).child("groups").child(groupRef.getKey()).child("name").setValue(groupName);
+            }
+
             NewGroupFragment.this.dismiss();
-        }
-        else {
+        } else {
             newGroupName.setText("Please enter a name!");
             newGroupName.setTextColor(Color.parseColor("#0627FF"));
+
+            newGroupName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    newGroupName.setText("");
+                    newGroupName.setTextColor(Color.parseColor("#ffffff"));
+                }
+            });
+
         }
     }
 }
