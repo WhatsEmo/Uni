@@ -24,6 +24,7 @@ import com.example.whatsemo.classmates.NotificationActivity;
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.adapter.ProfileCourseAdapter;
 import com.example.whatsemo.classmates.adapter.ProfileInterestAdapter;
+import com.example.whatsemo.classmates.adapter.SchedulingAdapter;
 import com.example.whatsemo.classmates.model.Course;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.DataSnapshot;
@@ -32,6 +33,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -50,6 +52,8 @@ public class HomePageFragment extends Fragment {
     private static final String ARG_PAGE = "ARG_PAGE";
     private static final int REQUEST_CAMERA = 0;
     private static final int SELECT_FILE = 1;
+    private static final int AMOUNT_OF_HOURS_TO_DISPLAY = 13;
+    private final static int STARTING_HOUR = 8;
 
     private int mPage;
     private OnFragmentInteractionListener mListener;
@@ -59,12 +63,16 @@ public class HomePageFragment extends Fragment {
 
     private ArrayList<Course> userCourses;
     private ArrayList<String> userInterests;
+    private ArrayList<Boolean> hasFreeTime;
+    private ArrayList<Integer> freeTimeInHours;
 
     private LinearLayoutManager coursesLayoutManager;
     private LinearLayoutManager interestsLayoutManager;
+    private LinearLayoutManager scheduleLayoutManager;
 
     private ProfileCourseAdapter courseAdapter;
     private ProfileInterestAdapter interestAdapter;
+    private SchedulingAdapter scheduleAdapter;
 
     @Bind(R.id.homeUserName)
     TextView userName;
@@ -80,6 +88,9 @@ public class HomePageFragment extends Fragment {
 
     @Bind(R.id.interests_recycler_view)
     RecyclerView interestsRecyclerView;
+
+    @Bind(R.id.schedule_recylcer_view)
+    RecyclerView scheduleRecyclerView;
 
     @OnClick(R.id.profile_picture)
     public void changeProfilePicture(){
@@ -125,6 +136,8 @@ public class HomePageFragment extends Fragment {
         appUser = ((MainActivity)getActivity()).getUser();
         userCourses = new ArrayList<Course>();
         userInterests = new ArrayList<String>();
+        hasFreeTime = new ArrayList<Boolean>(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, false));
+        freeTimeInHours = new ArrayList<Integer>();
 
         imageHandler = new ImageHandler(this.getActivity());
 
@@ -159,6 +172,19 @@ public class HomePageFragment extends Fragment {
                             userCourses = checkCourses;
                         }
                     }
+
+                    if(snapshot.child(getString(R.string.user_schedule_key)).exists()){
+                        ArrayList<Integer> checkSchedule = snapshot.child(getString(R.string.user_schedule_key)).getValue(ArrayList.class);
+
+                        if(freeTimeInHours.size() != checkSchedule.size()){
+                            freeTimeInHours = checkSchedule;
+                            hasFreeTime = new ArrayList<Boolean>(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, false));
+                            for (Integer time : freeTimeInHours){
+                                hasFreeTime.set(time-STARTING_HOUR, true);
+                            }
+                        }
+                    }
+
                     setUpAdapters();
                 }
 
@@ -289,6 +315,14 @@ public class HomePageFragment extends Fragment {
 
         interestAdapter = new ProfileInterestAdapter(userInterests, getActivity(), getFragmentManager(), ref, appUser);
         interestsRecyclerView.setAdapter(interestAdapter);
+
+
+        scheduleLayoutManager = new LinearLayoutManager(getActivity());
+        scheduleLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        scheduleRecyclerView.setLayoutManager(scheduleLayoutManager);
+
+        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref, freeTimeInHours);
+        scheduleRecyclerView.setAdapter(scheduleAdapter);
 
     }
 

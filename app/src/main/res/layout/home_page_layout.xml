@@ -140,25 +140,18 @@
 
         </RelativeLayout>
 
-        <ImageView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_below="@+id/HomeClassesLayout">
+
+        <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:id="@+id/homeScheduleView"
-            android:src="@drawable/schedule_placeholder"
-            android:layout_below="@+id/HomeClassesLayout"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/homeScheduleView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"></FrameLayout>
+            android:id="@+id/schedule_recylcer_view"
+            android:layout_centerInParent="true"></android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
 
 
     </RelativeLayout>

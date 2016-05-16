@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         firedata.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
-                if (authData != null) {
+                if (authData != null && appUser != null) {
                     //user is logged on
                     uid = firedata.getAuth().getUid();
                     createUserObject();
