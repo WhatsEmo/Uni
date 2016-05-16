@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.adapter.FriendAdapter;
@@ -36,6 +38,9 @@ public class NewGroupFragment extends DialogFragment {
 
     @Bind(R.id.friends_result_view)
     RecyclerView recyclerView;
+
+    @Bind(R.id.group_members_layout)
+    GridLayout groupMembersLayout;
 
     @OnClick(R.id.confirm_group_button)
     public void confirmGroup(){
@@ -100,11 +105,28 @@ public class NewGroupFragment extends DialogFragment {
         return view;
     }
 
+    public void addToGroup(final Friend friend){
+        members.put(friend.getUid(), friend.getName());
+
+        Button newFriend = new Button(this.getActivity().getApplicationContext());
+        newFriend.setText(friend.getName());
+
+        newFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                groupMembersLayout.removeView(v);
+                members.remove(friend.getUid());
+            }
+        });
+
+        groupMembersLayout.addView(newFriend);
+    }
+
     private void setUpAdapter(){
         RecyclerView.LayoutManager recyclerViewLayout = new LinearLayoutManager(this.getActivity().getApplicationContext());
         recyclerView.setLayoutManager(recyclerViewLayout);
 
-        friendAdapter = new FriendAdapter(friendList, getActivity(), appUser, 1);
+        friendAdapter = new FriendAdapter(friendList, getActivity(), appUser, 1, this);
         recyclerView.setAdapter(friendAdapter);
     }
 

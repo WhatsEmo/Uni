@@ -3,33 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/friends_result_layout"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/friends_result_view"
-            android:layout_below="@+id/search_members"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-        </android.support.v7.widget.RecyclerView>
-
-        <android.support.v7.widget.SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_members"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-    </RelativeLayout>
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -37,7 +10,7 @@
         android:layout_toLeftOf="@+id/new_group_name"
         android:layout_toStartOf="@+id/new_group_name"
         android:layout_alignParentTop="true"
-        android:id="@+id/linearLayout"
+        android:id="@+id/new_group_header"
         android:background="#FF5B06">
 
         <EditText
@@ -62,5 +35,39 @@
             android:layout_toRightOf="@+id/new_group_name"
             android:layout_toEndOf="@+id/new_group_name" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/friends_result_layout"
+        android:layout_marginTop="61dp"
+        android:layout_below="@+id/new_group_header"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/friends_result_view"
+            android:layout_below="@+id/search_members"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_members"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_members_layout"
+        android:layout_below="@+id/new_group_header"></GridLayout>
 
 </RelativeLayout>
