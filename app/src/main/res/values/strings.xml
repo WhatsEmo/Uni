@@ -57,4 +57,5 @@
     <string name="home_frag_adding_info">chooseType</string>
     <string name="school_courses_name">name</string>
     <string name="user_schedule_key">schedule</string>
+    <string name="social_hint">Filter Social...</string>
 </resources>
