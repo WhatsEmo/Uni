@@ -132,20 +132,21 @@ public class ChatActivity extends AppCompatActivity {
                     chatRef = firedata.child("chats").push();
                     firedata.child("users").child(senderUid).child(label).child(recipientId).child("chatId").setValue(chatRef.getKey());
                     for(String uid : chatRecipients.keySet()){
-                        if(recipientId.equals(chatRecipients.get(uid))) {
-                            firedata.child("users").child(chatRecipients.get(uid)).child(label).child(recipientId).child("chatId").setValue(chatRef.getKey());
+                        if(recipientId.equals(uid) && chatRecipients.size() == 1) {
+                            firedata.child("users").child(uid).child(label).child(senderUid).child("chatId").setValue(chatRef.getKey());
+                        }
+                        else if(senderUid.equals(uid)){
+                            firedata.child("users").child(uid).child(label).child(recipientId).child("chatId").setValue(chatRef.getKey());
                         }
                         else{
-                            firedata.child("users").child(chatRecipients.get(uid)).child(label).child(senderUid).child("chatId").setValue(chatRef.getKey());
+                            firedata.child("users").child(uid).child(label).child(recipientId).child("chatId").setValue(chatRef.getKey());
                         }
                     }
 
                 } else {
                     //If chat has been created, get chat reference from database
                     chatRef = firedata.child("chats").child(dataSnapshot.child(label).child(recipientId).child("chatId").getValue().toString());
-
                 }
-
 
                 chatRef.addChildEventListener(new ChildEventListener() {
                     @Override
