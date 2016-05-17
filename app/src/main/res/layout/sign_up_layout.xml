@@ -84,7 +84,7 @@
         android:width="270dp"
         android:text="@string/sign_up_button"
         android:textColor="@color/orange"
-        android:background="@drawable/button_white"
+        android:background="@drawable/button_white_selector"
         android:id="@+id/signUpScreenButton"
         android:layout_marginTop="35dp"
         style="?android:attr/borderlessButtonStyle"

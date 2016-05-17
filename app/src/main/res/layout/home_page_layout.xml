@@ -71,6 +71,14 @@
                 android:layout_alignLeft="@+id/homeUserName"
                 android:layout_alignStart="@+id/homeUserName" />
 
+            <Button
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:text="logout"
+                android:layout_below="@id/homeUserMajor"
+                android:background="@color/orange"
+                android:id="@+id/logoutButton"/>
+
 
         </RelativeLayout>
 

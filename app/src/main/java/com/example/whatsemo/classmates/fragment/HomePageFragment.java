@@ -76,6 +76,14 @@ public class HomePageFragment extends Fragment {
     private ProfileInterestAdapter interestAdapter;
     private SchedulingAdapter scheduleAdapter;
 
+    @OnClick(R.id.logoutButton)
+    public void logout(){
+        ref.unauth();
+        Intent intent = getActivity().getIntent();
+        getActivity().finish();
+        startActivity(intent);
+    }
+
     @Bind(R.id.monday_button)
     TextView mondayButton;
 

@@ -26,13 +26,13 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     //REMOVE THIS LATER
-    @OnClick(R.id.logoutButton)
-    public void logout(){
-        firedata.unauth();
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }
+//    @OnClick(R.id.logoutButton)
+//    public void logout(){
+//        firedata.unauth();
+//        Intent intent = getIntent();
+//        finish();
+//        startActivity(intent);
+//    }
 
     @OnClick(R.id.search_icon)
     public void startSearchActivity(){
