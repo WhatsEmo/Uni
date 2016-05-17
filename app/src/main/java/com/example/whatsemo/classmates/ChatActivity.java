@@ -50,9 +50,6 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.chatSendButton)
     Button sendButton;
 
-    @Bind(R.id.profile_picture)
-    ImageView profilePicture;
-
     @Bind(R.id.messagesView)
     RecyclerView messagesRecyclerView;
 
@@ -102,11 +99,9 @@ public class ChatActivity extends AppCompatActivity {
 
         if(chatRecipients != null && chatRecipients.size() > 1){
             chatRoutine("groups");
-            setHeaderPicture("groups");
         }
         else{
             chatRoutine("friends");
-            setHeaderPicture("users");
         }
 
         //User linear layout manager that starts from bottom up
@@ -155,23 +150,23 @@ public class ChatActivity extends AppCompatActivity {
                         String authorName;
                         char mode;
 
-                        String authorId = dataSnapshot.child("author").getValue().toString();
+                        String authorUid = dataSnapshot.child("author").getValue().toString();
                         String message = dataSnapshot.child("message").getValue().toString();
                         String timeStamp = dataSnapshot.child("timestamp").getValue().toString();
 
-                        if (authorId.equals(senderUid)) {
+                        if (authorUid.equals(senderUid)) {
                             authorName = senderName;
                             mode = 'r';
                         } else {
-                            authorName = chatRecipients.get(authorId);
+                            authorName = chatRecipients.get(authorUid);
                             mode = 'l';
                         }
 
-                        if (mode != 'r') {
-                            newMessage = new Message(authorId, authorName, mode, message, timeStamp, bm);
-                        } else {
-                            newMessage = new Message(authorId, authorName, mode, message, timeStamp);
-                        }
+
+                        newMessage = new Message(authorUid, authorName, mode, message, timeStamp);
+
+                        setMessagePicture(authorUid, newMessage);
+
                         messages.add(newMessage);
                         messagesAdapter.notifyDataSetChanged();
                         messagesRecyclerView.smoothScrollToPosition(messagesAdapter.getItemCount());
@@ -204,13 +199,14 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    public void setHeaderPicture(String label){
-        firedata.child(label).child(recipientId).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void setMessagePicture(String authorUid, final Message newMessage){
+        firedata.child(getString(R.string.database_users_key)).child(authorUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
                     bm = imageHandler.convertByteArrayToBitmap(dataSnapshot.child(getString(R.string.users_picture_key)).getValue(String.class));
-                    profilePicture.setImageBitmap(bm);
+                    newMessage.setBm(bm);
+                    messagesAdapter.notifyDataSetChanged();
                 }
             }
 

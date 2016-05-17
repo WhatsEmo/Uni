@@ -26,7 +26,6 @@
         android:id="@+id/author_profile_image"
         android:layout_width="37dp"
         android:layout_height="37dp"
-        android:background="@drawable/ic_account_circle"
         android:layout_below="@+id/author_name"
         android:layout_marginRight="5dp"/>
 

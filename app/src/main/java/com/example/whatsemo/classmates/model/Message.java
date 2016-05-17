@@ -65,8 +65,7 @@ public class Message {
     }
 
     public Bitmap getBm() {
-        if(mode == 'l') return bm;
-        return null;
+        return bm;
     }
 
     public void setBm(Bitmap bm) {
