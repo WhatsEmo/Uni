@@ -33,6 +33,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Map;
 
@@ -59,6 +60,7 @@ public class HomePageFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     public ImageHandler imageHandler;
     private Firebase ref;
+    private int day;
     private User appUser;
 
     private ArrayList<Course> userCourses = new ArrayList<Course>();
@@ -73,6 +75,21 @@ public class HomePageFragment extends Fragment {
     private ProfileCourseAdapter courseAdapter;
     private ProfileInterestAdapter interestAdapter;
     private SchedulingAdapter scheduleAdapter;
+
+    @Bind(R.id.monday_button)
+    TextView mondayButton;
+
+    @Bind(R.id.tuesday_button)
+    TextView tuesdayButton;
+
+    @Bind(R.id.wednesday_button)
+    TextView wednesdayButton;
+
+    @Bind(R.id.thursday_button)
+    TextView thursdayButton;
+
+    @Bind(R.id.friday_button)
+    TextView fridayButton;
 
     @Bind(R.id.homeUserName)
     TextView userName;
@@ -103,6 +120,56 @@ public class HomePageFragment extends Fragment {
     @OnClick(R.id.friend_request_button)
     public void viewNotifications(){
         startNotificationActivity();
+    }
+
+    @OnClick(R.id.monday_button)
+    public void setMondayButton(){
+        day = Calendar.MONDAY;
+        setTextColors(day);
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .child("1")
+                .setValue(null);
+    }
+
+    @OnClick(R.id.tuesday_button)
+    public void setTuesdayButton(){
+        day = Calendar.TUESDAY;
+        setTextColors(day);
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .child("1")
+                .setValue(null);
+    }
+
+    @OnClick(R.id.wednesday_button)
+    public void setWednesdayButton(){
+        day = Calendar.WEDNESDAY;
+        setTextColors(day);
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .child("1")
+                .setValue(null);
+    }
+
+    @OnClick(R.id.thursday_button)
+    public void setThursdayButton(){
+        day = Calendar.THURSDAY;
+        setTextColors(day);
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .child("1")
+                .setValue(null);
+    }
+
+    @OnClick(R.id.friday_button)
+    public void setFridayButton(){
+        day = Calendar.FRIDAY;
+        setTextColors(day);
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .child("1")
+                .setValue(null);
     }
 
     public HomePageFragment() {
@@ -136,6 +203,9 @@ public class HomePageFragment extends Fragment {
         appUser = ((MainActivity)getActivity()).getUser();
 
         imageHandler = new ImageHandler(this.getActivity());
+
+        day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        setTextColors(day);
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
@@ -174,17 +244,20 @@ public class HomePageFragment extends Fragment {
                     }
 
                     if(snapshot.child(getString(R.string.user_schedule_key)).exists()){
-                        ArrayList<Integer> checkSchedule = snapshot.child(getString(R.string.user_schedule_key)).getValue(ArrayList.class);
+                        ArrayList<Integer> checkSchedule = snapshot.child(getString(R.string.user_schedule_key)).child(Integer.toString(day)).getValue(ArrayList.class);
 
-                        if(freeTimeInHours.size() != checkSchedule.size()){
+                        if(checkSchedule != null && freeTimeInHours.size() != checkSchedule.size()){
                             freeTimeInHours = checkSchedule;
                             hasFreeTime.clear();
                             hasFreeTime.addAll(new ArrayList(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, Boolean.FALSE)));
                             for (Integer time : freeTimeInHours){
                                 hasFreeTime.set(time-STARTING_HOUR, Boolean.TRUE);
-                                scheduleAdapter.notifyDataSetChanged();
                             }
+                        }else if(checkSchedule == null){
+                            hasFreeTime.clear();
+                            hasFreeTime.addAll(new ArrayList(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, Boolean.FALSE)));
                         }
+                        scheduleAdapter.notifyDataSetChanged();
                     }
                     setUpAdapters();
 
@@ -324,9 +397,36 @@ public class HomePageFragment extends Fragment {
         scheduleLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         scheduleRecyclerView.setLayoutManager(scheduleLayoutManager);
 
-        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref);
+        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref, day);
         scheduleRecyclerView.setAdapter(scheduleAdapter);
 
     }
 
+
+    private void setTextColors(int date) {
+        mondayButton.setTextColor(getResources().getColor(R.color.gray));
+        tuesdayButton.setTextColor(getResources().getColor(R.color.gray));
+        wednesdayButton.setTextColor(getResources().getColor(R.color.gray));
+        thursdayButton.setTextColor(getResources().getColor(R.color.gray));
+        fridayButton.setTextColor(getResources().getColor(R.color.gray));
+        switch (date){
+            case Calendar.MONDAY:
+                mondayButton.setTextColor(getResources().getColor(R.color.realOrange));
+                break;
+            case Calendar.TUESDAY:
+                tuesdayButton.setTextColor(getResources().getColor(R.color.realOrange));
+                break;
+            case Calendar.WEDNESDAY:
+                wednesdayButton.setTextColor(getResources().getColor(R.color.realOrange));
+                break;
+            case Calendar.THURSDAY:
+                thursdayButton.setTextColor(getResources().getColor(R.color.realOrange));
+                break;
+            case Calendar.FRIDAY:
+                fridayButton.setTextColor(getResources().getColor(R.color.realOrange));
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -42,12 +42,13 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SchedulingAdapter(ArrayList<Boolean> myDataset, Context context, Firebase ref) {
+    public SchedulingAdapter(ArrayList<Boolean> myDataset, Context context, Firebase ref, int day) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         mRef = ref.child(mContext.getString(R.string.database_users_key))
                 .child(ref.getAuth().getUid())
-                .child(mContext.getString(R.string.user_schedule_key));
+                .child(mContext.getString(R.string.user_schedule_key))
+                .child(Integer.toString(day));
         freeTimeInHours = new ArrayList<Integer>();
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
