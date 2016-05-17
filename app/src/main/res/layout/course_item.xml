@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight">
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@drawable/edit_text"
+    android:paddingLeft="20dp"
+    android:paddingTop="15dp"
+    android:id="@+id/course_item_layout">
 
     <ImageView
         android:id="@+id/course_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:background="@drawable/ic_account_circle"/>
 
     <TextView
@@ -14,6 +18,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:textColor="@color/gray"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/course_icon"
         android:ellipsize="marquee"
