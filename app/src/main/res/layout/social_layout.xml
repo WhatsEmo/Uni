@@ -41,13 +41,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:id="@+id/SocialCoursesLayout"
-                android:background="#f2564e35">
+                android:background="@drawable/edit_text">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/social_courses_title"
+                android:textColor="@color/gray"
                 android:id="@+id/courseListTitle"
+                android:textSize="16sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -65,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/SocialCoursesLayout"
                 android:id="@+id/SocialGroupsLayout"
-                android:background="#f2564e35">
+                android:background="@drawable/edit_text">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,6 +80,11 @@
                     android:id="@+id/groupListTitle"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="20dp"
                     android:layout_alignParentStart="true" />
 
                 <android.support.v7.widget.RecyclerView
@@ -88,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/SocialGroupsLayout"
-                android:background="#f2564e35"
+                android:background="@drawable/edit_text"
                 android:id="@+id/SocialFriendsLayout">
 
                 <TextView
@@ -99,6 +109,11 @@
                     android:id="@+id/friendListTitle"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="20dp"
                     android:layout_alignParentStart="true" />
 
                 <android.support.v7.widget.RecyclerView
