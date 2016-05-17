@@ -94,17 +94,14 @@ public class SocialFragment extends Fragment {
     private ArrayList<Course> userCourses;
     private ArrayList<Group> userGroups;
 
-
     private CourseAdapter coursesAdapter;
     private RecyclerView.LayoutManager coursesLayoutManager;
-
 
     private FriendAdapter friendsAdapter;
     private RecyclerView.LayoutManager friendsLayoutManager;
 
     private GroupAdapter groupsAdapter;
     private RecyclerView.LayoutManager groupsLayoutManager;
-
 
     public SocialFragment() {
         // Required empty public constructor

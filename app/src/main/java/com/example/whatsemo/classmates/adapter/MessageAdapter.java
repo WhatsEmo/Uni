@@ -82,6 +82,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.sentMessage.setText(mDataset.get(position).getMessage());
         holder.timeStamp.setText(mDataset.get(position).getTimeStamp());
         if(mDataset.get(position).getMode() == 'l'){
+            System.out.println(mDataset.get(position).getBm());
             holder.authorProfileImage.setImageBitmap(mDataset.get(position).getBm());
         }
         //ADD MORE LATER
