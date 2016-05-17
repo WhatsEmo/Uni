@@ -5,55 +5,58 @@
     tools:context=".fragment.SocialFragment">
 
 
-    <LinearLayout
-        android:id="@+id/chat_search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        >
 
-        <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0px"
-            android:layout_height="0px"/>
-
-        <android.support.v7.widget.SearchView
-            android:iconifiedByDefault="false"
-            android:id="@+id/action_search"
-            android:nextFocusUp="@id/action_search"
-            android:nextFocusLeft="@id/action_search"
-            android:title="@string/social_hint"
-            android:theme="@style/AppTheme"
-            android:actionViewClass="android.support.v7.widget.SearchView"
-            android:showAsAction="always"
-            android:layout_weight="0.9"
-            android:layout_width="0dp"
-            android:background="@color/white"
-            android:queryHint="@string/social_hint"
-            android:layout_height="match_parent" />
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="wrap_content"
-            android:id="@+id/new_group_icon"
-            android:background="@drawable/groups" />
-    </LinearLayout>
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_search_layout">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
+
+            <LinearLayout
+                android:id="@+id/chat_search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                >
+
+
+
+                <android.support.v7.widget.SearchView
+                    android:iconifiedByDefault="false"
+                    android:id="@+id/action_search"
+                    android:nextFocusUp="@id/action_search"
+                    android:nextFocusLeft="@id/action_search"
+                    android:title="@string/social_hint"
+                    android:theme="@style/AppTheme"
+                    android:actionViewClass="android.support.v7.widget.SearchView"
+                    android:showAsAction="always"
+                    android:layout_weight="0.9"
+                    android:layout_width="0dp"
+                    android:background="@color/white"
+                    android:queryHint="@string/social_hint"
+                    android:layout_height="match_parent" />
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_group_icon"
+                    android:background="@drawable/groups" />
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:id="@+id/SocialCoursesLayout"
+                android:layout_below="@+id/chat_search_layout"
                 android:background="@color/off_white">
             <TextView
                 android:layout_width="wrap_content"
