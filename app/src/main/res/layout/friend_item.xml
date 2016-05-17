@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/friend_item_layout"
-    android:background="@drawable/edit_text"
+    android:background="@drawable/chat_selector"
     android:paddingLeft="20dp"
     android:paddingTop="15dp"
     android:layout_height="?android:attr/listPreferredItemHeight">
