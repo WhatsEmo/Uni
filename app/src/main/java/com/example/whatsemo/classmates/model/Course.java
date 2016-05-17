@@ -2,8 +2,10 @@ package com.example.whatsemo.classmates.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.example.whatsemo.classmates.ChatActivity;
+import com.example.whatsemo.classmates.ProfileActivity;
 
 /**
  * Created by WhatsEmo on 4/30/2016.
@@ -34,9 +36,15 @@ public class Course extends DatabaseObject{
         this.courseName = courseName;
     }
 
-    public void openChatActivity(Context context){
-        Intent startChatIntent = new Intent(context, ChatActivity.class);
-        context.startActivity(startChatIntent);
+    public void openChatActivity(Context context, User user){
+        Intent startProfileIntent = new Intent(context, ProfileActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("appUser", user);
+        bundle.putString("recipientId", courseID);
+        bundle.putString("recipientName", courseName);
+        startProfileIntent.putExtras(bundle);
+        context.startActivity(startProfileIntent);
     }
 
     @Override

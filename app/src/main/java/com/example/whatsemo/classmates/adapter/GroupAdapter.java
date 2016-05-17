@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,14 +28,15 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView groupName;
         public TextView lastMessage;
+        public ImageView itemIcon;
         public RelativeLayout layout;
 
         public ViewHolder(View v) {
                 super(v);
             groupName = (TextView) v.findViewById(R.id.group_name);
             lastMessage = (TextView) v.findViewById(R.id.last_message);
+            itemIcon = (ImageView) v.findViewById(R.id.group_icon);
             layout = (RelativeLayout) v.findViewById(R.id.group_item_layout);
-
         }
     }
 
