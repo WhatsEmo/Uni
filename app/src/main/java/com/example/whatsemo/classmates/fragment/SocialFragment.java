@@ -1,6 +1,7 @@
 package com.example.whatsemo.classmates.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +12,9 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.R;
@@ -325,6 +328,14 @@ public class SocialFragment extends Fragment {
 
     private void createSearchBar(){
         final SearchView searchView = actionSearch;
+
+        // STYLING SEARCHVIEW
+        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(Color.parseColor("#303030"));
+        searchEditText.setHintTextColor(Color.parseColor("#303030"));
+        searchView.setIconifiedByDefault(false);
+        //END STYLING
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

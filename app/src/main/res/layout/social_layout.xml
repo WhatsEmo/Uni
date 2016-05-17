@@ -8,22 +8,34 @@
     <LinearLayout
         android:id="@+id/chat_search_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         >
 
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
         <android.support.v7.widget.SearchView
+            android:iconifiedByDefault="false"
             android:id="@+id/action_search"
-            android:title="@string/search_hint"
+            android:nextFocusUp="@id/action_search"
+            android:nextFocusLeft="@id/action_search"
+            android:title="@string/social_hint"
+            android:theme="@style/AppTheme"
             android:actionViewClass="android.support.v7.widget.SearchView"
             android:showAsAction="always"
-            android:layout_width="290dp"
-            android:background="@color/off_white"
+            android:layout_weight="0.9"
+            android:layout_width="0dp"
+            android:background="@color/white"
             android:queryHint="@string/social_hint"
             android:layout_height="match_parent" />
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
             android:layout_height="wrap_content"
             android:id="@+id/new_group_icon"
             android:background="@drawable/groups" />
@@ -43,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:id="@+id/SocialCoursesLayout"
-                android:background="@drawable/edit_text">
+                android:background="@color/off_white">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,8 +64,8 @@
                 android:textColor="@color/gray"
                 android:id="@+id/courseListTitle"
                 android:textSize="16sp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -72,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/SocialCoursesLayout"
                 android:id="@+id/SocialGroupsLayout"
-                android:background="@drawable/edit_text">
+                android:background="@color/off_white">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,8 +96,8 @@
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/gray"
                     android:textSize="16sp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
                     android:layout_alignParentStart="true" />
 
@@ -100,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/SocialGroupsLayout"
-                android:background="@drawable/edit_text"
+                android:background="@color/off_white"
                 android:id="@+id/SocialFriendsLayout">
 
                 <TextView
@@ -113,8 +125,8 @@
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/gray"
                     android:textSize="16sp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
                     android:layout_alignParentStart="true" />
 

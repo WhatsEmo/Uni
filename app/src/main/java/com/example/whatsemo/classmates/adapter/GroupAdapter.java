@@ -1,10 +1,12 @@
 package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
@@ -25,11 +27,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView groupName;
         public TextView lastMessage;
+        public RelativeLayout layout;
 
         public ViewHolder(View v) {
                 super(v);
             groupName = (TextView) v.findViewById(R.id.group_name);
             lastMessage = (TextView) v.findViewById(R.id.last_message);
+            layout = (RelativeLayout) v.findViewById(R.id.group_item_layout);
+
         }
     }
 
