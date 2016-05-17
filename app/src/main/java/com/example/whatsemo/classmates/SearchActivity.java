@@ -223,6 +223,8 @@ public class SearchActivity extends Activity {
      */
     private void createSearchBar(){
         final SearchView searchView = searchInfo;
+        searchView.setIconifiedByDefault(false);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

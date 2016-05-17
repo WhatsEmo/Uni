@@ -17,6 +17,7 @@
         <android.support.v7.widget.SearchView
         android:id="@+id/activity_action_search"
         android:title="@string/search_hint"
+            android:iconifiedByDefault="false"
         android:actionViewClass="android.support.v7.widget.SearchView"
         android:showAsAction="always"
         android:layout_width="match_parent"
