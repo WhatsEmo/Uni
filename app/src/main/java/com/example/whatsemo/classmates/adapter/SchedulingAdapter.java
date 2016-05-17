@@ -80,7 +80,7 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
             @Override
             public void onClick(View v) {
                 Boolean freeTime = mDataset.get(position);
-                mDataset.set(position, !freeTime);
+                set(position, !freeTime);
                 //If user is free, then make the orange circle appear
                 if(!freeTime){
                     holder.orangeCircle.setVisibility(View.VISIBLE);
@@ -97,6 +97,7 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
                             .child(mContext.getString(R.string.user_schedule_key))
                             .setValue(freeTimeInHours);
                 }
+                notifyDataSetChanged();
             }
         });
 
@@ -108,9 +109,9 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
         return mDataset.size();
     }
 
-    public void add(int position, Boolean freeTime) {
-        mDataset.add(position, freeTime);
-        notifyItemInserted(position);
+    public void set(int position, Boolean freeTime) {
+        mDataset.set(position, freeTime);
+        notifyItemChanged(position);
     }
 
 }

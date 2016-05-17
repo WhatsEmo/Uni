@@ -146,20 +146,20 @@ public class SocialFragment extends Fragment {
         userCourses = new ArrayList<Course>();
         userGroups = new ArrayList<Group>();
 
-        ref = new Firebase(getResources().getString(R.string.database));
+        ref = new Firebase(getString(R.string.database));
 
         if (ref.getAuth() != null){
-            ref.child(getResources().getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
+            ref.child(getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 
                     //Used to prevent crashes from happening
-                    boolean hasCourses = snapshot.child(getResources().getString(R.string.user_courses_key)).exists();
-                    boolean hasFriends = snapshot.child(getResources().getString(R.string.user_friends_key)).exists();
-                    boolean hasGroups = snapshot.child(getResources().getString(R.string.user_groups_key)).exists();
+                    boolean hasCourses = snapshot.child(getString(R.string.user_courses_key)).exists();
+                    boolean hasFriends = snapshot.child(getString(R.string.user_friends_key)).exists();
+                    boolean hasGroups = snapshot.child(getString(R.string.user_groups_key)).exists();
 
                     if (hasCourses) {
-                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_courses_key)).getValue();
+                        retrieveDataMap = (Map<String, String>) snapshot.child(getString(R.string.user_courses_key)).getValue();
                         if(retrieveDataMap.keySet().size() != userCourses.size()) {
                             userCourses.clear();
                             for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
@@ -171,7 +171,7 @@ public class SocialFragment extends Fragment {
                         }
                     }
                     if (hasFriends) {
-                        Map<String, Map<String,String>> getMap = (Map<String, Map<String,String>>) snapshot.child(getResources().getString(R.string.user_friends_key)).getValue();
+                        Map<String, Map<String,String>> getMap = (Map<String, Map<String,String>>) snapshot.child(getString(R.string.user_friends_key)).getValue();
                         if(getMap.keySet().size() != userFriends.size()) {
                             userFriends.clear();
                             for (Map.Entry<String, Map<String,String>> entry : getMap.entrySet()) {
@@ -184,12 +184,12 @@ public class SocialFragment extends Fragment {
 
                     }
                     if (hasGroups) {
-                        retrieveDataMap = (Map<String, String>) snapshot.child(getResources().getString(R.string.user_groups_key)).getValue();
+                        retrieveDataMap = (Map<String, String>) snapshot.child(getString(R.string.user_groups_key)).getValue();
                         if(retrieveDataMap.keySet().size() != userGroups.size()) {
                             userGroups.clear();
                             for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
                                 final String groupId = entry.getKey();
-                                final String groupName = snapshot.child(getResources().getString(R.string.user_groups_key)).child(groupId).child("name").getValue(String.class);
+                                final String groupName = snapshot.child(getString(R.string.user_groups_key)).child(groupId).child("name").getValue(String.class);
 
                                 ref.child("groups").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -201,14 +201,7 @@ public class SocialFragment extends Fragment {
                                             userGroups.add(group);
                                             System.out.println(userGroups);
                                         }
-                                        // use a linear layout manager
-                                        groupsLayoutManager = new LinearLayoutManager(getContext());
-                                        groupsRecyclerView.setLayoutManager(groupsLayoutManager);
-
-                                        // specify an adapter
-                                        groupsAdapter = new GroupAdapter(userGroups, getContext(), appUser);
-                                        groupsRecyclerView.setAdapter(groupsAdapter);
-                                        System.out.println(userGroups);
+                                        setVisibility();
                                     }
 
                                     public void onCancelled(FirebaseError firebaseError){
@@ -317,8 +310,8 @@ public class SocialFragment extends Fragment {
         friendsAdapter = new FriendAdapter(userFriends, getActivity(), appUser, 0);
         friendRecyclerView.setAdapter(friendsAdapter);
 
-        /*
-            *************GROUPS*************
+
+        //*************GROUPS*************
 
 
         // use a linear layout manager
@@ -328,7 +321,7 @@ public class SocialFragment extends Fragment {
         // specify an adapter
         groupsAdapter = new GroupAdapter(userGroups, getContext(), appUser);
         groupsRecyclerView.setAdapter(groupsAdapter);
-        */
+
     }
 
     private void createSearchBar(){

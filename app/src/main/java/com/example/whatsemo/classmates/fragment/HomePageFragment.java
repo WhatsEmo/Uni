@@ -140,6 +140,7 @@ public class HomePageFragment extends Fragment {
         freeTimeInHours = new ArrayList<Integer>();
 
         imageHandler = new ImageHandler(this.getActivity());
+        setUpAdapters();
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
@@ -157,7 +158,9 @@ public class HomePageFragment extends Fragment {
                         ArrayList<String> checkInterests = (ArrayList<String>) snapshot.child(getString(R.string.user_interests_key)).getValue();
 
                         if(userInterests.size() != checkInterests.size()){
-                            userInterests = checkInterests;
+                            userInterests.clear();
+                            userInterests.addAll(userInterests);
+                            interestAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -169,7 +172,9 @@ public class HomePageFragment extends Fragment {
                         }
 
                         if(checkCourses.size() != userCourses.size()){
-                            userCourses = checkCourses;
+                            userCourses.clear();
+                            userCourses.addAll(checkCourses);
+                            courseAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -178,14 +183,15 @@ public class HomePageFragment extends Fragment {
 
                         if(freeTimeInHours.size() != checkSchedule.size()){
                             freeTimeInHours = checkSchedule;
-                            hasFreeTime = new ArrayList<Boolean>(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, false));
+                            hasFreeTime.clear();
+                            hasFreeTime.addAll(new ArrayList(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, Boolean.FALSE)));
                             for (Integer time : freeTimeInHours){
-                                hasFreeTime.set(time-STARTING_HOUR, true);
+                                hasFreeTime.set(time-STARTING_HOUR, Boolean.TRUE);
+                                scheduleAdapter.notifyDataSetChanged();
                             }
                         }
                     }
 
-                    setUpAdapters();
                 }
 
                 @Override
