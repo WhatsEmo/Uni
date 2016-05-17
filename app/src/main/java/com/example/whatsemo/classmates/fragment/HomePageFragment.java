@@ -61,10 +61,10 @@ public class HomePageFragment extends Fragment {
     private Firebase ref;
     private User appUser;
 
-    private ArrayList<Course> userCourses;
-    private ArrayList<String> userInterests;
-    private ArrayList<Boolean> hasFreeTime;
-    private ArrayList<Integer> freeTimeInHours;
+    private ArrayList<Course> userCourses = new ArrayList<Course>();
+    private ArrayList<String> userInterests = new ArrayList<String>();
+    private ArrayList<Boolean> hasFreeTime = new ArrayList<Boolean>(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, false));;
+    private ArrayList<Integer> freeTimeInHours = new ArrayList<Integer>();
 
     private LinearLayoutManager coursesLayoutManager;
     private LinearLayoutManager interestsLayoutManager;
@@ -134,13 +134,8 @@ public class HomePageFragment extends Fragment {
         ref = new Firebase(getResources().getString(R.string.database));
 
         appUser = ((MainActivity)getActivity()).getUser();
-        userCourses = new ArrayList<Course>();
-        userInterests = new ArrayList<String>();
-        hasFreeTime = new ArrayList<Boolean>(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, false));
-        freeTimeInHours = new ArrayList<Integer>();
 
         imageHandler = new ImageHandler(this.getActivity());
-        setUpAdapters();
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
@@ -159,7 +154,7 @@ public class HomePageFragment extends Fragment {
 
                         if(userInterests.size() != checkInterests.size()){
                             userInterests.clear();
-                            userInterests.addAll(userInterests);
+                            userInterests.addAll(checkInterests);
                             interestAdapter.notifyDataSetChanged();
                         }
                     }
@@ -191,6 +186,7 @@ public class HomePageFragment extends Fragment {
                             }
                         }
                     }
+                    setUpAdapters();
 
                 }
 
@@ -204,6 +200,7 @@ public class HomePageFragment extends Fragment {
         else{
             System.out.println("Home Page: Authentication failed");
         }
+        setUpAdapters();
         return view;
     }
 
@@ -327,7 +324,7 @@ public class HomePageFragment extends Fragment {
         scheduleLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         scheduleRecyclerView.setLayoutManager(scheduleLayoutManager);
 
-        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref, freeTimeInHours);
+        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref);
         scheduleRecyclerView.setAdapter(scheduleAdapter);
 
     }

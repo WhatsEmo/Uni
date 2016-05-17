@@ -199,7 +199,6 @@ public class SocialFragment extends Fragment {
                                         Group group = new Group(groupId, groupName, members);
                                         if (!userGroups.contains(group)) {
                                             userGroups.add(group);
-                                            System.out.println(userGroups);
                                         }
                                         setVisibility();
                                     }

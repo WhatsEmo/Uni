@@ -10,7 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -39,11 +42,26 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SchedulingAdapter(ArrayList<Boolean> myDataset, Context context, Firebase ref, ArrayList<Integer> passToDatabase) {
+    public SchedulingAdapter(ArrayList<Boolean> myDataset, Context context, Firebase ref) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
-        mRef = ref;
-        freeTimeInHours = passToDatabase;
+        mRef = ref.child(mContext.getString(R.string.database_users_key))
+                .child(ref.getAuth().getUid())
+                .child(mContext.getString(R.string.user_schedule_key));
+        freeTimeInHours = new ArrayList<Integer>();
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    freeTimeInHours.addAll(dataSnapshot.getValue(ArrayList.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     // Create new views (invoked by the layout manager)
@@ -85,17 +103,13 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
                 if(!freeTime){
                     holder.orangeCircle.setVisibility(View.VISIBLE);
                     freeTimeInHours.add(position + STARTING_HOUR);
-                    mRef.child(mContext.getString(R.string.database_users_key))
-                            .child(mRef.getAuth().getUid())
-                            .child(mContext.getString(R.string.user_schedule_key))
-                            .setValue(freeTimeInHours);
+                    mRef.setValue(freeTimeInHours);
                 }else{
-                    holder.orangeCircle.setVisibility(View.INVISIBLE);
-                    freeTimeInHours.remove(freeTimeInHours.indexOf(position + STARTING_HOUR));
-                    mRef.child(mContext.getString(R.string.database_users_key))
-                            .child(mRef.getAuth().getUid())
-                            .child(mContext.getString(R.string.user_schedule_key))
-                            .setValue(freeTimeInHours);
+                    if(freeTimeInHours.size() > 0) {
+                        holder.orangeCircle.setVisibility(View.INVISIBLE);
+                        freeTimeInHours.remove(freeTimeInHours.indexOf(position + STARTING_HOUR));
+                        mRef.setValue(freeTimeInHours);
+                    }
                 }
                 notifyDataSetChanged();
             }
@@ -113,5 +127,24 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
         mDataset.set(position, freeTime);
         notifyItemChanged(position);
     }
+
+    public void add(int position, Boolean freeTime) {
+        mDataset.add(position, freeTime);
+        notifyItemInserted(position);
+    }
+
+    public Boolean remove(int position) {
+        final Boolean removedFreeTime = mDataset.remove(position);
+        notifyItemRemoved(position);
+        return removedFreeTime;
+    }
+
+    public void move(int fromPosition, int toPosition){
+        final Boolean freeTime = mDataset.remove(fromPosition);
+        mDataset.add(toPosition, freeTime);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+
 
 }
