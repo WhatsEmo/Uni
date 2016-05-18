@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/circle"
+        android:src="@drawable/dot"
         android:layout_marginTop="11dp"
         android:id="@+id/orange_dot"
         android:layout_alignParentTop="true"
