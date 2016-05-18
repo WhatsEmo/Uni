@@ -192,6 +192,7 @@ public class HomePageFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -288,6 +289,9 @@ public class HomePageFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(!isAdded()){
+            return;
+        }
         /*
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;

@@ -1,11 +1,11 @@
 package com.example.whatsemo.classmates.fragment;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.R;
@@ -233,6 +232,9 @@ public class SocialFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(!isAdded()){
+            return;
+        }
         /*
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
