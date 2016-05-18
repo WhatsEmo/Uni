@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.adapter.MessageAdapter;
+import com.example.whatsemo.classmates.fragment.SchedulingFragment;
 import com.example.whatsemo.classmates.model.Message;
 import com.example.whatsemo.classmates.model.User;
 import com.firebase.client.ChildEventListener;
@@ -32,6 +33,9 @@ import butterknife.OnClick;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private final static int FRIEND_CHAT = 0;
+    private final static int GROUP_CHAT = 1;
+
     @Bind(R.id.toolbarLayout)
     RelativeLayout toolbarLayout;
 
@@ -50,12 +54,20 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.chatSendButton)
     Button sendButton;
 
+    @Bind(R.id.scheduling_button)
+    ImageView scheduleButton;
+
     @Bind(R.id.messagesView)
     RecyclerView messagesRecyclerView;
 
     @OnClick(R.id.chat_back_button)
     public void finishActivity(){
         finish();
+    }
+
+    @OnClick(R.id.scheduling_button)
+    public void openScheduleDialog(){
+        showSchedule();
     }
 
     private User sender;
@@ -65,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
     private String recipientName;
     private HashMap<String, String> chatRecipients;
     private Bitmap bm;
+    private int chatType;
 
     private Firebase firedata;
     private Firebase chatRef;
@@ -82,6 +95,7 @@ public class ChatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         firedata = new Firebase(getResources().getString(R.string.database));
+        firedata.setAndroidContext(this);
 
         imageHandler = new ImageHandler(this);
 
@@ -98,9 +112,11 @@ public class ChatActivity extends AppCompatActivity {
         messages = new ArrayList<Message>();
 
         if(chatRecipients != null && chatRecipients.size() > 1){
+            chatType = GROUP_CHAT;
             chatRoutine("groups");
         }
         else{
+            chatType = FRIEND_CHAT;
             chatRoutine("friends");
         }
 
@@ -245,6 +261,20 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
+    }
+
+    private void showSchedule() {
+        if(chatType == FRIEND_CHAT) {
+            SchedulingFragment newFragment = new SchedulingFragment();
+            ArrayList<String> friend = new ArrayList<String>();
+            friend.add(recipientId);
+            newFragment = newFragment.newInstance(FRIEND_CHAT, senderUid, friend);
+            newFragment.show(getSupportFragmentManager(), "dialog");
+        }else if(chatType == GROUP_CHAT){
+            SchedulingFragment newFragment = new SchedulingFragment();
+            newFragment = newFragment.newInstance(FRIEND_CHAT, senderUid, new ArrayList<String>(chatRecipients.keySet()));
+            newFragment.show(getSupportFragmentManager(), "dialog");
+        }
     }
 }
 

@@ -6,59 +6,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/inputLayout">
-
-        <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/messageInput"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/chatSendButton"
-        android:layout_toStartOf="@+id/chatSendButton"
-        android:background="@drawable/edit_text"
-        android:paddingLeft="10dp"
-        android:textColorHint="#20000000"
-        android:hint="Enter message..."
-        android:paddingRight="10dp"
-        android:layout_alignTop="@+id/chatSendButton"
-        android:textColor="#000000"
-        android:inputType="textLongMessage" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:id="@+id/chatSendButton"
-            android:text="SEND"
-            android:textColor="@color/orange"
-            android:background="@drawable/edit_text"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/messagesView"
-        android:background="@color/white"
-        android:layout_marginTop="-3dp"
-        android:layout_above="@+id/inputLayout"
-        android:paddingLeft="8dp"
-        android:layout_below="@+id/toolbarLayout">
-    </android.support.v7.widget.RecyclerView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:id="@+id/toolbarLayout"
         android:paddingTop="10dp"
         android:background="@drawable/chatbar">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_back"
+            android:id="@+id/chat_back_button"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,15 +28,67 @@
             android:layout_toRightOf="@+id/chat_back_button"
             android:layout_alignBottom="@+id/chat_back_button" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_back"
-            android:id="@+id/chat_back_button"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_account_circle"
+            android:id="@+id/scheduling_button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/recipientName"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/messagesView"
+        android:background="@color/white"
+        android:layout_marginTop="-3dp"
+        android:layout_above="@+id/inputLayout"
+        android:paddingLeft="8dp"
+        android:layout_below="@+id/toolbarLayout">
+    </android.support.v7.widget.RecyclerView>
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/inputLayout">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/messageInput"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/chatSendButton"
+            android:layout_toStartOf="@+id/chatSendButton"
+            android:background="@drawable/edit_text"
+            android:paddingLeft="10dp"
+            android:textColorHint="#20000000"
+            android:hint="Enter message..."
+            android:paddingRight="10dp"
+            android:layout_alignTop="@+id/chatSendButton"
+            android:textColor="#000000"
+            android:inputType="textLongMessage" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:id="@+id/chatSendButton"
+            android:text="SEND"
+            android:textColor="@color/orange"
+            android:background="@drawable/edit_text"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

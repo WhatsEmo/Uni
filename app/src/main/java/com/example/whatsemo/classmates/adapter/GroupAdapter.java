@@ -1,7 +1,6 @@
 package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.example.whatsemo.classmates.model.Group;
 import com.example.whatsemo.classmates.model.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by WhatsEmo on 4/29/2016.
@@ -37,57 +35,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
             lastMessage = (TextView) v.findViewById(R.id.last_message);
             itemIcon = (ImageView) v.findViewById(R.id.group_icon);
             layout = (RelativeLayout) v.findViewById(R.id.group_item_layout);
-        }
-    }
-
-    public void add(int position, Group group) {
-        mDataset.add(position, group);
-        notifyItemInserted(position);
-    }
-
-    public Group remove(int position) {
-        final Group removedGroup = mDataset.remove(position);
-        notifyItemRemoved(position);
-        return removedGroup;
-    }
-
-    public void move(int fromPosition, int toPosition){
-        final Group group = mDataset.remove(fromPosition);
-        mDataset.add(toPosition, group);
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void animateTo(ArrayList<Group> groups){
-        applyAndAnimateRemovals(groups);
-        applyAndAnimateAdditions(groups);
-        applyAndAnimateMovedItems(groups);
-    }
-
-    private void applyAndAnimateRemovals(ArrayList<Group> newGroups) {
-        for (int i = mDataset.size() - 1; i >= 0; i--) {
-            final Group group = mDataset.get(i);
-            if (!newGroups.contains(group)) {
-                remove(i);
-            }
-        }
-    }
-
-    private void applyAndAnimateAdditions(ArrayList<Group> newGroups) {
-        for (int i = 0, count = newGroups.size(); i < count; i++) {
-            final Group group = newGroups.get(i);
-            if (!mDataset.contains(group)) {
-                add(i, group);
-            }
-        }
-    }
-
-    private void applyAndAnimateMovedItems(ArrayList<Group> newGroups) {
-        for (int toPosition = newGroups.size() - 1; toPosition >= 0; toPosition--) {
-            final Group group = newGroups.get(toPosition);
-            final int fromPosition = mDataset.indexOf(group);
-            if (fromPosition >= 0 && fromPosition != toPosition) {
-                move(fromPosition, toPosition);
-            }
         }
     }
 
@@ -131,4 +78,55 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         return mDataset.size();
     }
 
+    public void add(int position, Group group) {
+        mDataset.add(position, group);
+        notifyItemInserted(position);
+    }
+
+
+    public Group remove(int position) {
+        final Group removedGroup = mDataset.remove(position);
+        notifyItemRemoved(position);
+        return removedGroup;
+    }
+
+    public void move(int fromPosition, int toPosition){
+        final Group group = mDataset.remove(fromPosition);
+        mDataset.add(toPosition, group);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void animateTo(ArrayList<Group> groups){
+        applyAndAnimateRemovals(groups);
+        applyAndAnimateAdditions(groups);
+        applyAndAnimateMovedItems(groups);
+    }
+
+    private void applyAndAnimateRemovals(ArrayList<Group> newGroups) {
+        for (int i = mDataset.size() - 1; i >= 0; i--) {
+            final Group group = mDataset.get(i);
+            if (!newGroups.contains(group)) {
+                remove(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(ArrayList<Group> newGroups) {
+        for (int i = 0, count = newGroups.size(); i < count; i++) {
+            final Group group = newGroups.get(i);
+            if (!mDataset.contains(newGroups)) {
+                add(i, group);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(ArrayList<Group> newGroups) {
+        for (int toPosition = newGroups.size() - 1; toPosition >= 0; toPosition--) {
+            final Group group = newGroups.get(toPosition);
+            final int fromPosition = mDataset.indexOf(group);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                move(fromPosition, toPosition);
+            }
+        }
+    }
 }

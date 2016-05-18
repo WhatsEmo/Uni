@@ -422,6 +422,7 @@ public class SocialFragment extends Fragment {
         return filteredCourses;
     }
 
+
     private ArrayList<Friend> filterFriends(ArrayList<Friend> friends, String query) {
         query = query.toLowerCase();
 
@@ -434,6 +435,7 @@ public class SocialFragment extends Fragment {
         }
         return filteredFriends;
     }
+
 
     private ArrayList<Group> filterGroups(ArrayList<Group> groups, String query) {
         query = query.toLowerCase();
