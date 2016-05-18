@@ -34,7 +34,7 @@ public class AddingFragment extends DialogFragment {
     private final static int ADD_COURSES = 0;
     private final static int ADD_INTERESTS = 1;
     private final static int WINDOW_WIDTH = 245;
-    private final static int WINDOW_HEIGHT = 285;
+    private final static int WINDOW_HEIGHT = 200;
     private int addingType;
     private int windowWidth;
     private int windowHeight;
