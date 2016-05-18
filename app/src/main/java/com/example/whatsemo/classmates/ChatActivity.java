@@ -3,7 +3,9 @@ package com.example.whatsemo.classmates;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -31,7 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends FragmentActivity {
 
     private final static int FRIEND_CHAT = 0;
     private final static int GROUP_CHAT = 1;
@@ -78,6 +80,8 @@ public class ChatActivity extends AppCompatActivity {
     private HashMap<String, String> chatRecipients;
     private Bitmap bm;
     private int chatType;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
     private Firebase firedata;
     private Firebase chatRef;
@@ -96,6 +100,9 @@ public class ChatActivity extends AppCompatActivity {
 
         firedata = new Firebase(getResources().getString(R.string.database));
         firedata.setAndroidContext(this);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         imageHandler = new ImageHandler(this);
 
@@ -268,12 +275,12 @@ public class ChatActivity extends AppCompatActivity {
             SchedulingFragment newFragment = new SchedulingFragment();
             ArrayList<String> friend = new ArrayList<String>();
             friend.add(recipientId);
-            newFragment = newFragment.newInstance(FRIEND_CHAT, senderUid, friend);
-            newFragment.show(getSupportFragmentManager(), "dialog");
+            newFragment = newFragment.newInstance(senderUid, friend);
+            newFragment.show(fragmentManager, "dialog");
         }else if(chatType == GROUP_CHAT){
             SchedulingFragment newFragment = new SchedulingFragment();
-            newFragment = newFragment.newInstance(FRIEND_CHAT, senderUid, new ArrayList<String>(chatRecipients.keySet()));
-            newFragment.show(getSupportFragmentManager(), "dialog");
+            newFragment = newFragment.newInstance(senderUid, new ArrayList<String>(chatRecipients.keySet()));
+            newFragment.show(fragmentManager, "dialog");
         }
     }
 }

@@ -55,6 +55,7 @@ public class HomePageFragment extends Fragment {
     private static final int SELECT_FILE = 1;
     private static final int AMOUNT_OF_HOURS_TO_DISPLAY = 13;
     private final static int STARTING_HOUR = 8;
+    private final static int IN_HOME = 0;
 
     private int mPage;
     private OnFragmentInteractionListener mListener;
@@ -403,7 +404,7 @@ public class HomePageFragment extends Fragment {
         scheduleLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         scheduleRecyclerView.setLayoutManager(scheduleLayoutManager);
 
-        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref, day);
+        scheduleAdapter = new SchedulingAdapter(hasFreeTime, getActivity(), ref, day, IN_HOME);
         scheduleRecyclerView.setAdapter(scheduleAdapter);
 
     }

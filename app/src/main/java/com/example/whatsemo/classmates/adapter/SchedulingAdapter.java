@@ -25,8 +25,11 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
     private ArrayList<Integer> freeTimeInHours;
     private Context mContext;
     private Firebase mRef;
-    private final static int ADD_INTEREST = 1;
+    private int beingCalledFrom;
     private final static int STARTING_HOUR = 8;
+    private final static int IN_HOME = 0;
+    private final static int IN_CHAT = 1;
+    private final static int DISPLAY_ALL_IN_CHAT = 2;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public RelativeLayout layout;
@@ -42,7 +45,7 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SchedulingAdapter(ArrayList<Boolean> myDataset, Context context, Firebase ref, int day) {
+    public SchedulingAdapter(ArrayList<Boolean> myDataset, Context context, Firebase ref, int day, int inHomeOrChat) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         mRef = ref.child(mContext.getString(R.string.database_users_key))
@@ -50,6 +53,7 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
                 .child(mContext.getString(R.string.user_schedule_key))
                 .child(Integer.toString(day));
         freeTimeInHours = new ArrayList<Integer>();
+        beingCalledFrom = inHomeOrChat;
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -83,39 +87,59 @@ public class SchedulingAdapter extends RecyclerView.Adapter<SchedulingAdapter.Vi
         // - replace the contents of the view with that element
         // If it's not the "+" button, then add in regular functions
         final Boolean freeTime = mDataset.get(position);
-        int time = STARTING_HOUR+position;
-        if(time > 12){
-            time = time-12;
-        }
-        holder.timeOfDay.setText(Integer.toString(time));
-
-        //If user is free, then make the orange circle appear
-        if(freeTime){
-            holder.orangeCircle.setVisibility(View.VISIBLE);
-        }else{
-            holder.orangeCircle.setVisibility(View.INVISIBLE);
-        }
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean freeTime = mDataset.get(position);
-                set(position, !freeTime);
-                //If user is free, then make the orange circle appear
-                if(!freeTime){
-                    holder.orangeCircle.setVisibility(View.VISIBLE);
-                    freeTimeInHours.add(position + STARTING_HOUR);
-                    mRef.setValue(freeTimeInHours);
-                }else{
-                    if(freeTimeInHours.size() > 0) {
-                        holder.orangeCircle.setVisibility(View.INVISIBLE);
-                        freeTimeInHours.remove(freeTimeInHours.indexOf(position + STARTING_HOUR));
-                        mRef.setValue(freeTimeInHours);
-                    }
-                }
-                notifyDataSetChanged();
+        if(beingCalledFrom == IN_HOME) {
+            int time = STARTING_HOUR + position;
+            if (time > 12) {
+                time = time - 12;
             }
-        });
+            holder.timeOfDay.setText(Integer.toString(time));
 
+            //If user is free, then make the orange circle appear
+            if (freeTime) {
+                holder.orangeCircle.setVisibility(View.VISIBLE);
+            } else {
+                holder.orangeCircle.setVisibility(View.INVISIBLE);
+            }
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Boolean freeTime = mDataset.get(position);
+                    set(position, !freeTime);
+                    //If user is free, then make the orange circle appear
+                    if (!freeTime) {
+                        holder.orangeCircle.setVisibility(View.VISIBLE);
+                        freeTimeInHours.add(position + STARTING_HOUR);
+                        mRef.setValue(freeTimeInHours);
+                    } else {
+                        if (freeTimeInHours.size() > 0) {
+                            holder.orangeCircle.setVisibility(View.INVISIBLE);
+                            freeTimeInHours.remove(freeTimeInHours.indexOf(position + STARTING_HOUR));
+                            mRef.setValue(freeTimeInHours);
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+        }else if(beingCalledFrom == IN_CHAT){
+            if (freeTime) {
+                holder.orangeCircle.setVisibility(View.VISIBLE);
+            } else {
+                holder.orangeCircle.setVisibility(View.INVISIBLE);
+            }
+        }else if(beingCalledFrom == DISPLAY_ALL_IN_CHAT){
+            int time = STARTING_HOUR + position;
+            if (time > 12) {
+                time = time - 12;
+            }
+            holder.timeOfDay.setText(Integer.toString(time));
+
+            //If user is free, then make the orange circle appear
+            if (freeTime) {
+                holder.orangeCircle.setVisibility(View.VISIBLE);
+            } else {
+                holder.orangeCircle.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

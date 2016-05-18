@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragment.SchedulingFragment">
 
     <RelativeLayout
@@ -10,8 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:id="@+id/day_button_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/HomeClassesLayout">
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +48,10 @@
             android:text="W"
             android:id="@+id/wednesday_button"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_toRightOf="@+id/tuesday_button"
+            android:layout_toEndOf="@+id/tuesday_button"
+            android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,8 +63,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/wednesday_button"
             android:layout_toEndOf="@+id/wednesday_button"
-            android:layout_marginLeft="40dp"
-            android:layout_marginStart="40dp" />
+            android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,39 +74,46 @@
             android:text="F"
             android:id="@+id/friday_button"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="60dp"
-            android:layout_marginEnd="60dp" />
+            android:layout_toRightOf="@+id/thursday_button"
+            android:layout_toEndOf="@+id/thursday_button"
+            android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp" />
     </RelativeLayout>
 
-    <LinearLayout
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
         android:layout_below="@+id/day_button_layout"
-        android:id="@+id/group_schedule">
+        android:paddingBottom="10dp"
+        android:id="@+id/schedules_recylcer_view"></android.support.v7.widget.RecyclerView>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedules_recylcer_view"
-            android:layout_centerInParent="true"></android.support.v7.widget.RecyclerView>
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/group_schedule">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/schedules_recylcer_view">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#000000"
+            android:id="@+id/line_divider"
+            android:layout_below="@+id/schedules_recylcer_view"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/all_text"
+            android:layout_toEndOf="@+id/all_text" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/all_text"
+            android:textColor="@color/gray"
             android:text="ALL"
             android:paddingRight="3dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_centerVertical="true"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
