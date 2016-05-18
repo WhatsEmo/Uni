@@ -33,13 +33,13 @@ public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterest
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout layout;
-        public ImageView courseImage;
+//        public ImageView courseImage;
         public TextView courseName;
 
         public ViewHolder(View v) {
             super(v);
             layout = (LinearLayout) v.findViewById(R.id.home_course_item_layout);
-            courseImage = (ImageView) v.findViewById(R.id.course_item_image);
+//            courseImage = (ImageView) v.findViewById(R.id.course_item_image);
             courseName = (TextView) v.findViewById(R.id.course_item_name);
         }
     }
@@ -87,6 +87,7 @@ public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterest
             });
         }else{
             //Add "+" button
+            holder.courseName.setTextSize(24);
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

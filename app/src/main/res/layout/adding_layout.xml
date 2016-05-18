@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/orange">
 
@@ -12,30 +14,39 @@
         android:soundEffectsEnabled="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="50sp"
+        android:textSize="20sp"
+        android:padding="5dp"
         android:id="@+id/addingLayoutTitle"
         android:layout_gravity="center_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/addingClassesLayout">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:theme="@style/AppTheme"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_classes_button_text"
             android:id="@+id/classId"
-            android:inputType="textPersonName"
-            android:layout_toLeftOf="@+id/addingClassesButton"
-            android:layout_toStartOf="@+id/addingClassesButton" />
+            android:inputType="textPersonName" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adding_classes_button_text"
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/classId"
+            android:layout_centerInParent="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/button_selector"
             android:id="@+id/addingClassesButton" />
 
         <GridLayout
@@ -48,7 +59,7 @@
             android:columnCount="5"></GridLayout>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
@@ -61,13 +72,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/addingInterestsLayout">
+        android:id="@+id/addingInterestsLayout"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_interests_button_text"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:theme="@style/AppTheme"
             android:id="@+id/interest"
             android:inputType="textPersonName" />
 
@@ -75,7 +92,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adding_interests_button_text"
-            android:layout_alignParentRight="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/button_selector"
+            android:layout_below="@+id/interest"
+            android:layout_centerInParent="true"
             android:id="@+id/addingInterestsButton" />
 
 
@@ -100,11 +121,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/addingGroupsLayout">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:hint="@string/adding_groups_button_text"
             android:id="@+id/groupName"
@@ -114,8 +138,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentRight="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/button_selector"
             android:text="@string/adding_groups_button_text"
+            android:layout_below="@id/groupName"
+            android:layout_centerInParent="true"
             android:id="@+id/addingGroupsButton" />
 
 
