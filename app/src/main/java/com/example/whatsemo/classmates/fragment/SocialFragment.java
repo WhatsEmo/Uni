@@ -153,7 +153,7 @@ public class SocialFragment extends Fragment {
         ref = new Firebase(getString(R.string.database));
 
         if (ref.getAuth() != null){
-            dataListener = ref.child(getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
+            dataListener = ref.child(getString(R.string.database_users_key)).child(ref.getAuth().getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 
@@ -274,7 +274,7 @@ public class SocialFragment extends Fragment {
     public void onStop() {
         super.onStop();
         ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
+                .child(ref.getAuth().getUid())
                 .removeEventListener(dataListener);
     }
 
@@ -282,7 +282,7 @@ public class SocialFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
+                .child(ref.getAuth().getUid())
                 .addValueEventListener(dataListener);
     }
 
