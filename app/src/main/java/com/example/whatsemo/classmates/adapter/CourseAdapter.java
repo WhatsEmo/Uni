@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Course;
+import com.example.whatsemo.classmates.model.User;
 
 import java.util.ArrayList;
 
@@ -20,16 +22,19 @@ import java.util.ArrayList;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
     private ArrayList<Course> mDataset;
     private Context mContext;
+    private User appUser;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView courseName;
         public TextView lastMessage;
+        public ImageView itemIcon;
         public RelativeLayout layout;
 
         public ViewHolder(View v) {
                 super(v);
             courseName = (TextView) v.findViewById(R.id.course_name);
             lastMessage = (TextView) v.findViewById(R.id.last_message);
+            itemIcon = (ImageView) v.findViewById(R.id.course_icon);
             layout = (RelativeLayout) v.findViewById(R.id.course_item_layout);
         }
     }
@@ -86,9 +91,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CourseAdapter(ArrayList<Course> myDataset, Context context) {
+    public CourseAdapter(ArrayList<Course> myDataset, User user, Context context) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
+        appUser = user;
     }
 
     // Create new views (invoked by the layout manager)
@@ -112,7 +118,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.courseName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                course.openChatActivity(mContext);
+                course.openChatActivity(mContext, appUser);
             }
         });
 

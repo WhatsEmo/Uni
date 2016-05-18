@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.model.Course;
+import com.example.whatsemo.classmates.model.User;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private ArrayList<Course> mDataset;
     private Context mContext;
+    private User appUser;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView courseName;
@@ -68,7 +70,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         holder.courseName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                course.openChatActivity(mContext);
+                course.openChatActivity(mContext, appUser);
             }
         });
 

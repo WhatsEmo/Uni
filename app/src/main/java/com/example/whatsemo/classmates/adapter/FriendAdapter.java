@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,12 +33,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
         public TextView lastMessage;
+        public ImageView itemIcon;
         public RelativeLayout layout;
 
         public ViewHolder(View v) {
             super(v);
             friendName = (TextView) v.findViewById(R.id.user_name);
             lastMessage = (TextView) v.findViewById(R.id.last_message);
+            itemIcon = (ImageView) v.findViewById(R.id.user_icon);
             layout = (RelativeLayout) v.findViewById(R.id.friend_item_layout);
         }
     }
@@ -76,6 +79,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         // - replace the contents of the view with that element
         final Friend friend = mDataset.get(position);
         holder.friendName.setText(mDataset.get(position).getName());
+        if (friend.getPicture() != null) {holder.itemIcon.setImageBitmap(friend.getPicture());}
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

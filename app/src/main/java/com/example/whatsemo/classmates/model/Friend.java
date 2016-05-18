@@ -2,6 +2,7 @@ package com.example.whatsemo.classmates.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.example.whatsemo.classmates.ChatActivity;
@@ -15,10 +16,17 @@ import java.util.HashMap;
 public class Friend extends DatabaseObject{
     private String uid;
     private String name;
+    private Bitmap picture;
 
     public Friend(String uid, String name) {
         this.uid = uid;
         this.name = name;
+    }
+
+    public Friend(String uid, String name, Bitmap picture) {
+        this.uid = uid;
+        this.name = name;
+        this.picture = picture;
     }
 
     public String getUid() {
@@ -29,6 +37,10 @@ public class Friend extends DatabaseObject{
     public void setUid(String uid) {
         this.uid = uid;
     }
+
+    public Bitmap getPicture() { return picture; }
+
+    public void setPicture(Bitmap picture) { this.picture = picture; }
 
     @Override
     public String getName() {

@@ -1,6 +1,7 @@
 package com.example.whatsemo.classmates;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,6 @@ public class NotificationActivity extends Activity{
         notifications = new ArrayList<Friend>();
         firedata = new Firebase(getString(R.string.database));
         firedata.setAndroidContext(this);
-
 
         Firebase userRef = firedata.child(getString(R.string.database_users_key)).child(appUser.getUid());
 

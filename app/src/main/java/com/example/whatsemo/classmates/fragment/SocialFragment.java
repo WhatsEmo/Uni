@@ -2,6 +2,7 @@ package com.example.whatsemo.classmates.fragment;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.example.whatsemo.classmates.ImageHandler;
 import com.example.whatsemo.classmates.MainActivity;
 import com.example.whatsemo.classmates.R;
 import com.example.whatsemo.classmates.adapter.CourseAdapter;
@@ -93,6 +95,8 @@ public class SocialFragment extends Fragment {
     private ArrayList<Course> userCourses;
     private ArrayList<Group> userGroups;
 
+    private ImageHandler imageHandler;
+
     private CourseAdapter coursesAdapter;
     private RecyclerView.LayoutManager coursesLayoutManager;
 
@@ -120,7 +124,7 @@ public class SocialFragment extends Fragment {
         setHasOptionsMenu(true);
 
         appUser = ((MainActivity)getActivity()).getUser();
-
+        imageHandler = new ImageHandler(getActivity());
         if (getArguments() != null) {
             mPage = getArguments().getInt(ARG_PAGE);
         }
@@ -174,11 +178,36 @@ public class SocialFragment extends Fragment {
                         if(getMap.keySet().size() != userFriends.size()) {
                             userFriends.clear();
                             for (Map.Entry<String, Map<String,String>> entry : getMap.entrySet()) {
-                                Friend friend = new Friend(entry.getKey(), entry.getValue().get("name"));
+                                final String friendId = entry.getKey();
+                                final String friendName = entry.getValue().get("name");
+
+                                Friend friend = new Friend(friendId, friendName);
                                 if (!userFriends.contains(friend)) {
                                     userFriends.add(friend);
                                 }
+
+                                /*
+                                ref.child("users").child(friendId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.child("picture").exists()) {
+                                            Bitmap picture = imageHandler.convertByteArrayToBitmap(dataSnapshot.child("picture").getValue(String.class));
+
+                                            Friend friend = new Friend(friendId, friendName, picture);
+                                            if (!userFriends.contains(friend)) {
+                                                userFriends.add(friend);
+                                            }
+                                            setVisibility();
+                                        }
+                                    }
+
+                                    public void onCancelled(FirebaseError firebaseError) {
+                                        System.out.println("Friend picture check failed: " + ref.child("users").child(friendId).child("picture").toString());
+                                    }
+                                });
+                                */
                             }
+
                         }
 
                     }
@@ -221,8 +250,7 @@ public class SocialFragment extends Fragment {
                 }
             });
 
-        }
-        else{
+        } else {
             System.out.println("Social: Authentication failed");
         }
 
@@ -296,7 +324,7 @@ public class SocialFragment extends Fragment {
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
 
         // specify an adapter
-        coursesAdapter = new CourseAdapter(userCourses, getActivity());
+        coursesAdapter = new CourseAdapter(userCourses, appUser, getActivity());
         coursesRecyclerView.setAdapter(coursesAdapter);
 
         /*
