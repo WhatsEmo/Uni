@@ -19,7 +19,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="140dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/coverPhoto"
                 android:src="@drawable/banner_picture"
@@ -43,24 +43,11 @@
                 android:id="@+id/profile_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="92dp"
                 android:layout_marginLeft="30dp"
                 android:src="@drawable/dijkstra"
                 app:civ_border_width="2dp"
                 app:civ_border_color="#FFFFFF"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Hello"
-                android:textColor="@color/gray"
-                android:id="@+id/homeUserName"
-                android:layout_below="@+id/coverPhoto"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/profile_image"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -75,14 +62,28 @@
                 android:layout_alignTop="@+id/profile_image"
                 android:background="@drawable/button_selector_white_noshadow"
                 android:layout_toRightOf="@id/profile_image"
-               />
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Hello"
+                android:textColor="@color/gray"
+                android:id="@+id/homeUserName"
+                android:layout_below="@+id/coverPhoto"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/profile_image"
+                android:layout_marginLeft="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="User major?"
+                android:textSize="14sp"
                 android:textColor="@color/gray"
+                android:layout_marginTop="-5dp"
                 android:id="@+id/homeUserMajor"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/homeUserName"
