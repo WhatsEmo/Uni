@@ -60,6 +60,7 @@ public class HomePageFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     public ImageHandler imageHandler;
     private Firebase ref;
+    private Firebase triggerRef;
     private int day;
     private User appUser;
 
@@ -134,50 +135,40 @@ public class HomePageFragment extends Fragment {
     public void setMondayButton(){
         day = Calendar.MONDAY;
         setTextColors(day);
-        ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
-                .child("1")
-                .setValue(null);
+        triggerRef.setValue("1");
+        triggerRef.setValue(null);
     }
 
     @OnClick(R.id.tuesday_button)
     public void setTuesdayButton(){
         day = Calendar.TUESDAY;
         setTextColors(day);
-        ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
-                .child("1")
-                .setValue(null);
+        triggerRef.setValue("1");
+        triggerRef.setValue(null);
     }
 
     @OnClick(R.id.wednesday_button)
     public void setWednesdayButton(){
         day = Calendar.WEDNESDAY;
         setTextColors(day);
-        ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
-                .child("1")
-                .setValue(null);
+        triggerRef.setValue("1");
+        triggerRef.setValue(null);
     }
 
     @OnClick(R.id.thursday_button)
     public void setThursdayButton(){
         day = Calendar.THURSDAY;
         setTextColors(day);
-        ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
-                .child("1")
-                .setValue(null);
+        triggerRef.setValue("1");
+        triggerRef.setValue(null);
     }
 
     @OnClick(R.id.friday_button)
     public void setFridayButton(){
         day = Calendar.FRIDAY;
         setTextColors(day);
-        ref.child(getString(R.string.database_users_key))
-                .child(appUser.getUid())
-                .child("1")
-                .setValue(null);
+        triggerRef.setValue("1");
+        triggerRef.setValue(null);
     }
 
     public HomePageFragment() {
@@ -215,6 +206,9 @@ public class HomePageFragment extends Fragment {
 
         day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         setTextColors(day);
+        triggerRef = ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .child("1");
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
@@ -255,14 +249,14 @@ public class HomePageFragment extends Fragment {
                     if(snapshot.child(getString(R.string.user_schedule_key)).exists()){
                         ArrayList<Integer> checkSchedule = snapshot.child(getString(R.string.user_schedule_key)).child(Integer.toString(day)).getValue(ArrayList.class);
 
-                        if(checkSchedule != null && freeTimeInHours.size() != checkSchedule.size()){
+                        if(checkSchedule != null){
                             freeTimeInHours = checkSchedule;
                             hasFreeTime.clear();
                             hasFreeTime.addAll(new ArrayList(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, Boolean.FALSE)));
                             for (Integer time : freeTimeInHours){
                                 hasFreeTime.set(time-STARTING_HOUR, Boolean.TRUE);
                             }
-                        }else if(checkSchedule == null){
+                        }else{
                             hasFreeTime.clear();
                             hasFreeTime.addAll(new ArrayList(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, Boolean.FALSE)));
                         }

@@ -2,7 +2,6 @@ package com.example.whatsemo.classmates.fragment;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -113,7 +112,7 @@ public class SocialFragment extends Fragment {
     public static SocialFragment newInstance(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-                SocialFragment fragment = new SocialFragment();
+        SocialFragment fragment = new SocialFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -423,7 +422,6 @@ public class SocialFragment extends Fragment {
         return filteredCourses;
     }
 
-
     private ArrayList<Friend> filterFriends(ArrayList<Friend> friends, String query) {
         query = query.toLowerCase();
 
@@ -436,7 +434,6 @@ public class SocialFragment extends Fragment {
         }
         return filteredFriends;
     }
-
 
     private ArrayList<Group> filterGroups(ArrayList<Group> groups, String query) {
         query = query.toLowerCase();
