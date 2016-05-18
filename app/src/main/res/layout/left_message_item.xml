@@ -22,12 +22,20 @@
         android:layout_marginBottom="3dp"
         android:layout_alignLeft="@+id/chatbox_left" />
 
-    <ImageView
+    <!--<ImageView-->
+        <!--android:id="@+id/author_profile_image"-->
+        <!--android:layout_width="37dp"-->
+        <!--android:layout_height="37dp"-->
+        <!--android:layout_below="@+id/author_name"-->
+        <!--android:layout_marginRight="5dp"/>-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/author_profile_image"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         android:layout_below="@+id/author_name"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="10dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

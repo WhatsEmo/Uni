@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.ImageHandler;
@@ -109,8 +110,8 @@ public class HomePageFragment extends Fragment {
     @Bind(R.id.homeUserMajor)
     TextView userMajor;
 
-    @Bind(R.id.profile_picture)
-    ImageButton profilePicture;
+    @Bind(R.id.profile_image)
+    ImageView profilePicture;
 
     @Bind(R.id.classes_recycler_view)
     RecyclerView coursesRecyclerView;
@@ -121,7 +122,7 @@ public class HomePageFragment extends Fragment {
     @Bind(R.id.schedule_recylcer_view)
     RecyclerView scheduleRecyclerView;
 
-    @OnClick(R.id.profile_picture)
+    @OnClick(R.id.profile_image)
     public void changeProfilePicture(){
         selectPicture();
     }
