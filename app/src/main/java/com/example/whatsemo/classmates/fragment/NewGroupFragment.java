@@ -1,13 +1,16 @@
 package com.example.whatsemo.classmates.fragment;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -88,6 +91,15 @@ public class NewGroupFragment extends DialogFragment {
         Bundle args = getArguments();
         friendList = (ArrayList<Friend>) args.getSerializable("friends");
         appUser = args.getParcelable("user");
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+        return dialog;
     }
 
     @Override
