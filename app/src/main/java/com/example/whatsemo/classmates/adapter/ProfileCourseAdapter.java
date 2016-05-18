@@ -89,6 +89,7 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
             });
         }else{
             //Add "+" button
+            holder.courseName.setTextSize(24);
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

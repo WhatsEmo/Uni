@@ -13,5 +13,6 @@
             android:id="@+id/course_item_name"
             android:gravity="center"
             android:background="@drawable/circle"
-            android:textColor="#303030"/>
+            android:text="+"
+            android:textColor="@color/orange"/>
 </LinearLayout>
