@@ -386,17 +386,17 @@ public class SocialFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String query) {
                 //***********COURSES***********
-                final ArrayList<Course> filteredCourses = filterCourses(userCourses, query);
+                final ArrayList<Course> filteredCourses = filterList(userCourses, query);
                 coursesAdapter.animateTo(filteredCourses);
                 coursesRecyclerView.scrollToPosition(0);
 
                 //***********FRIENDS***********
-                final ArrayList<Friend> filteredFriends = filterFriends(userFriends, query);
+                final ArrayList<Friend> filteredFriends = filterList(userFriends, query);
                 friendsAdapter.animateTo(filteredFriends);
                 friendRecyclerView.scrollToPosition(0);
 
                 //***********GROUPS***********
-                final ArrayList<Group> filteredGroups = filterGroups(userGroups, query);
+                final ArrayList<Group> filteredGroups = filterList(userGroups, query);
                 groupsAdapter.animateTo(filteredGroups);
                 groupsRecyclerView.scrollToPosition(0);
 /*
@@ -424,6 +424,26 @@ public class SocialFragment extends Fragment {
         });
     }
 
+    private <E> ArrayList<E> filterList(ArrayList<E> originalList, String query){
+        query = query.toLowerCase();
+
+        final ArrayList<E> filteredList = new ArrayList<>();
+        for (E object : originalList) {
+            try {
+                String text = (String) object.getClass().getDeclaredMethod("getName").invoke(object);
+                text = text.toLowerCase();
+                if (text.contains(query)) {
+                    filteredList.add(object);
+                }
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return filteredList;
+    }
+
+    /* Deprecated
     private ArrayList<Course> filterCourses(ArrayList<Course> courses, String query) {
         query = query.toLowerCase();
 
@@ -464,5 +484,6 @@ public class SocialFragment extends Fragment {
         }
         return filteredGroups;
     }
+    */
 
 }
