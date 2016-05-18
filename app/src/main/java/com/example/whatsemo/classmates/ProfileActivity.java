@@ -38,7 +38,7 @@ public class ProfileActivity extends Activity {
     @Bind(R.id.toolbar_friend_name)
     TextView toolbarFriendNameTextView;
 
-    @OnClick(R.id.chat_back_button)
+    @OnClick(R.id.profile_back_button)
     public void finishActivity(){
         finish();
     }
