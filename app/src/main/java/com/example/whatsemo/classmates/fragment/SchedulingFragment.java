@@ -49,6 +49,7 @@ public class SchedulingFragment extends DialogFragment {
     private Map<String, Bitmap> allProfilePics;
     private Map<String, ArrayList<Boolean>> allFreeTimesOnCertainDay;
     private ImageHandler imageHandler;
+    private ValueEventListener scheduleListener;
 
     private ChatSchedulingAdapter chatSchedulingAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -146,7 +147,7 @@ public class SchedulingFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        firebase.child(getString(R.string.database_users_key)).addValueEventListener(new ValueEventListener() {
+        scheduleListener = firebase.child(getString(R.string.database_users_key)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Both these lists are used to check the free time of all users
@@ -166,14 +167,14 @@ public class SchedulingFragment extends DialogFragment {
                         if (isArrayNull) {
                             freeTimeInHours.addAll(userFreeTimeInHours);
                         } else {
-                            for (int counter = freeTimeInHours.size()-1; counter >= 0; counter--) {
+                            for (int counter = freeTimeInHours.size() - 1; counter >= 0; counter--) {
                                 Integer value = freeTimeInHours.get(counter);
                                 if (!userFreeTimeInHours.contains(value)) {
                                     freeTimeInHours.remove(counter);
                                 }
                             }
                         }
-                        if(userFreeTimeInHours == null){
+                        if (userFreeTimeInHours == null) {
                             freeTimeInHours.clear();
                             break;
                         }
@@ -247,6 +248,17 @@ public class SchedulingFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        firebase.child(getString(R.string.database_users_key)).removeEventListener(scheduleListener);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     private void setTextColors(int date) {

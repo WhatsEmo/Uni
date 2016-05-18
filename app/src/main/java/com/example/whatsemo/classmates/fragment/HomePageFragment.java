@@ -78,6 +78,8 @@ public class HomePageFragment extends Fragment {
     private ProfileInterestAdapter interestAdapter;
     private SchedulingAdapter scheduleAdapter;
 
+    private ValueEventListener homeFragmentListener;
+
     @OnClick(R.id.logoutButton)
     public void logout(){
         ref.unauth();
@@ -213,7 +215,7 @@ public class HomePageFragment extends Fragment {
 
         if (ref.getAuth() != null){
             String uid = ref.getAuth().getUid();
-            ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
+            homeFragmentListener = ref.child(getResources().getString(R.string.database_users_key)).child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     String name = snapshot.child(getResources().getString(R.string.user_name_key)).getValue(String.class);
@@ -294,6 +296,22 @@ public class HomePageFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }*/
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ref.child(getResources().getString(R.string.database_users_key))
+                .child(ref.getAuth().getUid())
+                .removeEventListener(homeFragmentListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ref.child(getResources().getString(R.string.database_users_key))
+                .child(ref.getAuth().getUid())
+                .addValueEventListener(homeFragmentListener);
     }
 
     @Override

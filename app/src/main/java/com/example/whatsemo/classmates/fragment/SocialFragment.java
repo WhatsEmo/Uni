@@ -105,6 +105,8 @@ public class SocialFragment extends Fragment {
     private GroupAdapter groupsAdapter;
     private RecyclerView.LayoutManager groupsLayoutManager;
 
+    private ValueEventListener dataListener;
+
     public SocialFragment() {
         // Required empty public constructor
     }
@@ -151,7 +153,7 @@ public class SocialFragment extends Fragment {
         ref = new Firebase(getString(R.string.database));
 
         if (ref.getAuth() != null){
-            ref.child(getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
+            dataListener = ref.child(getString(R.string.database_users_key)).child(appUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 
@@ -259,9 +261,6 @@ public class SocialFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(!isAdded()){
-            return;
-        }
         /*
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -269,6 +268,22 @@ public class SocialFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }*/
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .removeEventListener(dataListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ref.child(getString(R.string.database_users_key))
+                .child(appUser.getUid())
+                .addValueEventListener(dataListener);
     }
 
     @Override
