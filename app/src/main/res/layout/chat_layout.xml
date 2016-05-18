@@ -23,7 +23,7 @@
             android:layout_marginTop="-2dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/recipientName"
+            android:id="@+id/toolbar_friend_name"
             android:layout_marginLeft="10dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/chat_back_button"

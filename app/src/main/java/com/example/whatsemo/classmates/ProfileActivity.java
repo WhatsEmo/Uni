@@ -35,6 +35,14 @@ public class ProfileActivity extends Activity {
     @Bind(R.id.friend_major)
     TextView friendMajorTextView;
 
+    @Bind(R.id.toolbar_friend_name)
+    TextView toolbarFriendNameTextView;
+
+    @OnClick(R.id.chat_back_button)
+    public void finishActivity(){
+        finish();
+    }
+
     @Bind(R.id.add_or_message_friend)
     Button addOrMessageFriendButton;
 
@@ -81,6 +89,7 @@ public class ProfileActivity extends Activity {
     private void setUpView() {
 
         friendNameTextView.setText(friendName);
+        toolbarFriendNameTextView.setText(friendName);
         Firebase newRef = firedata.child(getResources().getString(R.string.database_users_key)).child(friendId);
         newRef.addValueEventListener(new ValueEventListener() {
             @Override

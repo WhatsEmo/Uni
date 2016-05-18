@@ -51,12 +51,12 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="Friend Requests"
                 android:textSize="12sp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:textColor="@color/gray"
                 android:id="@+id/friend_request_button"
                 android:layout_alignTop="@+id/profile_image"
@@ -74,7 +74,7 @@
                 android:layout_below="@+id/coverPhoto"
                 android:textStyle="bold"
                 android:layout_toRightOf="@+id/profile_image"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
