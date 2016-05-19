@@ -1,6 +1,5 @@
 package com.example.whatsemo.classmates;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.adapter.ProfileCourseAdapter;
@@ -24,7 +22,6 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -157,23 +154,23 @@ public class ProfileActivity extends AppCompatActivity {
         firedata.child(getResources().getString(R.string.database_users_key)).child(friendId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(getString(R.string.users_picture_key)).exists()) {
+                //Prevents crashes
+                isFriend = dataSnapshot.child(getString(R.string.users_friends_key)).child(appUser.getUid()).exists();
+                if (dataSnapshot.child(getString(R.string.users_picture_key)).exists() && isFriend) {
                     Bitmap bm = imageHandler.convertByteArrayToBitmap(dataSnapshot.child(getString(R.string.users_picture_key)).getValue().toString());
                     profilePictureImageView.setImageBitmap(bm);
                 }
 
-                //Prevents crashes
-                isFriend = dataSnapshot.child(getString(R.string.users_friends_key)).child(appUser.getUid()).exists();
-
                 if (isFriend) {
                     addOrMessageFriendButton.setText("Message");
                 } else if (dataSnapshot.child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists()) {
-                    addOrMessageFriendButton.setText("Respond To Friend Request");
-                    respondToRequest = true;
+                    addOrMessageFriendButton.setText("Friend Request Sent");
+                    addOrMessageFriendButton.setOnClickListener(null);
+                    friendRequestSent = true;
                 } else {
                     //Prevents crashes
                     if (dataSnapshot.child(getString(R.string.users_requests_key)).exists()) {
-                        friendRequestSent = dataSnapshot.child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists();
+                        respondToRequest = dataSnapshot.child(getString(R.string.users_requests_key)).child(appUser.getUid()).exists();
                     }
 
                     // Hides the schedule and the profile pic if users are not friends
