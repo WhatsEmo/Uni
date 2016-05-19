@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
@@ -27,11 +28,13 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
         public TextView lastMessage;
+        public RelativeLayout layout;
 
         public ViewHolder(View v) {
             super(v);
             friendName = (TextView) v.findViewById(R.id.user_name);
             lastMessage = (TextView) v.findViewById(R.id.last_message);
+            layout = (RelativeLayout) v.findViewById(R.id.friend_item_layout);
         }
     }
 
@@ -61,7 +64,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         // - replace the contents of the view with that element
         final Friend friend = mDataset.get(position);
         holder.friendName.setText(mDataset.get(position).getName());
-        holder.friendName.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.clearFocus();
