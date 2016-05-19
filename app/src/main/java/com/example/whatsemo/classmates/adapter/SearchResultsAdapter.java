@@ -2,9 +2,11 @@ package com.example.whatsemo.classmates.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.example.whatsemo.classmates.R;
@@ -20,6 +22,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     private User appUser;
     private ArrayList<Friend> mDataset;
     private Context mContext;
+    private SearchView searchView;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView friendName;
@@ -33,10 +36,11 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SearchResultsAdapter(ArrayList<Friend> myDataset, Context context, User user) {
+    public SearchResultsAdapter(ArrayList<Friend> myDataset, Context context, User user, SearchView searchView) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         appUser = user;
+        this.searchView = searchView;
     }
 
     // Create new views (invoked by the layout manager)
@@ -60,6 +64,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         holder.friendName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                searchView.clearFocus();
                 friend.openProfileActivity(mContext, appUser);
             }
         });

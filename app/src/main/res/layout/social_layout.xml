@@ -5,13 +5,12 @@
     android:background="@color/white"
     tools:context=".fragment.SocialFragment">
 
-
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:focusableInTouchMode="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -29,8 +28,6 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 >
-
-
 
                 <android.support.v7.widget.SearchView
                     android:iconifiedByDefault="false"
