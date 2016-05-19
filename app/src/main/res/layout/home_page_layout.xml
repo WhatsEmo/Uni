@@ -85,6 +85,7 @@
                 android:id="@+id/homeUserName"
                 android:layout_below="@+id/coverPhoto"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/profile_image"
                 android:layout_marginLeft="15dp" />
 
