@@ -282,6 +282,8 @@ public class SocialFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        actionSearch.clearFocus();
+        actionSearch.setQuery("", false);
         ref.child(getString(R.string.database_users_key))
                 .child(ref.getAuth().getUid())
                 .addValueEventListener(dataListener);

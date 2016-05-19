@@ -182,9 +182,16 @@ public class SearchActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        searchInfo.clearFocus();
+        searchInfo.setQuery("", false);
+    }
+
     /*
-        Gets needed User data like courses and possibly interests (later on)
-     */
+            Gets needed User data like courses and possibly interests (later on)
+         */
     public void getCurrentUserData(DataSnapshot snapshot){
         Map<String, String> getData;
         boolean hasCourses = snapshot.child(getResources().getString(R.string.user_courses_key)).exists();
@@ -271,4 +278,6 @@ public class SearchActivity extends Activity {
         }
         return filteredFriends;
     }
+
+
 }
