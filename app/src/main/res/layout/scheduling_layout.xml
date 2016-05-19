@@ -37,8 +37,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/monday_button"
             android:layout_toEndOf="@+id/monday_button"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,8 +50,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/tuesday_button"
             android:layout_toEndOf="@+id/tuesday_button"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,8 +63,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/wednesday_button"
             android:layout_toEndOf="@+id/wednesday_button"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,22 +76,22 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/thursday_button"
             android:layout_toEndOf="@+id/thursday_button"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp" />
     </RelativeLayout>
-
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/day_button_layout"
+        android:paddingLeft="15dp"
         android:paddingBottom="10dp"
+        android:layout_below="@id/day_button_layout"
         android:id="@+id/schedules_recylcer_view"></android.support.v7.widget.RecyclerView>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
         android:layout_below="@+id/schedules_recylcer_view">
 
         <ImageView
@@ -99,7 +99,6 @@
             android:layout_height="3dp"
             android:background="#000000"
             android:id="@+id/line_divider"
-            android:layout_below="@+id/schedules_recylcer_view"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/all_text"
             android:layout_toEndOf="@+id/all_text" />
