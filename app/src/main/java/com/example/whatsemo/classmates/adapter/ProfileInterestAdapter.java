@@ -76,7 +76,7 @@ public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterest
         // - replace the contents of the view with that element
         // If it's not the "+" button, then add in regular functions
         final String interest = mDataset.get(position);
-        if(!interest.equals("NULL")) {
+        if(!(interest == null) && !interest.equals("NULL")) {
             holder.courseName.setText(interest);
             if (mode == HOME_PAGE) {
                 holder.layout.setOnClickListener(new View.OnClickListener() {
