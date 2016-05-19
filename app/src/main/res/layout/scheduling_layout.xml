@@ -110,8 +110,9 @@
             android:id="@+id/all_text"
             android:textColor="@color/gray"
             android:text="ALL"
-            android:paddingRight="3dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingRight="5dp"
+            android:paddingLeft="4dp"
+            android:textSize="16sp"
             android:layout_centerVertical="true"/>
 
         <android.support.v7.widget.RecyclerView
