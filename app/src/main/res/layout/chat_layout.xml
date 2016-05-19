@@ -12,17 +12,19 @@
         android:background="@drawable/chatbar">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/back_button"
+            android:layout_marginTop="-12dp"
             android:id="@+id/chat_back_button"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="0dp"
+            android:textSize="18sp"
             android:text="Large Text"
+            android:textColor="@color/white"
             android:id="@+id/recipientName"
             android:layout_marginLeft="10dp"
             android:layout_alignParentTop="true"
@@ -32,10 +34,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_account_circle"
+            android:src="@drawable/scheduler_icon"
             android:id="@+id/scheduling_button"
-            android:layout_alignParentBottom="true"
-            android:layout_alignTop="@+id/recipientName"
+            android:layout_marginTop="-4dp"
+            android:layout_marginBottom="12dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 

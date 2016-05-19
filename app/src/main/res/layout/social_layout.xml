@@ -38,7 +38,7 @@
                     android:theme="@style/AppTheme"
                     android:actionViewClass="android.support.v7.widget.SearchView"
                     android:showAsAction="always"
-                    android:layout_weight="0.9"
+                    android:layout_weight="0.88"
                     android:layout_width="0dp"
                     android:background="@color/white"
                     android:queryHint="@string/social_hint"
@@ -46,10 +46,11 @@
 
                 <ImageButton
                     android:layout_width="0dp"
-                    android:layout_weight="0.1"
+                    android:layout_weight="0.12"
                     android:layout_height="wrap_content"
                     android:id="@+id/new_group_icon"
-                    android:background="@drawable/groups" />
+                    android:layout_marginRight="6dp"
+                    android:background="@drawable/add_group_test2" />
             </LinearLayout>
 
             <RelativeLayout

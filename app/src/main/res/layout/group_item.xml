@@ -7,17 +7,26 @@
     android:paddingLeft="20dp"
     android:paddingTop="15dp">
 
-    <ImageView
+    <!--<ImageView-->
+        <!--android:id="@+id/group_icon"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/ic_account_circle"/>-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/group_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_account_circle"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/ic_account_circle" />
 
     <TextView
         android:id="@+id/group_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/group_icon"
