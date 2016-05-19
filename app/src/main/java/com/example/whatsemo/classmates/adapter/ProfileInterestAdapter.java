@@ -29,7 +29,9 @@ public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterest
     private FragmentManager mfragmentManager;
     private Firebase mRef;
     private User appUser;
+    private int mode;
     private final static int ADD_INTEREST = 1;
+    private final static int HOME_PAGE = 0;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout layout;
@@ -45,14 +47,15 @@ public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterest
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProfileInterestAdapter(ArrayList<String> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user) {
+    public ProfileInterestAdapter(ArrayList<String> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user, int mode) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         //Helps easily implement the "+" button in the recyclerview
-        mDataset.add("NULL");
         mfragmentManager = fragmentManager;
         mRef = ref;
         appUser = user;
+        this.mode = mode;
+        if (mode == HOME_PAGE) {mDataset.add("NULL");}
     }
 
     // Create new views (invoked by the layout manager)
@@ -75,16 +78,18 @@ public class ProfileInterestAdapter extends RecyclerView.Adapter<ProfileInterest
         final String interest = mDataset.get(position);
         if(!interest.equals("NULL")) {
             holder.courseName.setText(interest);
-            holder.layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String title = "Delete Interest: ";
-                    AlertDialog.Builder alertDialogBuilder = setUpDialogBuilder(title, interest, position);
-                    DeleteItemDialog dialogFragment = new DeleteItemDialog();
-                    dialogFragment = dialogFragment.createCustomDialog(alertDialogBuilder);
-                    dialogFragment.show(mfragmentManager, "dialog");
-                }
-            });
+            if (mode == HOME_PAGE) {
+                holder.layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String title = "Delete Interest: ";
+                        AlertDialog.Builder alertDialogBuilder = setUpDialogBuilder(title, interest, position);
+                        DeleteItemDialog dialogFragment = new DeleteItemDialog();
+                        dialogFragment = dialogFragment.createCustomDialog(alertDialogBuilder);
+                        dialogFragment.show(mfragmentManager, "dialog");
+                    }
+                });
+            }
         }else{
             //Add "+" button
             holder.courseName.setTextSize(24);

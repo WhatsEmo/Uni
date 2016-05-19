@@ -68,6 +68,7 @@ public class HomePageFragment extends Fragment {
 
     private ArrayList<Course> userCourses = new ArrayList<Course>();
     private ArrayList<String> userInterests = new ArrayList<String>();
+
     private ArrayList<Boolean> hasFreeTime = new ArrayList<Boolean>(Collections.nCopies(AMOUNT_OF_HOURS_TO_DISPLAY, false));;
     private ArrayList<Integer> freeTimeInHours = new ArrayList<Integer>();
 
@@ -407,7 +408,7 @@ public class HomePageFragment extends Fragment {
         coursesLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
 
-        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager(),ref, appUser);
+        courseAdapter = new ProfileCourseAdapter(userCourses, getActivity(), getFragmentManager(),ref, appUser, 0);
         coursesRecyclerView.setAdapter(courseAdapter);
 
         //**********INTEREST***********
@@ -415,7 +416,7 @@ public class HomePageFragment extends Fragment {
         interestsLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         interestsRecyclerView.setLayoutManager(interestsLayoutManager);
 
-        interestAdapter = new ProfileInterestAdapter(userInterests, getActivity(), getFragmentManager(), ref, appUser);
+        interestAdapter = new ProfileInterestAdapter(userInterests, getActivity(), getFragmentManager(), ref, appUser, 0);
         interestsRecyclerView.setAdapter(interestAdapter);
 
 

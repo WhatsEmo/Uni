@@ -30,7 +30,9 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     private FragmentManager mfragmentManager;
     private Firebase mRef;
     private User appUser;
+    private int mode;
     private final static int ADD_COURSES = 0;
+    private final static int HOME_PAGE = 0;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout layout;
@@ -46,14 +48,15 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user) {
+    public ProfileCourseAdapter(ArrayList<Course> myDataset, Context context, FragmentManager fragmentManager, Firebase ref, User user, int mode) {
         mContext = context;
         mDataset = new ArrayList<>(myDataset);
         //Helps easily implement the "+" button in the recyclerview
-        mDataset.add(new Course(null,null));
         mfragmentManager = fragmentManager;
         mRef = ref;
         appUser = user;
+        this.mode = mode;
+        if (mode == HOME_PAGE) {mDataset.add(new Course(null,null));}
     }
 
     // Create new views (invoked by the layout manager)
@@ -76,17 +79,19 @@ public class ProfileCourseAdapter extends RecyclerView.Adapter<ProfileCourseAdap
         final Course course = mDataset.get(position);
         if(course.getCourseID() != null) {
             holder.courseName.setText(course.getName());
-            holder.layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String title = "Delete Course: ";
-                    String message = String.format("%s (%s)", course.getName(), course.getCourseID());
-                    AlertDialog.Builder alertDialogBuilder = setUpDialogBuilder(title, message, position);
-                    DeleteItemDialog dialogFragment = new DeleteItemDialog();
-                    dialogFragment = dialogFragment.createCustomDialog(alertDialogBuilder);
-                    dialogFragment.show(mfragmentManager, "dialog");
-                }
-            });
+            if(mode == HOME_PAGE) {
+                holder.layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String title = "Delete Course: ";
+                        String message = String.format("%s (%s)", course.getName(), course.getCourseID());
+                        AlertDialog.Builder alertDialogBuilder = setUpDialogBuilder(title, message, position);
+                        DeleteItemDialog dialogFragment = new DeleteItemDialog();
+                        dialogFragment = dialogFragment.createCustomDialog(alertDialogBuilder);
+                        dialogFragment.show(mfragmentManager, "dialog");
+                    }
+                });
+            }
         }else{
             //Add "+" button
             holder.courseName.setTextSize(24);
