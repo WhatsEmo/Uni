@@ -38,7 +38,7 @@ public class ChatActivity extends FragmentActivity {
     private final static int FRIEND_CHAT = 0;
     private final static int GROUP_CHAT = 1;
 
-    @Bind(R.id.toolbarLayout)
+    @Bind(R.id.profile_toolbar_layout)
     RelativeLayout toolbarLayout;
 
     //@Bind(R.id.messagesLayout)

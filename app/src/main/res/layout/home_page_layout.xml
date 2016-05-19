@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:id="@+id/header"
+            android:id="@+id/profile_header"
             android:layout_alignParentLeft="true"
             android:background="#FFF"
             android:layout_alignParentStart="true">
@@ -88,7 +88,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/homeUserName"
                 android:layout_alignLeft="@+id/homeUserName"
-                android:layout_alignStart="@+id/homeUserName" />
+                android:layout_alignStart="@+id/homeUserName"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="25dp"
@@ -104,10 +105,10 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="140dp"
-            android:layout_below="@+id/header"
+            android:layout_below="@+id/profile_header"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/HomeInterestsLayout"
+            android:id="@+id/profile_interests_layout"
             android:background="#FFF">
 
 
@@ -138,10 +139,10 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="140dp"
-            android:layout_below="@+id/HomeInterestsLayout"
+            android:layout_below="@+id/profile_interests_layout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/HomeClassesLayout"
+            android:id="@+id/profile_classes_layout"
             android:background="#FFF">
 
 
@@ -175,7 +176,7 @@
             android:background="@color/white"
             android:id="@+id/day_button_layout"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/HomeClassesLayout">
+            android:layout_below="@+id/profile_classes_layout">
 
             <TextView
                 android:layout_width="wrap_content"

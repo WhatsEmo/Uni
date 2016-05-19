@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/toolbarLayout"
+        android:id="@+id/profile_toolbar_layout"
         android:paddingTop="10dp"
         android:background="@drawable/chatbar">
 
@@ -49,7 +49,7 @@
         android:layout_marginTop="-3dp"
         android:layout_above="@+id/inputLayout"
         android:paddingLeft="8dp"
-        android:layout_below="@+id/toolbarLayout">
+        android:layout_below="@+id/profile_toolbar_layout">
     </android.support.v7.widget.RecyclerView>
 
 
