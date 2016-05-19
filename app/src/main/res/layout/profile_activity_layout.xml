@@ -193,16 +193,13 @@
 
             <ImageView
                 android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/profile_schedule_view"
-                android:src="@drawable/schedule_placeholder"
-                android:layout_below="@+id/profile_classes_layout"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:src="@drawable/schedule_dummy"
+                android:layout_below="@+id/profile_classes_layout" />
 
 
         </RelativeLayout>
