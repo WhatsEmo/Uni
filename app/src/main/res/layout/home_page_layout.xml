@@ -64,6 +64,18 @@
                 android:layout_toRightOf="@id/profile_image"
                 />
 
+            <Button
+                android:layout_width="65dp"
+                android:layout_height="35dp"
+                android:textSize="12sp"
+                android:text="logout"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/friend_request_button"
+                android:layout_alignTop="@id/friend_request_button"
+                android:textColor="@color/gray"
+                android:background="@drawable/button_selector_white_noshadow"
+                android:id="@+id/logoutButton"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,14 +102,6 @@
                 android:layout_alignLeft="@+id/homeUserName"
                 android:layout_alignStart="@+id/homeUserName"
                 android:visibility="invisible" />
-
-            <Button
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:text="logout"
-                android:layout_below="@id/homeUserMajor"
-                android:background="@color/orange"
-                android:id="@+id/logoutButton"/>
 
 
         </RelativeLayout>
