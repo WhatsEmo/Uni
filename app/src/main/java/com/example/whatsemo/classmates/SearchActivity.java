@@ -169,14 +169,14 @@ public class SearchActivity extends Activity {
 
                 // specify an adapter
                 //Put this here since it will be the default amount shown when the user enters the Activity.
-                searchResultAdapter = new SearchResultsAdapter(classmates, getApplicationContext(), appUser);
+                searchResultAdapter = new SearchResultsAdapter(classmates, getApplicationContext(), appUser, searchInfo);
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                searchResultAdapter = new SearchResultsAdapter(classmates, getApplicationContext(), appUser);
+                searchResultAdapter = new SearchResultsAdapter(classmates, getApplicationContext(), appUser, searchInfo);
                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
             }
         });
