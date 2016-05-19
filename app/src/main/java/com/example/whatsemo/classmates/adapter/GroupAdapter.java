@@ -30,7 +30,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         public RelativeLayout layout;
 
         public ViewHolder(View v) {
-                super(v);
+            super(v);
             groupName = (TextView) v.findViewById(R.id.group_name);
             lastMessage = (TextView) v.findViewById(R.id.last_message);
             itemIcon = (ImageView) v.findViewById(R.id.group_icon);
@@ -96,10 +96,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public void animateTo(ArrayList<Group> groups){
+    public ArrayList<Group> animateTo(ArrayList<Group> groups){
         applyAndAnimateRemovals(groups);
         applyAndAnimateAdditions(groups);
         applyAndAnimateMovedItems(groups);
+
+        return mDataset;
     }
 
     private void applyAndAnimateRemovals(ArrayList<Group> newGroups) {

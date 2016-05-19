@@ -24,10 +24,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     private static final int SOCIAL_FRAGMENT_ADAPTER = 0;
     private static final int ADD_FRIENDS_TO_GROUP_ADATPER = 1;
 
-    private int adapterMode;
-    private User appUser;
     private ArrayList<Friend> mDataset;
     private Context mContext;
+    private User appUser;
+    private int adapterMode;
     private NewGroupFragment newGroupFragment;
 
     public class ViewHolder extends RecyclerView.ViewHolder{

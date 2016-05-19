@@ -16,6 +16,11 @@ public class Group extends DatabaseObject{
     private String groupName;
     private HashMap<String, String> members;
 
+    public Group(String groupID, String groupName) {
+        this.groupID = groupID;
+        this.groupName = groupName;
+    }
+
     public Group(String groupID, String groupName, HashMap<String, String> members) {
         this.groupID = groupID;
         this.groupName = groupName;
