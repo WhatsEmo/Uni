@@ -273,9 +273,9 @@ public class SocialFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        ref.child(getString(R.string.database_users_key))
-                .child(ref.getAuth().getUid())
-                .removeEventListener(dataListener);
+        //ref.child(getString(R.string.database_users_key))
+                //.child(ref.getAuth().getUid())
+                //.removeEventListener(dataListener);
     }
 
     @Override
