@@ -7,8 +7,10 @@
     android:id="@+id/schedule_item_layout">
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:src="@drawable/dot"
         android:layout_marginTop="11dp"
         android:id="@+id/orange_dot"
