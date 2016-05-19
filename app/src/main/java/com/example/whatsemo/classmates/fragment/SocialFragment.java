@@ -214,8 +214,8 @@ public class SocialFragment extends Fragment {
                     }
                     if (hasGroups) {
                         retrieveDataMap = (Map<String, String>) snapshot.child(getString(R.string.user_groups_key)).getValue();
+                        userGroups.clear();
                         if(retrieveDataMap.keySet().size() != userGroups.size()) {
-                            userGroups.clear();
                             for (Map.Entry<String, String> entry : retrieveDataMap.entrySet()) {
                                 final String groupId = entry.getKey();
                                 final String groupName = snapshot.child(getString(R.string.user_groups_key)).child(groupId).child("name").getValue(String.class);
@@ -236,6 +236,7 @@ public class SocialFragment extends Fragment {
                                         System.out.println("Group member check failed: " + firebaseError);
                                     }
                                 });
+
                             }
                         }
                     }
@@ -397,8 +398,9 @@ public class SocialFragment extends Fragment {
 
                 //***********GROUPS***********
                 final ArrayList<Group> filteredGroups = filterList(userGroups, query);
-                groupsAdapter.animateTo(filteredGroups);
-                groupsRecyclerView.scrollToPosition(0);
+                System.out.println(groupsAdapter.animateTo(filteredGroups));
+
+                //groupsRecyclerView.scrollToPosition(0);
 /*
                 if(!filteredCourses.isEmpty() && coursesRecyclerView.getVisibility() == View.GONE){
                     coursesRecyclerView.setVisibility(View.VISIBLE);
