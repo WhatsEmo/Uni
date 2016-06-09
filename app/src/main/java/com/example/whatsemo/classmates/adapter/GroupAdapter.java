@@ -41,7 +41,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     // Provide a suitable constructor (depends on the kind of dataset)
     public GroupAdapter(ArrayList<Group> myDataset, Context context, User user) {
         mContext = context;
-        mDataset = myDataset;
+        mDataset = new ArrayList<>(myDataset);
         appUser = user;
     }
 
@@ -116,7 +116,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     private void applyAndAnimateAdditions(ArrayList<Group> newGroups) {
         for (int i = 0, count = newGroups.size(); i < count; i++) {
             final Group group = newGroups.get(i);
-            if (!mDataset.contains(newGroups)) {
+            if (!mDataset.contains(group)) {
                 add(i, group);
             }
         }
